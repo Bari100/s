@@ -101,3 +101,43 @@ input[type=range]::-webkit-slider-thumb {
 	background-color: red;
 	-webkit-appearance: none;
 }
+
+/*SINGLE-RANGE*/
+.slider-single {
+	width: 498px;
+	height: 10px;
+	position: relative;
+	margin-top: 80px;
+}
+#single-range {
+	width: 500px;
+	-webkit-appearance: none;
+	outline: none;
+	background-color: transparent;;
+	position: absolute;
+}
+#single-range::-webkit-slider-runnable-track {
+	background-color: #c6aee7;
+	border-radius: 5px;
+	height: 10px;
+	position: static;
+	z-index: -2;
+}
+#single-range::-webkit-slider-thumb {
+	width: 30px;
+	height: 30px;
+	background-color: #6200ee;
+	border-radius: 50%;
+	box-shadow: 0 0 0 0 rgba(98,0,238,.1);
+	margin-top: -10px;
+}
+.progress-bar {
+	width: 1px;
+	height: 10px;
+	background-color: #6200ee;
+	position: absolute;
+	left: 2.5px;
+	top: 2px;
+	border-radius: 5px;
+	z-index: -1;
+}

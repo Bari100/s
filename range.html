@@ -10,7 +10,10 @@
             <button onclick="vertical()">vertical</button>
             <button onclick="changeStep()">Step</button>
             <input type="number" id="number">
-            <input type="range" id="range-1" min="1" max="100">
+            <div class="slider-single">
+                <input type="range" id="single-range" min="0" max="100px">
+                <div class="progress-bar"></div>
+            </div>
             <p id="demo"></p>
         </div>
         
@@ -27,6 +30,7 @@
                 </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
         <script src="range.js"></script>
     </body>
 </html>

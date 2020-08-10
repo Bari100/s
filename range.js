@@ -6,11 +6,12 @@ var slider = document.querySelector(".slider");
 var thumbLeft = document.querySelector(".slider > .thumb.left");
 var thumbRight = document.querySelector(".slider > .thumb.right");
 var range = document.querySelector(".slider > .range");
+var singleRange = document.getElementById("single-range");
 
 
 //ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
 function vertical() {
-	document.getElementById("range-1").classList.add("vertical");
+	singleRange.classList.add("vertical");
 	inputLeft.classList.add("vertical");
 	inputRight.classList.add("vertical");
 	inputLeft.style.height = "500px";
@@ -135,3 +136,13 @@ var positionXY,
 			}
 		}
 	};
+
+$('#single-range').on('input', function(e){
+	var min = e.target.min,
+		max = e.target.max,
+		val = e.target.value;
+	
+	$('.progress-bar').css({
+		'width': (min + val) + '%'
+	});
+	}).trigger('input');
