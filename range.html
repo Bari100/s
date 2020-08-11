@@ -6,19 +6,26 @@
         <link href="range.css" rel="stylesheet">
     </head>
     <body>
+        <div class="single-multi">
+            <label> Single
+                <input id="mult-sing" class="choose-single" name="choose-slider" type="radio">
+            </label>
+            <label> Multi
+                <input id="mult-sing" class="choose-multi" name="choose-slider" type="radio" checked>
+            </label>
+        </div>
         <div>
             <button onclick="vertical()">vertical</button>
             <button onclick="changeStep()">Step</button>
             <input type="number" id="number">
+        </div>
+        
+       
+        <div class="sliders">
             <div class="slider-single">
                 <input type="range" id="single-range" min="0" max="100px">
                 <div class="progress-bar"></div>
             </div>
-            <p id="demo"></p>
-        </div>
-        
-       
-        <div class="middle">
             <div class="multi-range-slider">
                 <input type="range" id="input-left" min="0" max="100" value="25">
                 <input type="range" id="input-right" min="0" max="100" value="75">

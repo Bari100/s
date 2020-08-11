@@ -1,17 +1,19 @@
 
-var inputLeft = document.getElementById("input-left");
-var inputRight = document.getElementById("input-right");
-
-var slider = document.querySelector(".slider");
-var thumbLeft = document.querySelector(".slider > .thumb.left");
-var thumbRight = document.querySelector(".slider > .thumb.right");
-var range = document.querySelector(".slider > .range");
-var singleRange = document.getElementById("single-range");
-
+var inputLeft = document.getElementById("input-left"),
+	inputRight = document.getElementById("input-right"),
+	slider = document.querySelector(".slider"),
+	thumbLeft = document.querySelector(".slider > .thumb.left"),
+	thumbRight = document.querySelector(".slider > .thumb.right"),
+	range = document.querySelector(".slider > .range"),
+	singleRange = document.getElementById("single-range"),
+	sliderSingle = document.querySelector(".slider-single");
+	radioSingle = document.querySelector(".choose-single");
+	radioMulti = document.querySelector(".choose-multi");
 
 //ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
 function vertical() {
 	singleRange.classList.add("vertical");
+	sliderSingle.style.transform = "rotate(270deg)";
 	inputLeft.classList.add("vertical");
 	inputRight.classList.add("vertical");
 	inputLeft.style.height = "500px";
@@ -21,7 +23,7 @@ function vertical() {
 	inputRight.style.top = "-250px";
 }
 function changeStep() {
-	// document.getElementById("range").step = document.getElementById("number").value;
+	singleRange.step = document.getElementById("number").value;
 	inputLeft.step = document.getElementById("number").value;
 	inputRight.step = document.getElementById("number").value;	
 }
@@ -137,6 +139,7 @@ var positionXY,
 		}
 	};
 
+//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 $('#single-range').on('input', function(e){
 	var min = e.target.min,
 		max = e.target.max,
@@ -145,4 +148,16 @@ $('#single-range').on('input', function(e){
 	$('.progress-bar').css({
 		'width': (min + val) + '%'
 	});
-	}).trigger('input');
+}).trigger('input');
+
+
+//ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
+$("input[type='radio']").change(function(){
+	if($(radioMulti).prop("checked")) {
+		$(sliderSingle).hide();
+		$(".multi-range-slider").show();
+	} else {
+		$(sliderSingle).show();
+		$(".multi-range-slider").hide();
+	}
+});
