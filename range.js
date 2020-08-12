@@ -6,21 +6,14 @@ var inputLeft = document.getElementById("input-left"),
 	thumbRight = document.querySelector(".slider > .thumb.right"),
 	range = document.querySelector(".slider > .range"),
 	singleRange = document.getElementById("single-range"),
-	sliderSingle = document.querySelector(".slider-single");
-	radioSingle = document.querySelector(".choose-single");
-	radioMulti = document.querySelector(".choose-multi");
+	sliderSingle = document.querySelector(".slider-single"),
+	radioSingle = document.querySelector(".choose-single"),
+	radioMulti = document.querySelector(".choose-multi"),
+	sliders = document.querySelector(".sliders");
 
 //ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
 function vertical() {
-	singleRange.classList.add("vertical");
-	sliderSingle.style.transform = "rotate(270deg)";
-	inputLeft.classList.add("vertical");
-	inputRight.classList.add("vertical");
-	inputLeft.style.height = "500px";
-	inputRight.style.height = "500px";
-	slider.style.transform = "rotate(270deg)";
-	inputLeft.style.top = "-250px";
-	inputRight.style.top = "-250px";
+	sliders.style.transform = "rotate(270deg)";
 }
 function changeStep() {
 	singleRange.step = document.getElementById("number").value;
@@ -107,26 +100,14 @@ var positionXY,
 	inputRightMath,
 	x100;
 	MouseMove = function(eventArg) {
-		if (inputLeft.classList.contains("vertical") && inputRight.classList.contains("vertical")) {
-			positionXY = eventArg.offsetY;
-			countPosition = 500 / 2800;			
-			/* percentage position Y of cursor  */
-			x100 = positionXY * countPosition; //offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-			/* absolute distance from respective slider values */
-			inputLeftMath = Math.abs(inputLeft.value - x100);
-			inputRightMath = Math.abs(inputRight.value - x100);
-			compareInputs = inputLeftMath > inputRightMath;
-		
-		} else {
-			positionXY = eventArg.offsetX;
-			countPosition = 500 / 2500;
-			/* percentage position Y of cursor  */
-			x100 = positionXY * countPosition; //offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.		
-			/* absolute distance from respective slider values */
-			inputLeftMath = Math.abs(inputLeft.value - x100);
-			inputRightMath = Math.abs(inputRight.value - x100);
-			compareInputs = inputLeftMath < inputRightMath;
-		}
+		positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+		countPosition = 100 / $(sliders).width();
+		/* percentage position Y of cursor  */
+		x100 = positionXY * countPosition;
+		/* absolute distance from respective slider values */
+		inputLeftMath = Math.abs(inputLeft.value - x100);
+		inputRightMath = Math.abs(inputRight.value - x100);
+		compareInputs = inputLeftMath < inputRightMath;
 		// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
 		if (!eventArg.buttons) {
 			if (compareInputs) {
@@ -161,3 +142,4 @@ $("input[type='radio']").change(function(){
 		$(".multi-range-slider").hide();
 	}
 });
+console.log($(sliders).height());
