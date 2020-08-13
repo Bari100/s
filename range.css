@@ -144,3 +144,9 @@ input[type=range]::-webkit-slider-thumb {
 	border-radius: 5px;
 	z-index: -1;
 }
+.value-single {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: red;
+}

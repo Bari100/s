@@ -142,4 +142,14 @@ $("input[type='radio']").change(function(){
 		$(".multi-range-slider").hide();
 	}
 });
-console.log($(sliders).height());
+
+
+//БЕГУНОК(bubble) СО ЗНАЧЕНИЕМ VALUE
+$(".value-single-span").text(singleRange.value);
+function getValue() {
+	var newValue = Number( (singleRange.value - singleRange.min) * 100 / (singleRange.max - singleRange.min) ),
+		newPosition = 10 - (newValue * 0.2);
+	$(".value-single").css("left", `calc(${newValue}% + (${newPosition}px))`);
+	$(".value-single-span").text(singleRange.value);
+}
+singleRange.addEventListener('input', getValue);
