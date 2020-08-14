@@ -1,6 +1,8 @@
-.vertical[type=range] {
-    -webkit-appearance: slider-vertical;
+.none {
+    display: none;
 }
+
+
 
 body {
 	margin: 0;
@@ -75,7 +77,7 @@ body {
 	/* -webkit-appearance: none; */
 	/* z-index: 2; */
 	/* height: 10px; */
-	/* opacity: 0; */
+	opacity: 0;
 }
 #input-left {
 	position: absolute;
@@ -103,9 +105,49 @@ input[type=range]::-webkit-slider-thumb {
 	-webkit-appearance: none;
 }
 
+/*BUBBLES MULTI*/
+.bubble-multi-left, .bubble-multi-right {
+    position: absolute;
+	width: 25px;
+	height: 20px;
+    border-radius: 5px;
+	background-color: #9452f2;
+	left: 242px;
+	bottom: 29px;
+    box-shadow: 0 0 4px #000;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 1px;
+}
+.bubble-multi-left:after, .bubble-multi-right:after {
+    content: "";
+    background-color: #9452f2;
+	position: absolute;
+	left: 6px;
+	top: 14px;
+    z-index: -1;
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 0 4px #000;
+    transform: rotate(225deg);
+}
+.value-multi-left-span {
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    color: aliceblue;
+}
+.value-multi-right-span {
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    color: aliceblue;
+}
+
 /*SINGLE-RANGE*/
 .slider-single {
-	width: 498px;
+	/* width: 498px; */
+	width: 500px;
 	height: 10px;
 	position: relative;
 	display: none;
@@ -144,9 +186,35 @@ input[type=range]::-webkit-slider-thumb {
 	border-radius: 5px;
 	z-index: -1;
 }
-.value-single {
+/*BUBBLES SINGLE*/
+.bubble-single {
 	position: absolute;
-	width: 20px;
+	width: 25px;
 	height: 20px;
-	background-color: red;
+    border-radius: 5px;
+	background-color: #9452f2;
+	left: 242px;
+	bottom: 29px;
+    box-shadow: 0 0 4px #000;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 1px;
+}
+.bubble-single:after {
+    content: "";
+    background-color: #9452f2;
+	position: absolute;
+	left: 6px;
+	top: 14px;
+    z-index: -1;
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 0 4px #000;
+    transform: rotate(225deg);
+}
+.value-single-span {
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    color: aliceblue;
 }

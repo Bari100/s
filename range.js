@@ -15,6 +15,13 @@ var inputLeft = document.getElementById("input-left"),
 function vertical() {
 	sliders.style.transform = "rotate(270deg)";
 }
+$("input[type='radio']").change(function(){
+	if($(".vertical").prop("checked")) {
+		sliders.style.transform = "rotate(270deg)";
+	} else {
+		sliders.style.transform = "rotate(0deg)";
+	}
+});
 function changeStep() {
 	singleRange.step = document.getElementById("number").value;
 	inputLeft.step = document.getElementById("number").value;
@@ -128,6 +135,7 @@ $('#single-range').on('input', function(e){
 	
 	$('.progress-bar').css({
 		'width': (min + val) + '%'
+		// 'width': (val - min) * 100 / (max - min) + '%'
 	});
 }).trigger('input');
 
@@ -144,12 +152,50 @@ $("input[type='radio']").change(function(){
 });
 
 
-//БЕГУНОК(bubble) СО ЗНАЧЕНИЕМ VALUE
+//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
 $(".value-single-span").text(singleRange.value);
-function getValue() {
+function getSingleValue() {
+	//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 	var newValue = Number( (singleRange.value - singleRange.min) * 100 / (singleRange.max - singleRange.min) ),
-		newPosition = 10 - (newValue * 0.2);
-	$(".value-single").css("left", `calc(${newValue}% + (${newPosition}px))`);
+		newPosition = 10 - (newValue * 0.35);
+	$(".bubble-single").css("left", `calc(${newValue}% + (${newPosition}px))`);
+	//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 	$(".value-single-span").text(singleRange.value);
 }
-singleRange.addEventListener('input', getValue);
+singleRange.addEventListener('input', getSingleValue);
+
+//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
+$(".value-multi-left-span").text(inputLeft.value);
+function getLeftValue() {
+	//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
+	var newValue = Number( (inputLeft.value - inputLeft.min) * 100 / (inputLeft.max - inputLeft.min) ),
+		newPosition = 10 - (newValue * 0.35);
+	$(".bubble-multi-left").css("left", `calc(${newValue}% + (${newPosition}px))`);
+	//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+	$(".value-multi-left-span").text(inputLeft.value);
+}
+inputLeft.addEventListener('input', getLeftValue);
+$(".value-multi-right-span").text(inputRight.value);
+function getRightValue() {
+	//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
+	var newValue = Number( (inputRight.value - inputRight.min) * 100 / (inputRight.max - inputRight.min) ),
+		newPosition = 10 - (newValue * 0.35);
+	$(".bubble-multi-right").css("left", `calc(${newValue}% + (${newPosition}px))`);
+	//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+	$(".value-multi-right-span").text(inputRight.value);
+}
+inputRight.addEventListener('input', getRightValue);
+
+
+//ОТКЛЮЧЕНИЕ BUBBLES
+$("input[type='radio']").change(function(){
+	if($(".bubble-off").prop("checked")) {
+		$(".bubble-single").addClass("none");
+        $(".bubble-multi-right").addClass("none");
+        $(".bubble-multi-left").addClass("none");
+	} else {
+		$(".bubble-single").removeClass("none");
+        $(".bubble-multi-right").removeClass("none");
+        $(".bubble-multi-left").removeClass("none");
+	}
+});

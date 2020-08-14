@@ -6,28 +6,47 @@
         <link href="range.css" rel="stylesheet">
     </head>
     <body>
-        <div class="single-multi">
-            <label> Single
-                <input id="mult-sing" class="choose-single" name="choose-slider" type="radio">
-            </label>
-            <label> Multi
-                <input id="mult-sing" class="choose-multi" name="choose-slider" type="radio" checked>
-            </label>
-        </div>
-        <div>
-            <button onclick="vertical()">vertical</button>
-            <button onclick="changeStep()">Step</button>
-            <input type="number" id="number">
+        <div class="settings">
+            <div class="single-multi">
+                <label> Single
+                    <input id="mult-sing" class="choose-single" name="choose-slider" type="radio">
+                </label>
+                <label> Multi
+                    <input id="mult-sing" class="choose-multi" name="choose-slider" type="radio" checked>
+                </label>
+            </div>
+            <div class="bubble-on-off">
+                <label> Bubble
+                    <input class="bubble-on" name="bubble-radio" type="radio" checked>
+                </label>
+                <label> Without Bubble
+                    <input class="bubble-off" name="bubble-radio" type="radio">
+                </label>
+            </div>
+            <div class="horizontal-vertical">
+                <label> horizontal
+                    <input class="horizontal" name="horiz-vert" type="radio" checked>
+                </label>
+                <label> vertical
+                    <input class="vertical" name="horiz-vert" type="radio">
+                </label>
+            </div>
+            <div>
+                <button onclick="changeStep()">Step</button>
+                <input type="number" id="number">
+            </div>
         </div>
         
        
         <div class="sliders">
             <div class="slider-single">
-                <div class="value-single"><span class="value-single-span"></span></div>
+                <div class="bubble-single"><span class="value-single-span"></span></div>
                 <input type="range" id="single-range" min="0" max="100">
                 <div class="progress-bar"></div>
             </div>
             <div class="multi-range-slider">
+                <div class="bubble-multi-left"><span class="value-multi-left-span"></span></div>
+                <div class="bubble-multi-right"><span class="value-multi-right-span"></span></div>
                 <input type="range" id="input-left" min="0" max="100" value="25">
                 <input type="range" id="input-right" min="0" max="100" value="75">
                 <div class="slider">
