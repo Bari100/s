@@ -11,6 +11,7 @@ var inputLeft = document.getElementById("input-left"),
 	radioMulti = document.querySelector(".choose-multi"),
 	sliders = document.querySelector(".sliders");
 
+
 //ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
 function vertical() {
 	sliders.style.transform = "rotate(270deg)";
@@ -64,7 +65,7 @@ setRightValue();
 inputLeft.addEventListener("input", setLeftValue);
 inputRight.addEventListener("input", setRightValue);
 
-inputLeft.addEventListener("mouseover", function() {
+/*inputLeft.addEventListener("mouseover", function() {
 	thumbLeft.classList.add("hover");
 });
 inputLeft.addEventListener("mouseout", function() {
@@ -88,7 +89,7 @@ inputRight.addEventListener("mousedown", function() {
 });
 inputRight.addEventListener("mouseup", function() {
 	thumbRight.classList.remove("active");
-});
+});*/
 
 
 
@@ -134,8 +135,7 @@ $('#single-range').on('input', function(e){
 		val = e.target.value;
 	
 	$('.progress-bar').css({
-		'width': (min + val) + '%'
-		// 'width': (val - min) * 100 / (max - min) + '%'
+		'width': (val - min) * 100 / (max - min) + '%'
 	});
 }).trigger('input');
 
@@ -199,3 +199,15 @@ $("input[type='radio']").change(function(){
         $(".bubble-multi-left").removeClass("none");
 	}
 });
+
+
+//ДИАПАЗОН-ШКАЛА
+$(".first-ins").text(singleRange.min);
+$(".second-ins").text(Math.floor((singleRange.max - singleRange.min) / 4 + (+singleRange.min)));
+$(".third-ins").text(Math.round((singleRange.max - singleRange.min) / 2 + (+singleRange.min)));
+$(".fourth-ins").text(Math.round(singleRange.max - ((singleRange.max - singleRange.min) / 4)));
+$(".fifth-ins").text(singleRange.max);
+
+// $(".second").css("left", ($(singleRange).width() / 4));
+// $(".third").css("left", ($(singleRange).width() / 2));
+// $(".fourth").css("left", ($(singleRange).width() / 1.35));

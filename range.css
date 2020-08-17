@@ -147,7 +147,7 @@ input[type=range]::-webkit-slider-thumb {
 /*SINGLE-RANGE*/
 .slider-single {
 	/* width: 498px; */
-	width: 500px;
+	width: 26vw;
 	height: 10px;
 	position: relative;
 	display: none;
@@ -155,7 +155,7 @@ input[type=range]::-webkit-slider-thumb {
 	margin-left: -3px;
 }
 #single-range {
-	width: 500px;
+	width: 26vw;
 	-webkit-appearance: none;
 	outline: none;
 	background-color: transparent;;
@@ -217,4 +217,13 @@ input[type=range]::-webkit-slider-thumb {
     left: 5px;
     top: 3px;
     color: aliceblue;
+}
+
+/*ДИАПАЗОН-ШКАЛА*/
+.scale {
+    position: relative;
+    top: 20px;
+}
+.scale span {
+    position: absolute;
 }
