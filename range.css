@@ -146,7 +146,6 @@ input[type=range]::-webkit-slider-thumb {
 
 /*SINGLE-RANGE*/
 .slider-single {
-	/* width: 498px; */
 	width: 26vw;
 	height: 10px;
 	position: relative;
@@ -220,10 +219,15 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 /*ДИАПАЗОН-ШКАЛА*/
-.scale {
+.scale, .multi-scale {
     position: relative;
     top: 20px;
+    height: 20px;
+    width: 26vw;
 }
-.scale span {
+.scale span, .multi-scale span {
     position: absolute;
+}
+.scale ins, .multi-scale ins {
+    text-decoration: none;
 }

@@ -208,6 +208,12 @@ $(".third-ins").text(Math.round((singleRange.max - singleRange.min) / 2 + (+sing
 $(".fourth-ins").text(Math.round(singleRange.max - ((singleRange.max - singleRange.min) / 4)));
 $(".fifth-ins").text(singleRange.max);
 
+$(".multi-first-ins").text(inputLeft.min);
+$(".multi-second-ins").text(Math.floor((inputLeft.max - inputLeft.min) / 4 + (+inputLeft.min)));
+$(".multi-third-ins").text(Math.round((inputLeft.max - inputLeft.min) / 2 + (+inputLeft.min)));
+$(".multi-fourth-ins").text(Math.round(inputLeft.max - ((inputLeft.max - inputLeft.min) / 4)));
+$(".multi-fifth-ins").text(inputLeft.max);
+
 // $(".second").css("left", ($(singleRange).width() / 4));
 // $(".third").css("left", ($(singleRange).width() / 2));
 // $(".fourth").css("left", ($(singleRange).width() / 1.35));
