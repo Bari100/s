@@ -17,7 +17,7 @@ body {
 .sliders {
 	position: relative;
 	width: 50%;
-	max-width: 26vw;
+	width: 26vw;
 	/* max-width: 500px; */
 }
 

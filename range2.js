@@ -1,14 +1,8 @@
+
 (function ($) {
-	$.fn.rangeSliders = function (options) {
-		var settings = $.extend({
-			"step": 1,
-			"vertical": false,
-			"multirange": true,
-			"bubbles": true,
-			"width": 26
-			//ДОБАВИТЬ MIN MAX!!!
-		  }, options);
+	$.fn.rangeSliders = function () {
 		return this.each(function () {
+  
 			var inputLeft = document.getElementById("input-left"),
 				inputRight = document.getElementById("input-right"),
 				slider = document.querySelector(".slider"),
@@ -21,9 +15,19 @@
 				radioMulti = document.querySelector(".choose-multi"),
 				sliders = document.querySelector(".sliders");
 
+				// settings = $.extend({
+				// "vertical": false
+				// }, options);
 
 
-			//*-DEMO-* ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
+
+			// if (settings.vertical == true) {
+			// 	sliders.style.transform = "rotate(270deg)";
+			// } else sliders.style.transform = "rotate(0deg)";
+			//ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
+			// function vertical() {
+			// 	sliders.style.transform = "rotate(270deg)";
+			// }
 			$("input[type='radio']").change(function(){
 				if($(".vertical").prop("checked")) {
 					sliders.style.transform = "rotate(270deg)";
@@ -37,71 +41,6 @@
 				inputRight.step = document.getElementById("number").value;	
 			}
 
-			//*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
-			$("input[type='radio']").change(function(){
-				if($(radioMulti).prop("checked")) {
-					$(sliderSingle).hide();
-					$(".multi-range-slider").show();
-				} else {
-					$(sliderSingle).show();
-					$(".multi-range-slider").hide();
-				}
-			});
-
-			//*-DEMO-* ФУНКЦИЯ ОТКЛЮЧЕНИЯ BUBBLES
-			$("input[type='radio']").change(function(){
-				if($(".bubble-off").prop("checked")) {
-					$(".bubble-single").addClass("none");
-					$(".bubble-multi-right").addClass("none");
-					$(".bubble-multi-left").addClass("none");
-				} else {
-					$(".bubble-single").removeClass("none");
-					$(".bubble-multi-right").removeClass("none");
-					$(".bubble-multi-left").removeClass("none");
-				}
-			});
-
-
-
-			// ФУНКЦИЯ ИЗМЕНЕНИЯ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЯ ШАГА (STEP)
-			if(settings.vertical) {
-				sliders.style.transform = "rotate(270deg)";
-			} else {
-				sliders.style.transform = "rotate(0deg)";
-			}
-			singleRange.step = settings.step;
-			inputLeft.step = settings.step;
-			inputRight.step = settings.step;
-
-			
-			//ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
-			if(settings.multirange) {
-				$(sliderSingle).hide();
-				$(".multi-range-slider").show();
-			} else {
-				$(sliderSingle).show();
-				$(".multi-range-slider").hide();
-			}
-
-			//ФУНКЦИЯ BUBBLES
-			if(settings.bubbles) {
-				$(".bubble-single").removeClass("none");
-				$(".bubble-multi-right").removeClass("none");
-				$(".bubble-multi-left").removeClass("none");
-			} else {
-				$(".bubble-single").addClass("none");
-				$(".bubble-multi-right").addClass("none");
-				$(".bubble-multi-left").addClass("none");
-			}
-
-			//WIDTH
-			$(sliders).css("width", settings.width + "vw");
-			$(inputLeft).css("width", settings.width + "vw");
-			$(inputRight).css("width", settings.width + "vw");
-			$(singleRange).css("width", settings.width + "vw");
-			$(sliderSingle).css("width", settings.width + "vw");
-			$(".scale").css("width", settings.width + "vw");
-			$(".multi-scale").css("width", settings.width + "vw");
 
 
 
@@ -182,7 +121,7 @@
 				x100;
 				MouseMove = function(eventArg) {
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
+					countPosition = 100 / $(sliders).width();
 					/* percentage position Y of cursor  */
 					x100 = positionXY * countPosition;
 					/* absolute distance from respective slider values */
@@ -211,6 +150,18 @@
 					'width': (val - min) * 100 / (max - min) + '%'
 				});
 			}).trigger('input');
+
+
+			//ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
+			$("input[type='radio']").change(function(){
+				if($(radioMulti).prop("checked")) {
+					$(sliderSingle).hide();
+					$(".multi-range-slider").show();
+				} else {
+					$(sliderSingle).show();
+					$(".multi-range-slider").hide();
+				}
+			});
 
 
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
@@ -248,6 +199,20 @@
 			inputRight.addEventListener('input', getRightValue);
 
 
+			//ОТКЛЮЧЕНИЕ BUBBLES
+			$("input[type='radio']").change(function(){
+				if($(".bubble-off").prop("checked")) {
+					$(".bubble-single").addClass("none");
+					$(".bubble-multi-right").addClass("none");
+					$(".bubble-multi-left").addClass("none");
+				} else {
+					$(".bubble-single").removeClass("none");
+					$(".bubble-multi-right").removeClass("none");
+					$(".bubble-multi-left").removeClass("none");
+				}
+			});
+
+
 			//ДИАПАЗОН-ШКАЛА
 			$(".first-ins").text(singleRange.min);
 			$(".second-ins").text(Math.floor((singleRange.max - singleRange.min) / 4 + (+singleRange.min)));
@@ -262,6 +227,4 @@
 			$(".multi-fifth-ins").text(inputLeft.max);
 		});
 	};
-})(jQuery);	
-
-$("body").rangeSliders();
+})(jQuery);
