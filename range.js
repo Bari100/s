@@ -106,7 +106,8 @@
 
 
 
-			//ДЕЛАЕТ РАБОЧИМ СТИЛИЗИРОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
+			//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
+			//model
 			function setLeftValue() {
 				var _this = inputLeft,
 					min = parseInt(_this.min),
@@ -135,6 +136,7 @@
 			}
 			setRightValue();
 
+			//controller
 			inputLeft.addEventListener("input", setLeftValue);
 			inputRight.addEventListener("input", setRightValue);
 
@@ -168,6 +170,7 @@
 
 
 			//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
+			//controller?
 			inputLeft.onmousemove = function(e) {
 				MouseMove.call(inputLeft, e);
 			};
@@ -180,6 +183,7 @@
 				inputLeftMath,
 				inputRightMath,
 				x100;
+			//model
 				MouseMove = function(eventArg) {
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
 					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
@@ -202,17 +206,17 @@
 				};
 
 			//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
+			//controller?
 			$('#single-range').on('input', function(e){
 				var min = e.target.min,
 					max = e.target.max,
 					val = e.target.value;
-				
 				$('.progress-bar').css({
 					'width': (val - min) * 100 / (max - min) + '%'
 				});
 			}).trigger('input');
 
-
+			//controller?
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
 			$(".value-single-span").text(singleRange.value);
 			function getSingleValue() {
@@ -226,7 +230,6 @@
 			singleRange.addEventListener('input', getSingleValue);
 
 			//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-			$(".value-multi-left-span").text(inputLeft.value);
 			function getLeftValue() {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 				var newValue = Number( (inputLeft.value - inputLeft.min) * 100 / (inputLeft.max - inputLeft.min) ),
@@ -236,7 +239,6 @@
 				$(".value-multi-left-span").text(inputLeft.value);
 			}
 			inputLeft.addEventListener('input', getLeftValue);
-			$(".value-multi-right-span").text(inputRight.value);
 			function getRightValue() {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 				var newValue = Number( (inputRight.value - inputRight.min) * 100 / (inputRight.max - inputRight.min) ),
@@ -248,19 +250,19 @@
 			inputRight.addEventListener('input', getRightValue);
 
 
-			//ДИАПАЗОН-ШКАЛА
+			//ДИАПАЗОН-ШКАЛА(SINGLE)
 			$(".first-ins").text(singleRange.min);
 			$(".second-ins").text(Math.floor((singleRange.max - singleRange.min) / 4 + (+singleRange.min)));
 			$(".third-ins").text(Math.round((singleRange.max - singleRange.min) / 2 + (+singleRange.min)));
 			$(".fourth-ins").text(Math.round(singleRange.max - ((singleRange.max - singleRange.min) / 4)));
 			$(".fifth-ins").text(singleRange.max);
-
+			//ДИАПАЗОН-ШКАЛА(MULTI)
 			$(".multi-first-ins").text(inputLeft.min);
 			$(".multi-second-ins").text(Math.floor((inputLeft.max - inputLeft.min) / 4 + (+inputLeft.min)));
 			$(".multi-third-ins").text(Math.round((inputLeft.max - inputLeft.min) / 2 + (+inputLeft.min)));
 			$(".multi-fourth-ins").text(Math.round(inputLeft.max - ((inputLeft.max - inputLeft.min) / 4)));
 			$(".multi-fifth-ins").text(inputLeft.max);
-		});
+		});//рассчет в model, .text в controller
 	};
 })(jQuery);	
 
