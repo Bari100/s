@@ -1,4 +1,6 @@
-
+.cache/
+dist/
+node_modules/
 определения css.txt
 определения js jquery.txt
 ссылки.txt

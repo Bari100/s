@@ -206,7 +206,7 @@
 				};
 
 			//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
-			//controller?
+			//view
 			$('#single-range').on('input', function(e){
 				var min = e.target.min,
 					max = e.target.max,
