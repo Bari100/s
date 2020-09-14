@@ -8,18 +8,93 @@
 			"width": 26,
 			"min": 20,
 			"max": 280
-			//ДОБАВИТЬ MIN MAX!!!
 		  }, options);
 		return this.each(function () {
-			var inputLeft:any = <HTMLInputElement>document.getElementById("input-left"),
-				inputRight:any = <HTMLInputElement>document.getElementById("input-right"),
+			// var inputLeft:any = <HTMLInputElement>document.getElementById("input-left"),
+			// 	inputRight:any = <HTMLInputElement>document.getElementById("input-right"),
+			// 	thumbLeft = <HTMLInputElement>document.querySelector(".slider > .thumb.left"),
+			// 	thumbRight = <HTMLInputElement>document.querySelector(".slider > .thumb.right"),
+			// var	range = <HTMLInputElement>document.querySelector(".slider > .range"),
+			var sliders:any = <HTMLElement>document.querySelector(".sliders"),
+				radioMulti = document.querySelector(".choose-multi");
+				// singleRange:any = document.getElementById("single-range");
+				// sliderSingle = document.querySelector(".slider-single");
+			
+			var sliderSingle = $('<div>', {'class': 'slider-single'});
+			$(sliders).append(sliderSingle);
+			var bubbleSingle = $('<div>', {'class': 'bubble-single'});
+			$(sliderSingle).append(bubbleSingle);
+			var valueSingleSpan = $('<span>', {'class': 'value-single-span'})
+			$(bubbleSingle).append(valueSingleSpan);
+			var singleRange:any = $('<input>', {'id': 'single-range', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
+			$(sliderSingle).append(singleRange);
+			$(sliderSingle).append($('<div>', {'class': 'progress-bar'}));
+			var scaleSingle = $('<div>', {'class': 'scale'});
+			$(sliderSingle).append(scaleSingle);
+			var spanScaleSingle1 = $('<span>', {'style': 'left: 0%'});
+			$(scaleSingle).append(spanScaleSingle1);
+			$(spanScaleSingle1).append($('<ins>', {'class': 'first-ins'}));
+			var spanScaleSingle2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
+			$(scaleSingle).append(spanScaleSingle2);
+			$(spanScaleSingle2).append($('<ins>', {'class': 'second-ins'}));
+			var spanScaleSingle3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
+			$(scaleSingle).append(spanScaleSingle3);
+			$(spanScaleSingle3).append($('<ins>', {'class': 'third-ins'}));
+			var spanScaleSingle4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
+			$(scaleSingle).append(spanScaleSingle4);
+			$(spanScaleSingle4).append($('<ins>', {'class': 'fourth-ins'}));
+			var spanScaleSingle5 = $('<span>', {'style': 'left: 95%'});
+			$(scaleSingle).append(spanScaleSingle5);
+			$(spanScaleSingle5).append($('<ins>', {'class': 'fifth-ins'}));
+
+			var singleRange:any = document.getElementById("single-range");
+
+
+
+			var multiRangeSlider = $('<div>', {'class': 'multi-range-slider'});
+			$(sliders).append(multiRangeSlider);
+			var bubbleMultiLeft = $('<div>', {'class': 'bubble-multi-left'});
+			$(multiRangeSlider).append(bubbleMultiLeft);
+			var valueMultiLeftSpan = $('<span>', {'class': 'value-multi-left-span'})
+			$(bubbleMultiLeft).append(valueMultiLeftSpan);
+			var bubbleMultiRight = $('<div>', {'class': 'bubble-multi-right'});
+			$(multiRangeSlider).append(bubbleMultiRight);
+			var valueMultiRightSpan = $('<span>', {'class': 'value-multi-right-span'})
+			$(bubbleMultiRight).append(valueMultiRightSpan);
+			var inputLeft:any = $('<input>', {'id': 'input-left', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
+			var inputRight:any = $('<input>', {'id': 'input-right', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
+			$(multiRangeSlider).append(inputLeft);
+			$(multiRangeSlider).append(inputRight);
+			var slider = $('<div>', {'class': 'slider'});
+			$(multiRangeSlider).append(slider);
+			$(slider).append($('<div>', {'class': 'track'}));
+			$(slider).append($('<div>', {'class': 'range'}));
+			$(slider).append($('<div>', {'class': 'thumb left'}));
+			$(slider).append($('<div>', {'class': 'thumb right'}));
+			var multiScale = $('<div>', {'class': 'multi-scale'});
+			$(multiRangeSlider).append(multiScale);
+			var spanMultiScale1 = $('<span>', {'style': 'left: 0%'});
+			$(multiScale).append(spanMultiScale1);
+			$(spanMultiScale1).append($('<ins>', {'class': 'multi-first-ins'}));
+			var spanMultiScale2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
+			$(multiScale).append(spanMultiScale2);
+			$(spanMultiScale2).append($('<ins>', {'class': 'multi-second-ins'}));
+			var spanMultiScale3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
+			$(multiScale).append(spanMultiScale3);
+			$(spanMultiScale3).append($('<ins>', {'class': 'multi-third-ins'}));
+			var spanMultiScale4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
+			$(multiScale).append(spanMultiScale4);
+			$(spanMultiScale4).append($('<ins>', {'class': 'multi-fourth-ins'}));
+			var spanMultiScale5 = $('<span>', {'style': 'left: 95%'});
+			$(multiScale).append(spanMultiScale5);
+			$(spanMultiScale5).append($('<ins>', {'class': 'multi-fifth-ins'}));
+
+			var range = <HTMLInputElement>document.querySelector(".slider > .range"),
 				thumbLeft = <HTMLInputElement>document.querySelector(".slider > .thumb.left"),
 				thumbRight = <HTMLInputElement>document.querySelector(".slider > .thumb.right"),
-				range = <HTMLInputElement>document.querySelector(".slider > .range"),
-				sliders = <HTMLElement>document.querySelector(".sliders"),
-				radioMulti = document.querySelector(".choose-multi"),
-				singleRange:any = document.getElementById("single-range"),
-				sliderSingle = document.querySelector(".slider-single");
+				inputLeft:any = <HTMLInputElement>document.getElementById("input-left"),
+				inputRight:any = <HTMLInputElement>document.getElementById("input-right")
+
 
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
 			$("input[type='radio']").change(function(){
@@ -85,6 +160,7 @@
 			var	model = {
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 					setLeftValue: function() {
+							// range = <HTMLInputElement>document.querySelector(".slider > .range")
 						var _this = inputLeft,
 							min = parseInt(_this.min),
                             max = parseInt(_this.max);
@@ -98,6 +174,7 @@
 					},
 
 					setRightValue: function() {
+							// range = <HTMLInputElement>document.querySelector(".slider > .range")
 						var _this = inputRight,
 							min = parseInt(_this.min),
 							max = parseInt(_this.max);

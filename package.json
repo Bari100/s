@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel src/range.html"
+    "dev": "parcel src/range.html",
+    "prod": "parcel build src/range.html"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "typescript": "^4.0.2"
   },
   "dependencies": {
