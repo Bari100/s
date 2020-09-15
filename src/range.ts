@@ -1,5 +1,5 @@
 (function ($) {
-	(<any>$.fn).rangeSliders = function (options) {
+	(<any>$.fn).rangeSliders = function (options: object) {
 		var settings = $.extend({
 			"step": 10,
 			"vertical": false,
@@ -160,7 +160,6 @@
 			var	model = {
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 					setLeftValue: function() {
-							// range = <HTMLInputElement>document.querySelector(".slider > .range")
 						var _this = inputLeft,
 							min = parseInt(_this.min),
                             max = parseInt(_this.max);
@@ -174,7 +173,6 @@
 					},
 
 					setRightValue: function() {
-							// range = <HTMLInputElement>document.querySelector(".slider > .range")
 						var _this = inputRight,
 							min = parseInt(_this.min),
 							max = parseInt(_this.max);
@@ -189,12 +187,12 @@
 
 					//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
 					MouseMove: function(eventArg) {
-						var positionXY,
-							compareInputs,
-							countPosition,
-							inputLeftMath,
-							inputRightMath,
-							x100;
+						var positionXY: number,
+							compareInputs: boolean,
+							countPosition: number,
+							inputLeftMath: number,
+							inputRightMath: number,
+							x100: number;
 						positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
 						countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
 						/* percentage position Y of cursor  */
@@ -301,10 +299,10 @@
 				inTouchRight: function() {inputRight.addEventListener("input", model.setRightValue);},
 			
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				inMoveLeft: function() {inputLeft.onmousemove = function(e) {
+				inMoveLeft: function() {inputLeft.onmousemove = function(e: number) {
 					model.MouseMove.call(inputLeft, e);};
 				},
-				inMoveRight: function() {inputRight.onmousemove = function(e) {
+				inMoveRight: function() {inputRight.onmousemove = function(e: number) {
 					model.MouseMove.call(inputRight, e);};
 				},
 
