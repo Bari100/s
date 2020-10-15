@@ -1,27 +1,27 @@
-(function ($) {
+// // (function ($) {
 	
-	($.fn).rangeSliders = function range(options) {
-		var settings = $.extend({
+// 	// ($.fn).rangeSliders = function range(options) {
+// 		// var settings = $.extend({
+// 		// 	"step": 1,
+// 		// 	"vertical": false,
+// 		// 	"multirange": true,
+// 		// 	"bubbles": true,
+// 		// 	"width": 26,
+// 		// 	"min": 20,
+// 		// 	"max": 280
+// 		//   });
+// 		//   options
+		var settings = {
 			"step": 1,
 			"vertical": false,
-			"multirange": true,
+			"multirange": false,
 			"bubbles": true,
 			"width": 26,
-			"min": 30,
-			"max": 380
-		  }, options);
+			"min": 0,
+			"max": 10
+		  };
 		  
-		// var settings = {
-		// 	"step": 1,
-		// 	"vertical": false,
-		// 	"multirange": true,
-		// 	"bubbles": true,
-		// 	"width": 26,
-		// 	"min": 30,
-		// 	"max": 380
-		//   };
-		  
-		return this.each(function () {
+		// return this.each(function () {
 		var sliders = document.querySelector(".sliders"),
 			radioMulti = document.querySelector(".choose-multi");
 		
@@ -294,12 +294,12 @@
 			/////////////////////////////////SINGLE
 			//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 			progressBarWidth: Number,
-			countProgress(min, max, valu = 'empty') {
+			countProgress(min, max, testVal = 'empty') {
 				$('#single-range').on('input', function(e){
-					val = (e.target).value;
-					if (valu == 'empty') {
+					let val = (e.target).value;
+					if (testVal == 'empty') {
 						progressBarWidth = (val - min) * 100 / (max - min)
-					} else {progressBarWidth = (valu - min) * 100 / (max - min)}
+					} else {progressBarWidth = (testVal - min) * 100 / (max - min)}
 					$('.progress-bar').css({
 						'width': progressBarWidth + '%'
 					});
@@ -310,10 +310,11 @@
 			typeBubbleValue: function() {
 				$(".value-single-span").text(singleRange.value);
 			},
+			newValueFunc(){},
 			getSingleValue() {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 				let val = singleRange.value;
-				let newValueFunc = (min, max, testVal = 'empty') => {
+				newValueFunc = (min, max, testVal = 'empty') => {
 					if (testVal == 'empty') {
 						newValue = (val - min) * 100 / (max - min)
 					} else {
@@ -322,7 +323,8 @@
 				}
 				newValueFunc(settings.min, settings.max)
 				let	newPosition = 5 - (newValue * 0.25);
-				$(".bubble-single").css("left", `calc(${newValue}% + (${newPosition}px))`);
+				let countPosition = `calc(${newValue}% + (${newPosition}px))`
+				$(".bubble-single").css("left", countPosition);
 				//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 				$(".value-single-span").text(singleRange.value);
 				
@@ -345,7 +347,7 @@
 				$(".fourth-ins").text(scaleSingleObj.fourth);
 				$(".fifth-ins").text(scaleSingleObj.fifth);
 			}
-		};
+		}
 		view.getLeftValue();
 		view.getRightValue();
 		view.scaleMulti();
@@ -353,7 +355,6 @@
 		view.typeBubbleValue();
 		view.getSingleValue();
 		view.scaleSingle(settings.min, settings.max);
-
 
 		//=======================================================================
 		var controller = {
@@ -384,8 +385,8 @@
 		controller.inGetLeft();
 		controller.inGetRight();
 		controller.showBubbleValue();
-		});
-	};
-})(jQuery);	
+// 		// });
+// 	// };
+// // })(jQuery);	
 
-($("body")).rangeSliders();
+// // ($("body")).rangeSliders();

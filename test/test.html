@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- добавим стили mocha для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <link rel="stylesheet" href="range.css">
+    <!-- добавляем сам фреймворк mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>
+    // включаем режим тестирования в стиле BDD
+    mocha.setup('bdd');
+    </script>
+    <!-- добавим chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script>
+    // chai предоставляет большое количество функций. Объявим assert глобально
+    let assert = chai.assert;
+    let expect = chai.expect;
+    </script>
+</head>
+
+<body>
+    <div class="sliders"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="range.227ef839.js"></script>
+    
+
+    <!-- скрипт со спецификацией (describe, it...) -->
+    <script src="test.js"></script>
+
+    <!-- элемент с id="mocha" будет содержать результаты тестов -->
+    <div id="mocha"></div>
+
+    <!-- запускаем тесты! -->
+    <script>
+    mocha.run();
+    </script>
+</body>
+
+</html>

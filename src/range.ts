@@ -1,9 +1,9 @@
 (function ($) {
 	(<any>$.fn).rangeSliders = function (options: object) {
 		var settings = $.extend({
-			"step": 10,
+			"step": 1,
 			"vertical": false,
-			"multirange": true,
+			"multirange": false,
 			"bubbles": true,
 			"width": 26,
 			"min": 20,
@@ -186,7 +186,7 @@
 					},
 
 					//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-					MouseMove: function(eventArg) {
+					MouseMove: function abv(eventArg) {
 						var positionXY: number,
 							compareInputs: boolean,
 							countPosition: number,
@@ -211,6 +211,7 @@
 								inputLeft.style.zIndex = 1;
 							}
 						}
+						console.log(positionXY);
 					}
 				};
 			model.setLeftValue();
@@ -253,7 +254,7 @@
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 				countProgress: function() {
 					$('#single-range').on('input', function(e){
-						var min:any = (<HTMLInputElement>e.target).min,
+						var min: number = +(<HTMLInputElement>e.target).min, // (проверить данную строку на работоспособность) - было min: any = (<HTMLInputElement>e.target).min
 							max:any = (<HTMLInputElement>e.target).max,
 							val:any = (<HTMLInputElement>e.target).value;
 						$('.progress-bar').css({
