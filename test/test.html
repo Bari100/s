@@ -9,9 +9,16 @@
     <script>
     // включаем режим тестирования в стиле BDD
     mocha.setup('bdd');
+    // var chai = require("chai");
+    // var sinonChai = require("sinon-chai");
+
+    // chai.use(sinonChai);
     </script>
     <!-- добавим chai -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="../node_modules/sinon-chai/lib/sinon-chai.js"></script>
+    <!-- <script src="../node_modules/chai-spies/chai-spies.js"></script> -->
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
     <script>
     // chai предоставляет большое количество функций. Объявим assert глобально
     let assert = chai.assert;

@@ -194,58 +194,58 @@
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
 				MouseMove: function(eventArg) {
-					// var positionXY,
-					// 	compareInputs,
-					// 	countPosition,
-					// 	inputLeftMath,
-					// 	inputRightMath,
-					// 	x100;
-					// positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					// countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
-					// /* percentage position Y of cursor  */
-					// x100 = positionXY * countPosition;
-					// /* absolute distance from respective slider values */
-					// inputLeftMath = Math.abs(inputLeft.value - x100);
-					// inputRightMath = Math.abs(inputRight.value - x100);
-					// compareInputs = inputLeftMath < inputRightMath;
-					// // Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-					// if (!eventArg.buttons) {
-					// 	if (compareInputs) {
-					// 		inputLeft.style.zIndex = 2;
-					// 		inputRight.style.zIndex = 1;
-					// 	} else {
-					// 		inputRight.style.zIndex = 2;
-					// 		inputLeft.style.zIndex = 1;
-					// 	}
-					// }
-				}
-			};
-			function MouseMove(eventArg) {
-				var positionXY,
-				compareInputs,
-				countPosition,
-				inputLeftMath,
-				inputRightMath,
-				x100;
-				positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-				countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
-				/* percentage position Y of cursor  */
-				x100 = positionXY * countPosition;
-				/* absolute distance from respective slider values */
-				inputLeftMath = Math.abs(inputLeft.value - x100);
-				inputRightMath = Math.abs(inputRight.value - x100);
-				compareInputs = inputLeftMath < inputRightMath;
-				// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-				if (!eventArg.buttons) {
-					if (compareInputs) {
-						inputLeft.style.zIndex = 2;
-						inputRight.style.zIndex = 1;
-					} else {
-						inputRight.style.zIndex = 2;
-						inputLeft.style.zIndex = 1;
+					var positionXY,
+						compareInputs,
+						countPosition,
+						inputLeftMath,
+						inputRightMath,
+						x100;
+					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
+					/* percentage position Y of cursor  */
+					x100 = positionXY * countPosition;
+					/* absolute distance from respective slider values */
+					inputLeftMath = Math.abs(inputLeft.value - x100);
+					inputRightMath = Math.abs(inputRight.value - x100);
+					compareInputs = inputLeftMath < inputRightMath;
+					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
+					if (!eventArg.buttons) {
+						if (compareInputs) {
+							inputLeft.style.zIndex = 2;
+							inputRight.style.zIndex = 1;
+						} else {
+							inputRight.style.zIndex = 2;
+							inputLeft.style.zIndex = 1;
+						}
 					}
 				}
-			}
+			};
+			// function MouseMove(eventArg) {
+			// 	var positionXY,
+			// 	compareInputs,
+			// 	countPosition,
+			// 	inputLeftMath,
+			// 	inputRightMath,
+			// 	x100;
+			// 	positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+			// 	countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
+			// 	/* percentage position Y of cursor  */
+			// 	x100 = positionXY * countPosition;
+			// 	/* absolute distance from respective slider values */
+			// 	inputLeftMath = Math.abs(inputLeft.value - x100);
+			// 	inputRightMath = Math.abs(inputRight.value - x100);
+			// 	compareInputs = inputLeftMath < inputRightMath;
+			// 	Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
+			// 	if (!eventArg.buttons) {
+			// 		if (compareInputs) {
+			// 			inputLeft.style.zIndex = 2;
+			// 			inputRight.style.zIndex = 1;
+			// 		} else {
+			// 			inputRight.style.zIndex = 2;
+			// 			inputLeft.style.zIndex = 1;
+			// 		}
+			// 	}
+			// }
 		// offset = function(ev) {
 		// 	var positionXY = ev.offsetX;
 		// 	console.log(positionXY);
@@ -310,22 +310,35 @@
 			typeBubbleValue: function() {
 				$(".value-single-span").text(singleRange.value);
 			},
-			getSingleValue() {
+			countPosition: Number,
+			getSingleValue(min, max, testVal = 'empty') {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-				let val = singleRange.value;
-				let newValueFunc = (min, max, testVal = 'empty') => {
+				// let val = singleRange.value;
+				// newValueFunc = (min, max, testVal = 'empty') => {
+				// 	if (testVal == 'empty') {
+				// 		newValue = (val - min) * 100 / (max - min)
+				// 	} else {
+				// 		newValue = (testVal - min) * 100 / (max - min)
+				// 	}
+				// }
+				$('#single-range').on('input', function(e){
+					let newValue
+					// newValueFunc = () => {
+					let val = singleRange.value;
 					if (testVal == 'empty') {
 						newValue = (val - min) * 100 / (max - min)
-					} else {
-						newValue = (testVal - min) * 100 / (max - min)
-					}
-				}
-				newValueFunc(settings.min, settings.max)
-				let	newPosition = 5 - (newValue * 0.25);
-				$(".bubble-single").css("left", `calc(${newValue}% + (${newPosition}px))`);
-				//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-				$(".value-single-span").text(singleRange.value);
-				
+					} else {newValue = (testVal - min) * 100 / (max - min)}
+					// console.log(newValue)
+					// }
+					// newValueFunc(settings.min, settings.max, singleRange.value)
+					let	newPosition = 5 - (newValue * 0.25)
+					console.log(newValue)
+					countPosition = `calc(${newValue}% + (${newPosition}px))`
+					$(".bubble-single").css("left", countPosition);
+					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+					$(".value-single-span").text(singleRange.value);
+					console.log(countPosition)
+				}).trigger('input');
 			},
 
 			//ДИАПАЗОН-ШКАЛА(SINGLE)
@@ -351,36 +364,36 @@
 		view.scaleMulti();
 		view.countProgress(settings.min, settings.max);
 		view.typeBubbleValue();
-		view.getSingleValue();
+		view.getSingleValue(settings.min, settings.max);
 		view.scaleSingle(settings.min, settings.max);
 
 
 		//=======================================================================
 		var controller = {
 			//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-			inTouchLeft: function() {inputLeft.addEventListener("input", model.setLeftValue);},
-			inTouchRight: function() {inputRight.addEventListener("input", model.setRightValue);},
+			inTouchLeft: inputLeft.addEventListener("input", model.setLeftValue),
+			inTouchRight: inputRight.addEventListener("input", model.setRightValue),
 		
 			//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-			inMoveLeft: function() {inputLeft.onmousemove = function(e) {
-				model.MouseMove.call(inputLeft, e);};
+			inMoveLeft: inputLeft.onmousemove = function(e) {
+				model.MouseMove.call(inputLeft, e);
 			},
-			inMoveRight: function() {inputRight.onmousemove = function(e) {
-				model.MouseMove.call(inputRight, e);};
+			inMoveRight: inputRight.onmousemove = function(e) {
+				model.MouseMove.call(inputRight, e);
 			},
 
 			//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-			inGetLeft: function() {inputLeft.addEventListener('input', view.getLeftValue);},
-			inGetRight: function() {inputRight.addEventListener('input', view.getRightValue);},
+			inGetLeft: inputLeft.addEventListener('input', view.getLeftValue),
+			inGetRight: inputRight.addEventListener('input', view.getRightValue),
 			
 			/////////////////////////////////SINGLE
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-			showBubbleValue: function() {singleRange.addEventListener('input', view.getSingleValue)}
+			showBubbleValue: singleRange.addEventListener('input', view.getSingleValue)
 		};
 		controller.inTouchLeft();
 		controller.inTouchRight();
-		// controller.inMoveLeft();
-		// controller.inMoveRight();
+		controller.inMoveLeft();
+		controller.inMoveRight();
 		controller.inGetLeft();
 		controller.inGetRight();
 		controller.showBubbleValue();
