@@ -7,8 +7,8 @@
 			"multirange": true,
 			"bubbles": true,
 			"width": 26,
-			"min": 30,
-			"max": 380
+			"min": 10,
+			"max": 100
 		  }, options);
 		  
 		// var settings = {
@@ -201,7 +201,9 @@
 						inputRightMath,
 						x100;
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+					console.log(positionXY)
 					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
+					console.log(countPosition)
 					/* percentage position Y of cursor  */
 					x100 = positionXY * countPosition;
 					/* absolute distance from respective slider values */
@@ -371,24 +373,24 @@
 		//=======================================================================
 		var controller = {
 			//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-			inTouchLeft: inputLeft.addEventListener("input", model.setLeftValue),
-			inTouchRight: inputRight.addEventListener("input", model.setRightValue),
+			inTouchLeft: function(){inputLeft.addEventListener("input", model.setLeftValue)},
+			inTouchRight: function(){inputRight.addEventListener("input", model.setRightValue)},
 		
 			//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-			inMoveLeft: inputLeft.onmousemove = function(e) {
-				model.MouseMove.call(inputLeft, e);
+			inMoveLeft: function(){inputLeft.onmousemove = function(e) {
+				model.MouseMove.call(inputLeft, e)};
 			},
-			inMoveRight: inputRight.onmousemove = function(e) {
-				model.MouseMove.call(inputRight, e);
+			inMoveRight: function(){inputRight.onmousemove = function(e) {
+				model.MouseMove.call(inputRight, e)};
 			},
 
 			//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-			inGetLeft: inputLeft.addEventListener('input', view.getLeftValue),
-			inGetRight: inputRight.addEventListener('input', view.getRightValue),
+			inGetLeft: function(){inputLeft.addEventListener('input', view.getLeftValue)},
+			inGetRight: function(){inputRight.addEventListener('input', view.getRightValue)},
 			
 			/////////////////////////////////SINGLE
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-			showBubbleValue: singleRange.addEventListener('input', view.getSingleValue)
+			showBubbleValue: function(){singleRange.addEventListener('input', view.getSingleValue)}
 		};
 		controller.inTouchLeft();
 		controller.inTouchRight();

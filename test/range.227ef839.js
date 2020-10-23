@@ -17,8 +17,8 @@
 			"multirange": true,
 			"bubbles": true,
 			"width": 26,
-			"min": 1.6,
-			"max": 3759
+			"min": 10,
+			"max": 100
 		  };
 		  
 		// return this.each(function () {
@@ -164,50 +164,59 @@
 		//=======================================================================
 		var	model = {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				setLeftValue: function() {
-						// range = document.querySelector(".slider > .range")
-					var _this = inputLeft,
-						min = parseInt(_this.min),
-						max = parseInt(_this.max);
-
-					_this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
-
-					var percent = ((_this.value - min) / (max - min)) * 100;
-
-					thumbLeft.style.left = percent + "%";
-					range.style.left = percent + "%";
+				setLeftValue(testMin, testMax, testLeftVal = 'empty', testRightVal = 'empty') {
+					let	min = parseInt(settings.min),
+						max = parseInt(settings.max)
+					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+					let testCountVal = Math.min(testLeftVal, testRightVal - 1)
+					let percent
+					if(testLeftVal == 'empty') {
+						percent = ((inputLeft.value - min) / (max - min)) * 100
+					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+					thumbLeft.style.left = percent + "%"
+					range.style.left = percent + "%"
 				},
 
-				setRightValue: function() {
-						// range = document.querySelector(".slider > .range")
-					var _this = inputRight,
-						min = parseInt(_this.min),
-						max = parseInt(_this.max);
-
-					_this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
-
-					var percent = ((_this.value - min) / (max - min)) * 100;
-
-					thumbRight.style.right = (100 - percent) + "%";
-					range.style.right = (100 - percent) + "%";
+				setRightValue(testMin, testMax, testLeftVal = 'empty', testRightVal = 'empty') {
+					let	min = parseInt(settings.min),
+						max = parseInt(settings.max)
+					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
+					let testCountVal = Math.min(testLeftVal, testRightVal + 1)
+					let percent
+					if(testRightVal == 'empty'){
+						percent = ((inputRight.value - min) / (max - min)) * 100
+					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+					thumbRight.style.right = (100 - percent) + "%"
+					range.style.right = (100 - percent) + "%"
 				},
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				MouseMove: function(eventArg) {
+				MouseMove(eventArg, min, max, width, testValLeft = 'empty', testValRight = 'empty', testPosition = 'empty') {
 					var positionXY,
 						compareInputs,
 						countPosition,
 						inputLeftMath,
 						inputRightMath,
-						x100;
+						x100
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
+					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
+					// console.log($(sliders).width())
+					// console.log(positionXY)
+					testCountPosition = (min + max) / width
 					/* percentage position Y of cursor  */
-					x100 = positionXY * countPosition;
+					if(testPosition == 'empty') {
+						x100 = positionXY * countPosition
+					} else {x100 = testPosition * testCountPosition}
+					
 					/* absolute distance from respective slider values */
-					inputLeftMath = Math.abs(inputLeft.value - x100);
-					inputRightMath = Math.abs(inputRight.value - x100);
-					compareInputs = inputLeftMath < inputRightMath;
+					inputLeftMath = Math.abs(inputLeft.value - x100)
+					inputRightMath = Math.abs(inputRight.value - x100)
+					testInputLeftMath = Math.abs(testValLeft - x100)
+					testInputRightMath = Math.abs(testValRight - x100)
+					if(testValLeft == 'empty' && testValRight == 'empty') {
+						compareInputs = inputLeftMath < inputRightMath
+					} else {compareInputs = testInputLeftMath < testInputRightMath}
+					
 					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
 					if (!eventArg.buttons) {
 						if (compareInputs) {
@@ -220,39 +229,6 @@
 					}
 				}
 			};
-			// function MouseMove(eventArg) {
-			// 	var positionXY,
-			// 	compareInputs,
-			// 	countPosition,
-			// 	inputLeftMath,
-			// 	inputRightMath,
-			// 	x100;
-			// 	positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-			// 	countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
-			// 	/* percentage position Y of cursor  */
-			// 	x100 = positionXY * countPosition;
-			// 	/* absolute distance from respective slider values */
-			// 	inputLeftMath = Math.abs(inputLeft.value - x100);
-			// 	inputRightMath = Math.abs(inputRight.value - x100);
-			// 	compareInputs = inputLeftMath < inputRightMath;
-			// 	// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-			// 	if (!eventArg.buttons) {
-			// 		if (compareInputs) {
-			// 			inputLeft.style.zIndex = 2;
-			// 			inputRight.style.zIndex = 1;
-			// 		} else {
-			// 			inputRight.style.zIndex = 2;
-			// 			inputLeft.style.zIndex = 1;
-			// 		}
-			// 	}
-			// }
-		// offset = function(ev) {
-		// 	var positionXY = ev.offsetX;
-		// 	console.log(positionXY);
-		// };
-		// inputLeft.onmousemove = function(e) {
-		// 	offset.call(inputLeft, e);
-		// };
 		
 		
 		model.setLeftValue();
