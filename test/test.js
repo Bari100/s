@@ -1,42 +1,64 @@
-// //MODEL
+// const impObj = require('../src/range2.ts')
+import model from '../src/range2.ts'
+console.log(model)
+
+//MODEL
 
 describe("Тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
-    it("при min = 30, max = 380, sliders.width = 372.828, valueLeft = 117, valueRight = 380 и mousePosition = 147 inputLeft.zIndex = 2", function () {
+    it("при min = 10, max = 100, sliders.width = 372.828(26vw), valueLeft = 37 и valueRight = 73 range.style.left = 30%; range.style.right = 30%", function () {
       model.setLeftValue(10,100, 37, 73)
       model.setRightValue(10,100, 37, 73)
       assert.equal(range.style.left, 30 + '%')
       assert.equal(range.style.right, 30 + '%')
     })
+    it("при min = 0, max = 1500, sliders.width = 372.828(26vw), valueLeft = 200 и valueRight = 620 range.style.left = 13.3333%; range.style.right = 58.6667%", function () {
+      model.setLeftValue(0,1500, 200, 620)
+      model.setRightValue(0,1500, 200, 620)
+      assert.equal(range.style.left, 13.3333 + '%')
+      assert.equal(range.style.right, 58.6667 + '%')
+    })
+    it("при min = 0.5, max = 10.5, sliders.width = 372.828(26vw), valueLeft = 2 и valueRight = 4 range.style.left = 15%; range.style.right = 65%", function () {
+      model.setLeftValue(0.5, 10.5, 2, 4)
+      model.setRightValue(0.5, 10.5, 2, 4)
+      assert.equal(range.style.left, 15 + '%')
+      assert.equal(range.style.right, 65 + '%')
+    })
+    it("при min = 1, max = 20, sliders.width = 372.828(26vw), valueLeft = 7 и valueRight = 15 range.style.left = 31.5789%; range.style.right = 26.3158%", function () {
+      model.setLeftValue(1,20, 7, 15)
+      model.setRightValue(1,20, 7, 15)
+      assert.equal(range.style.left, 31.5789 + '%')
+      assert.equal(range.style.right, 26.3158 + '%')
+    })
 })
-// describe("Тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
-//   it("при min = 30, max = 380, sliders.width = 372.828, valueLeft = 117, valueRight = 380 и mousePosition = 147 inputLeft.zIndex = 2", function () {
-//     model.MouseMove(1, 30, 380, 372.828, 117, 380, 147)
-//     assert.equal(inputLeft.style.zIndex, 2)
-//     assert.equal(inputRight.style.zIndex, 1)
-//   });
-//   it("при min = 0, max = 55, sliders.width = 206.953, valueLeft = 5, valueRight = 25 и mousePosition = 66 inputLeft.zIndex = 1", function () {
-//     model.MouseMove(1, 0, 55, 206.953, 5, 25, 66)
-//     assert.equal(inputLeft.style.zIndex, 1)
-//     assert.equal(inputRight.style.zIndex, 2)
-//   });
-//   it("при min = 10, max = 100, sliders.width = 372.828, valueLeft = 20, valueRight = 50 и mousePosition = 120 inputRight.zIndex = 2", function () {
-//     model.MouseMove(1, 10, 100, 372.828, 20, 50, 120)
-//     assert.equal(inputRight.style.zIndex, 2)
-//     assert.equal(inputLeft.style.zIndex, 1)
-//   });
-//   it("при min = 0, max = 200, sliders.width = 372.828, valueLeft = 100, valueRight = 200 и mousePosition = 135 inputRight.zIndex = 1", function () {
-//     model.MouseMove(1, 0, 200, 372.828, 100, 200, 135)
-//     assert.equal(inputRight.style.zIndex, 1)
-//     assert.equal(inputLeft.style.zIndex, 2)
-//   });
-//   it("при min = 0, max = 100, sliders.width = 372.828, valueLeft = 15, valueRight = 50 и mousePosition = 235 inputLeft.zIndex = 1", function () {
-//     model.MouseMove(1, 0, 100, 372.828, 15, 50, 235)
-//     assert.equal(inputLeft.style.zIndex, 1)
-//     assert.equal(inputRight.style.zIndex, 2)
-//   });
-// });
+describe("Тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
+  it("при min = 30, max = 380, sliders.width = 372.828, valueLeft = 117, valueRight = 380 и mousePosition = 147 inputLeft.zIndex = 2", function () {
+    model.MouseMove(1, 30, 380, 372.828, 117, 380, 147)
+    assert.equal(inputLeft.style.zIndex, 2)
+    assert.equal(inputRight.style.zIndex, 1)
+  });
+  it("при min = 0, max = 55, sliders.width = 206.953, valueLeft = 5, valueRight = 25 и mousePosition = 66 inputLeft.zIndex = 1", function () {
+    model.MouseMove(1, 0, 55, 206.953, 5, 25, 66)
+    assert.equal(inputLeft.style.zIndex, 1)
+    assert.equal(inputRight.style.zIndex, 2)
+  });
+  it("при min = 10, max = 100, sliders.width = 372.828, valueLeft = 20, valueRight = 50 и mousePosition = 120 inputRight.zIndex = 2", function () {
+    model.MouseMove(1, 10, 100, 372.828, 20, 50, 120)
+    assert.equal(inputRight.style.zIndex, 2)
+    assert.equal(inputLeft.style.zIndex, 1)
+  });
+  it("при min = 0, max = 200, sliders.width = 372.828, valueLeft = 100, valueRight = 200 и mousePosition = 135 inputRight.zIndex = 1", function () {
+    model.MouseMove(1, 0, 200, 372.828, 100, 200, 135)
+    assert.equal(inputRight.style.zIndex, 1)
+    assert.equal(inputLeft.style.zIndex, 2)
+  });
+  it("при min = 0, max = 100, sliders.width = 372.828, valueLeft = 15, valueRight = 50 и mousePosition = 235 inputLeft.zIndex = 1", function () {
+    model.MouseMove(1, 0, 100, 372.828, 15, 50, 235)
+    assert.equal(inputLeft.style.zIndex, 1)
+    assert.equal(inputRight.style.zIndex, 2)
+  });
+});
 
-// //VIEW
+//VIEW
 
 // describe("тест шкалы single-range", function() {
 //   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {

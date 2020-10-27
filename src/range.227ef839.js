@@ -22,7 +22,7 @@
 		//   };
 		  
 		return this.each(function () {
-		var sliders = document.querySelector(".sliders"),
+			var sliders = document.querySelector(".sliders"),
 			radioMulti = document.querySelector(".choose-multi");
 		
 		var sliderSingle = $('<div>', {'class': 'slider-single'});
@@ -164,52 +164,59 @@
 		//=======================================================================
 		var	model = {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				setLeftValue: function() {
-						// range = document.querySelector(".slider > .range")
-					var _this = inputLeft,
-						min = parseInt(_this.min),
-						max = parseInt(_this.max);
-
-					_this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
-
-					var percent = ((_this.value - min) / (max - min)) * 100;
-
-					thumbLeft.style.left = percent + "%";
-					range.style.left = percent + "%";
+				setLeftValue(testMin, testMax, testLeftVal = 'empty', testRightVal = 'empty') {
+					let	min = parseInt(settings.min),
+						max = parseInt(settings.max)
+					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+					let testCountVal = Math.min(testLeftVal, testRightVal - 1)
+					let percent
+					if(testLeftVal == 'empty') {
+						percent = ((inputLeft.value - min) / (max - min)) * 100
+					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+					thumbLeft.style.left = percent + "%"
+					range.style.left = percent + "%"
 				},
 
-				setRightValue: function() {
-						// range = document.querySelector(".slider > .range")
-					var _this = inputRight,
-						min = parseInt(_this.min),
-						max = parseInt(_this.max);
-
-					_this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
-
-					var percent = ((_this.value - min) / (max - min)) * 100;
-
-					thumbRight.style.right = (100 - percent) + "%";
-					range.style.right = (100 - percent) + "%";
+				setRightValue(testMin, testMax, testLeftVal = 'empty', testRightVal = 'empty') {
+					let	min = parseInt(settings.min),
+						max = parseInt(settings.max)
+					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
+					let testCountVal = Math.max(testRightVal, testLeftVal + 1)
+					let percent
+					if(testRightVal == 'empty'){
+						percent = ((inputRight.value - min) / (max - min)) * 100
+					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+					thumbRight.style.right = (100 - percent) + "%"
+					range.style.right = (100 - percent) + "%"
 				},
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				MouseMove: function(eventArg) {
+				MouseMove(eventArg, min, max, width, testValLeft = 'empty', testValRight = 'empty', testPosition = 'empty') {
 					var positionXY,
 						compareInputs,
 						countPosition,
 						inputLeftMath,
 						inputRightMath,
-						x100;
+						x100
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					console.log(positionXY)
-					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
-					console.log(countPosition)
+					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
+					// console.log($(sliders).width())
+					// console.log(positionXY)
+					testCountPosition = (min + max) / width
 					/* percentage position Y of cursor  */
-					x100 = positionXY * countPosition;
+					if(testPosition == 'empty') {
+						x100 = positionXY * countPosition
+					} else {x100 = testPosition * testCountPosition}
+					
 					/* absolute distance from respective slider values */
-					inputLeftMath = Math.abs(inputLeft.value - x100);
-					inputRightMath = Math.abs(inputRight.value - x100);
-					compareInputs = inputLeftMath < inputRightMath;
+					inputLeftMath = Math.abs(inputLeft.value - x100)
+					inputRightMath = Math.abs(inputRight.value - x100)
+					testInputLeftMath = Math.abs(testValLeft - x100)
+					testInputRightMath = Math.abs(testValRight - x100)
+					if(testValLeft == 'empty' && testValRight == 'empty') {
+						compareInputs = inputLeftMath < inputRightMath
+					} else {compareInputs = testInputLeftMath < testInputRightMath}
+					
 					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
 					if (!eventArg.buttons) {
 						if (compareInputs) {
@@ -222,39 +229,6 @@
 					}
 				}
 			};
-			// function MouseMove(eventArg) {
-			// 	var positionXY,
-			// 	compareInputs,
-			// 	countPosition,
-			// 	inputLeftMath,
-			// 	inputRightMath,
-			// 	x100;
-			// 	positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-			// 	countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
-			// 	/* percentage position Y of cursor  */
-			// 	x100 = positionXY * countPosition;
-			// 	/* absolute distance from respective slider values */
-			// 	inputLeftMath = Math.abs(inputLeft.value - x100);
-			// 	inputRightMath = Math.abs(inputRight.value - x100);
-			// 	compareInputs = inputLeftMath < inputRightMath;
-			// 	Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-			// 	if (!eventArg.buttons) {
-			// 		if (compareInputs) {
-			// 			inputLeft.style.zIndex = 2;
-			// 			inputRight.style.zIndex = 1;
-			// 		} else {
-			// 			inputRight.style.zIndex = 2;
-			// 			inputLeft.style.zIndex = 1;
-			// 		}
-			// 	}
-			// }
-		// offset = function(ev) {
-		// 	var positionXY = ev.offsetX;
-		// 	console.log(positionXY);
-		// };
-		// inputLeft.onmousemove = function(e) {
-		// 	offset.call(inputLeft, e);
-		// };
 		
 		
 		model.setLeftValue();
@@ -265,43 +239,67 @@
 
 			/////////////////////////////////MULTI
 			//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-			getLeftValue: function() {
+			countMultiPosition: Number,
+			getLeftValue: function(min, max, testVal = 'empty') {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-				var newValue = Number( (inputLeft.value - inputLeft.min) * 100 / (inputLeft.max - inputLeft.min) ),
-					newPosition = -10 - (newValue * 0.05);
-				$(".bubble-multi-left").css("left", `calc(${newValue}% + (${newPosition}px))`);
-				$(".bubble-multi-left").css("bottom", "50px");
-				//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-				$(".value-multi-left-span").text(inputLeft.value);
+				$('#single-range').on('input', function(){
+					let newValue
+					let val = inputLeft.value
+					if (testVal == 'empty') {
+						newValue = (val - min) * 100 / (max - min)
+					} else {newValue = (testVal - min) * 100 / (max - min)}
+					let newPosition = -10 - (newValue * 0.05);
+					countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
+					$(".bubble-multi-left").css("left", countMultiPosition)
+					$(".bubble-multi-left").css("bottom", "50px")
+					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+					$(".value-multi-left-span").text(inputLeft.value)
+				}).trigger('input')
 			},
-			getRightValue: function() {
+			getRightValue: function(min, max, testVal = 'empty') {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-				var newValue = Number( (inputRight.value - inputRight.min) * 100 / (inputRight.max - inputRight.min) ),
-					newPosition = -10 - (newValue * 0.05);
-				$(".bubble-multi-right").css("left", `calc(${newValue}% + (${newPosition}px))`);
-				$(".bubble-multi-right").css("bottom", "50px");
-				//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-				$(".value-multi-right-span").text(inputRight.value);
+				$('#single-range').on('input', function(){
+					let newValue
+					let val = inputRight.value
+					if (testVal == 'empty') {
+						newValue = (val - min) * 100 / (max - min)
+					} else {newValue = (testVal - min) * 100 / (max - min)}
+					let newPosition = -10 - (newValue * 0.05)
+					countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
+					$(".bubble-multi-right").css("left", countMultiPosition)
+					$(".bubble-multi-right").css("bottom", "50px")
+					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+					$(".value-multi-right-span").text(inputRight.value)
+				}).trigger('input')
 			},
 
 			//ДИАПАЗОН-ШКАЛА(MULTI)
-			scaleMulti: function() {
-				$(".multi-first-ins").text(inputLeft.min);
-				$(".multi-second-ins").text(Math.floor((inputLeft.max - inputLeft.min) / 4 + (+inputLeft.min)));
-				$(".multi-third-ins").text(Math.round((inputLeft.max - inputLeft.min) / 2 + (+inputLeft.min)));
-				$(".multi-fourth-ins").text(Math.round(inputLeft.max - ((inputLeft.max - inputLeft.min) / 4)));
-				$(".multi-fifth-ins").text(inputLeft.max);
+			scaleMultiObj: {},
+			scaleMulti(min, max) {
+				scaleMultiObj = {
+					first: min,
+					second: Math.floor((max - min) / 4 + (+min)),
+					third: Math.round((max - min) / 2 + (+min)),
+					fourth: Math.round(max - ((max - min) / 4)),
+					fifth: max
+				}
+
+				$(".multi-first-ins").text(scaleMultiObj.first);
+				$(".multi-second-ins").text(scaleMultiObj.second);
+				$(".multi-third-ins").text(scaleMultiObj.third);
+				$(".multi-fourth-ins").text(scaleMultiObj.fourth);
+				$(".multi-fifth-ins").text(scaleMultiObj.fifth);
 			},
 
 			/////////////////////////////////SINGLE
 			//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 			progressBarWidth: Number,
-			countProgress(min, max, valu = 'empty') {
+			countProgress(min, max, testVal = 'empty') {
 				$('#single-range').on('input', function(e){
-					val = (e.target).value;
-					if (valu == 'empty') {
+					let val = (e.target).value;
+					if (testVal == 'empty') {
 						progressBarWidth = (val - min) * 100 / (max - min)
-					} else {progressBarWidth = (valu - min) * 100 / (max - min)}
+					} else {progressBarWidth = (testVal - min) * 100 / (max - min)}
 					$('.progress-bar').css({
 						'width': progressBarWidth + '%'
 					});
@@ -309,38 +307,21 @@
 			},
 
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-			typeBubbleValue: function() {
-				$(".value-single-span").text(singleRange.value);
-			},
-			countPosition: Number,
+			countSinglePosition: Number,
 			getSingleValue(min, max, testVal = 'empty') {
 				//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-				// let val = singleRange.value;
-				// newValueFunc = (min, max, testVal = 'empty') => {
-				// 	if (testVal == 'empty') {
-				// 		newValue = (val - min) * 100 / (max - min)
-				// 	} else {
-				// 		newValue = (testVal - min) * 100 / (max - min)
-				// 	}
-				// }
-				$('#single-range').on('input', function(e){
+				$('#single-range').on('input', function(){
 					let newValue
-					// newValueFunc = () => {
 					let val = singleRange.value;
 					if (testVal == 'empty') {
 						newValue = (val - min) * 100 / (max - min)
 					} else {newValue = (testVal - min) * 100 / (max - min)}
-					// console.log(newValue)
-					// }
-					// newValueFunc(settings.min, settings.max, singleRange.value)
 					let	newPosition = 5 - (newValue * 0.25)
-					console.log(newValue)
-					countPosition = `calc(${newValue}% + (${newPosition}px))`
-					$(".bubble-single").css("left", countPosition);
+					countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+					$(".bubble-single").css("left", countSinglePosition);
 					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 					$(".value-single-span").text(singleRange.value);
-					console.log(countPosition)
-				}).trigger('input');
+				}).trigger('input')
 			},
 
 			//ДИАПАЗОН-ШКАЛА(SINGLE)
@@ -360,15 +341,14 @@
 				$(".fourth-ins").text(scaleSingleObj.fourth);
 				$(".fifth-ins").text(scaleSingleObj.fifth);
 			}
-		};
-		view.getLeftValue();
-		view.getRightValue();
-		view.scaleMulti();
+		}
+		view.getLeftValue(settings.min, settings.max);
+		view.getRightValue(settings.min, settings.max);
+		view.scaleMulti(settings.min, settings.max);
 		view.countProgress(settings.min, settings.max);
-		view.typeBubbleValue();
+		// view.typeBubbleValue();
 		view.getSingleValue(settings.min, settings.max);
 		view.scaleSingle(settings.min, settings.max);
-
 
 		//=======================================================================
 		var controller = {
@@ -377,12 +357,14 @@
 			inTouchRight: function(){inputRight.addEventListener("input", model.setRightValue)},
 		
 			//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-			inMoveLeft: function(){inputLeft.onmousemove = function(e) {
-				model.MouseMove.call(inputLeft, e)};
-			},
-			inMoveRight: function(){inputRight.onmousemove = function(e) {
-				model.MouseMove.call(inputRight, e)};
-			},
+			// inMoveLeft: function(){inputLeft.onmousemove = function(e) {
+			// 	model.MouseMove.call(inputLeft, e);
+			// }},
+			inMoveLeft: function(){inputLeft.addEventListener('mousemove', model.MouseMove)},
+			// inMoveRight: function(){inputRight.onmousemove = function(e) {
+			// 	model.MouseMove.call(inputRight, e);
+			// }},
+			inMoveRight: function(){inputRight.addEventListener('mousemove', model.MouseMove)},
 
 			//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 			inGetLeft: function(){inputLeft.addEventListener('input', view.getLeftValue)},
@@ -390,7 +372,7 @@
 			
 			/////////////////////////////////SINGLE
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-			showBubbleValue: function(){singleRange.addEventListener('input', view.getSingleValue)}
+			// showBubbleValue: singleRange.addEventListener('input', view.getSingleValue)
 		};
 		controller.inTouchLeft();
 		controller.inTouchRight();
@@ -398,7 +380,6 @@
 		controller.inMoveRight();
 		controller.inGetLeft();
 		controller.inGetRight();
-		controller.showBubbleValue();
 		});
 	};
 })(jQuery);	

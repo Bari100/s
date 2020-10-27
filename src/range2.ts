@@ -1,24 +1,26 @@
-(function ($) {
-	(<any>$.fn).rangeSliders = function (options: object) {
-		var settings = $.extend({
+// (function ($) {
+// 	(<any>$.fn).rangeSliders = function (options: object) {
+		// var settings = $.extend({
+		// 	"step": 1,
+		// 	"vertical": false,
+		// 	"multirange": false,
+		// 	"bubbles": true,
+		// 	"width": 26,
+		// 	"min": 20,
+		// 	"max": 280
+		//   }, options);
+		// return this.each(function () {
+            var settings = { ///DELETE THIS
 			"step": 1,
 			"vertical": false,
-			"multirange": false,
+			"multirange": true,
 			"bubbles": true,
 			"width": 26,
-			"min": 20,
-			"max": 280
-		  }, options);
-		return this.each(function () {
-			// var inputLeft:any = <HTMLInputElement>document.getElementById("input-left"),
-			// 	inputRight:any = <HTMLInputElement>document.getElementById("input-right"),
-			// 	thumbLeft = <HTMLInputElement>document.querySelector(".slider > .thumb.left"),
-			// 	thumbRight = <HTMLInputElement>document.querySelector(".slider > .thumb.right"),
-			// var	range = <HTMLInputElement>document.querySelector(".slider > .range"),
+			"min": 10,
+			"max": 100
+		  };///DELETE THIS
 			var sliders:any = <HTMLElement>document.querySelector(".sliders"),
 				radioMulti = document.querySelector(".choose-multi");
-				// singleRange:any = document.getElementById("single-range");
-				// sliderSingle = document.querySelector(".slider-single");
 			
 			var sliderSingle = $('<div>', {'class': 'slider-single'});
 			$(sliders).append(sliderSingle);
@@ -157,67 +159,88 @@
 
 
 			//=======================================================================
-			var	model = {
+			let	model = {
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-					setLeftValue: function() {
-						var _this = inputLeft,
-							min = parseInt(_this.min),
-                            max = parseInt(_this.max);
+				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
+					let	min = settings.min,
+						max = settings.max
+					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+					let testCountVal = Math.min(testLeftVal, testRightVal - 1)
+					let percent
+					if(testLeftVal == -666.666) {
+						percent = ((inputLeft.value - min) / (max - min)) * 100
+					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+					thumbLeft.style.left = percent + "%"
+					range.style.left = percent + "%"
+				},
 
-						_this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
-
-						var percent = ((_this.value - min) / (max - min)) * 100;
-
-						thumbLeft.style.left = percent + "%";
-						range.style.left = percent + "%";
-					},
-
-					setRightValue: function() {
-						var _this = inputRight,
-							min = parseInt(_this.min),
-							max = parseInt(_this.max);
-
-						_this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
-
-						var percent = ((_this.value - min) / (max - min)) * 100;
-
-						thumbRight.style.right = (100 - percent) + "%";
-						range.style.right = (100 - percent) + "%";
-					},
+				setRightValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
+					let	min = settings.min,
+						max = settings.max
+					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
+					let testCountVal = Math.max(testRightVal, testLeftVal + 1)
+					let percent
+					if(testRightVal == -666.666){
+						percent = ((inputRight.value - min) / (max - min)) * 100
+					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+					thumbRight.style.right = (100 - percent) + "%"
+					range.style.right = (100 - percent) + "%"
+				},
 
 					//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-					MouseMove: function abv(eventArg) {
+					MouseMove(eventArg, min, max, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {
 						var positionXY: number,
 							compareInputs: boolean,
 							countPosition: number,
 							inputLeftMath: number,
 							inputRightMath: number,
 							x100: number;
-						positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-						countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width();
-						/* percentage position Y of cursor  */
-						x100 = positionXY * countPosition;
-						/* absolute distance from respective slider values */
-						inputLeftMath = Math.abs(inputLeft.value - x100);
-						inputRightMath = Math.abs(inputRight.value - x100);
-						compareInputs = inputLeftMath < inputRightMath;
-						// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-						if (!eventArg.buttons) {
-							if (compareInputs) {
-								inputLeft.style.zIndex = 2;
-								inputRight.style.zIndex = 1;
-							} else {
-								inputRight.style.zIndex = 2;
-								inputLeft.style.zIndex = 1;
-							}
-						}
-						console.log(positionXY);
-					}
+                        positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+                        countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
+                        let testCountPosition = (min + max) / width
+                        /* percentage position Y of cursor  */
+                        if(testPosition == -666.666) {
+                            x100 = positionXY * countPosition
+                        } else {x100 = testPosition * testCountPosition}
+                        
+                        /* absolute distance from respective slider values */
+                        inputLeftMath = Math.abs(inputLeft.value - x100)
+                        inputRightMath = Math.abs(inputRight.value - x100)
+                        let testInputLeftMath = Math.abs(testValLeft - x100)
+                        let testInputRightMath = Math.abs(testValRight - x100)
+                        if(testValLeft == -666.666 && testValRight == -666.666) {
+                            compareInputs = inputLeftMath < inputRightMath
+                        } else {compareInputs = testInputLeftMath < testInputRightMath}
+                        
+                        // Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
+                        if (!eventArg.buttons) {
+                            if (compareInputs) {
+                                inputLeft.style.zIndex = 2;
+                                inputRight.style.zIndex = 1;
+                            } else {
+                                inputRight.style.zIndex = 2;
+                                inputLeft.style.zIndex = 1;
+                            }
+                        }
+                    }
 				};
+			// module.exports = { fff: function(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
+			// 		let	min = settings.min,
+			// 			max = settings.max
+			// 		inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+			// 		let testCountVal = Math.min(testLeftVal, testRightVal - 1)
+			// 		let percent
+			// 		if(testLeftVal == -666.666) {
+			// 			percent = ((inputLeft.value - min) / (max - min)) * 100
+			// 		} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+			// 		thumbLeft.style.left = percent + "%"
+			// 		range.style.left = percent + "%"
+			// 	}
+			// }
 			model.setLeftValue();
 			model.setRightValue();
-			module.exports = {model}
-
+			// module.exports = {model}
+			export default model
 			//=======================================================================
 			var view = {
 
@@ -323,8 +346,8 @@
 			controller.inGetLeft();
 			controller.inGetRight();
 			controller.showBubbleValue();
-		});
-	};
-})(jQuery);	
+		// });
+// 	};
+// })(jQuery);	
 
-(<any>$("body")).rangeSliders();
+// (<any>$("body")).rangeSliders();

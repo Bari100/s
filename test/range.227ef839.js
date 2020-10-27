@@ -181,7 +181,7 @@
 					let	min = parseInt(settings.min),
 						max = parseInt(settings.max)
 					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
-					let testCountVal = Math.min(testLeftVal, testRightVal + 1)
+					let testCountVal = Math.max(testRightVal, testLeftVal + 1)
 					let percent
 					if(testRightVal == 'empty'){
 						percent = ((inputRight.value - min) / (max - min)) * 100
