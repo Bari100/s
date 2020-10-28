@@ -1,24 +1,24 @@
-// (function ($) {
-// 	(<any>$.fn).rangeSliders = function (options: object) {
-		// var settings = $.extend({
-		// 	"step": 1,
-		// 	"vertical": false,
-		// 	"multirange": false,
-		// 	"bubbles": true,
-		// 	"width": 26,
-		// 	"min": 20,
-		// 	"max": 280
-		//   }, options);
-		// return this.each(function () {
-            var settings = { ///DELETE THIS
+(function ($) {
+	(<any>$.fn).rangeSliders = function (options: object) {
+		var settings = $.extend({
 			"step": 1,
 			"vertical": false,
-			"multirange": true,
+			"multirange": false,
 			"bubbles": true,
 			"width": 26,
-			"min": 10,
-			"max": 100
-		  };///DELETE THIS
+			"min": 20,
+			"max": 280
+		  }, options);
+		return this.each(function () {
+        //     let settings = { ///DELETE THIS
+		// 	"step": 1,
+		// 	"vertical": false,
+		// 	"multirange": true,
+		// 	"bubbles": true,
+		// 	"width": 26,
+		// 	"min": 10,
+		// 	"max": 100
+		//   };///DELETE THIS
 			var sliders:any = <HTMLElement>document.querySelector(".sliders"),
 				radioMulti = document.querySelector(".choose-multi");
 			
@@ -159,7 +159,7 @@
 
 
 			//=======================================================================
-			let	model = {
+			class Model {
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
 					let	min = settings.min,
@@ -172,7 +172,7 @@
 					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
 					thumbLeft.style.left = percent + "%"
 					range.style.left = percent + "%"
-				},
+				}
 
 				setRightValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
 					let	min = settings.min,
@@ -185,10 +185,10 @@
 					} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
 					thumbRight.style.right = (100 - percent) + "%"
 					range.style.right = (100 - percent) + "%"
-				},
+				}
 
 					//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-					MouseMove(eventArg, min, max, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {
+					MouseMove(eventArg, min:number, max:number, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {
 						var positionXY: number,
 							compareInputs: boolean,
 							countPosition: number,
@@ -224,98 +224,123 @@
                         }
                     }
 				};
-			// module.exports = { fff: function(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
-			// 		let	min = settings.min,
-			// 			max = settings.max
-			// 		inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
-			// 		let testCountVal = Math.min(testLeftVal, testRightVal - 1)
-			// 		let percent
-			// 		if(testLeftVal == -666.666) {
-			// 			percent = ((inputLeft.value - min) / (max - min)) * 100
-			// 		} else {percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
-			// 		thumbLeft.style.left = percent + "%"
-			// 		range.style.left = percent + "%"
-			// 	}
-			// }
+			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
-			// module.exports = {model}
-			export default model
+			module.exports = Model
 			//=======================================================================
-			var view = {
-
+			class View {
 				/////////////////////////////////MULTI
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				getLeftValue: function() {
+				getLeftValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					var newValue = Number( (inputLeft.value - inputLeft.min) * 100 / (inputLeft.max - inputLeft.min) ),
-						newPosition = -10 - (newValue * 0.05);
-					$(".bubble-multi-left").css("left", `calc(${newValue}% + (${newPosition}px))`);
-					$(".bubble-multi-left").css("bottom", "50px");
-					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-					$(".value-multi-left-span").text(inputLeft.value);
-				},
-				getRightValue: function() {
+					$('#single-range').on('input', function(){
+						let newValue
+						let val = inputLeft.value
+						if (testVal == -666.666) {
+							newValue = (val - min) * 100 / (max - min)
+						} else {newValue = (testVal - min) * 100 / (max - min)}
+						let newPosition = -10 - (newValue * 0.05);
+						let countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
+						$(".bubble-multi-left").css("left", countMultiPosition)
+						$(".bubble-multi-left").css("bottom", "50px")
+						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+						$(".value-multi-left-span").text(inputLeft.value)
+					}).trigger('input')
+				}
+				getRightValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					var newValue = Number( (inputRight.value - inputRight.min) * 100 / (inputRight.max - inputRight.min) ),
-						newPosition = -10 - (newValue * 0.05);
-					$(".bubble-multi-right").css("left", `calc(${newValue}% + (${newPosition}px))`);
-					$(".bubble-multi-right").css("bottom", "50px");
-					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-					$(".value-multi-right-span").text(inputRight.value);
-				},
+					$('#single-range').on('input', function(){
+						let newValue
+						let val = inputRight.value
+						if (testVal == -666.666) {
+							newValue = (val - min) * 100 / (max - min)
+						} else {newValue = (testVal - min) * 100 / (max - min)}
+						let newPosition = -10 - (newValue * 0.05)
+						let countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
+						$(".bubble-multi-right").css("left", countMultiPosition)
+						$(".bubble-multi-right").css("bottom", "50px")
+						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+						$(".value-multi-right-span").text(inputRight.value)
+					}).trigger('input')
+				}
 
 				//ДИАПАЗОН-ШКАЛА(MULTI)
-				scaleMulti: function() {
-					$(".multi-first-ins").text(inputLeft.min);
-					$(".multi-second-ins").text(Math.floor((inputLeft.max - inputLeft.min) / 4 + (+inputLeft.min)));
-					$(".multi-third-ins").text(Math.round((inputLeft.max - inputLeft.min) / 2 + (+inputLeft.min)));
-					$(".multi-fourth-ins").text(Math.round(inputLeft.max - ((inputLeft.max - inputLeft.min) / 4)));
-					$(".multi-fifth-ins").text(inputLeft.max);
-				},
+				scaleMulti(min:number, max:number) {
+					let scaleMultiObj = {
+						first: min,
+						second: Math.floor((max - min) / 4 + (+min)),
+						third: Math.round((max - min) / 2 + (+min)),
+						fourth: Math.round(max - ((max - min) / 4)),
+						fifth: max
+					}
+
+					$(".multi-first-ins").text(scaleMultiObj.first);
+					$(".multi-second-ins").text(scaleMultiObj.second);
+					$(".multi-third-ins").text(scaleMultiObj.third);
+					$(".multi-fourth-ins").text(scaleMultiObj.fourth);
+					$(".multi-fifth-ins").text(scaleMultiObj.fifth);
+				}
 
 				/////////////////////////////////SINGLE
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
-				countProgress: function() {
+				countProgress(min:number, max:number, testVal:number = -666.666) {
 					$('#single-range').on('input', function(e){
-						var min: number = +(<HTMLInputElement>e.target).min, // (проверить данную строку на работоспособность) - было min: any = (<HTMLInputElement>e.target).min
-							max:any = (<HTMLInputElement>e.target).max,
-							val:any = (<HTMLInputElement>e.target).value;
+						let val:number = +((<HTMLInputElement>e.target).value);
+						let progressBarWidth:number
+						if (testVal == -666.666) {
+							progressBarWidth = (val - min) * 100 / (max - min)
+						} else {progressBarWidth = (testVal - min) * 100 / (max - min)}
 						$('.progress-bar').css({
-							'width': (val - min) * 100 / (max - min) + '%'
+							'width': progressBarWidth + '%'
 						});
 					}).trigger('input');
-				},
+				}
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-				typeBubbleValue: function() {
-					$(".value-single-span").text(singleRange.value);
-				},
-				getSingleValue: function() {
+				getSingleValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					var newValue = Number( (singleRange.value - singleRange.min) * 100 / (singleRange.max - singleRange.min) ),
-						newPosition = 5 - (newValue * 0.25);
-					$(".bubble-single").css("left", `calc(${newValue}% + (${newPosition}px))`);
-					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-					$(".value-single-span").text(singleRange.value);
-				},
+					$('#single-range').on('input', function(){
+						let newValue:number
+						let val = singleRange.value;
+						if (testVal == -666.666) {
+							newValue = (val - min) * 100 / (max - min)
+						} else {newValue = (testVal - min) * 100 / (max - min)}
+						let	newPosition = 5 - (newValue * 0.25)
+						let countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+						$(".bubble-single").css("left", countSinglePosition);
+						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+						$(".value-single-span").text(singleRange.value);
+					}).trigger('input')
+				}
 
 				//ДИАПАЗОН-ШКАЛА(SINGLE)
-				scaleSingle: function() {
-					$(".first-ins").text(singleRange.min);
-					$(".second-ins").text(Math.floor((singleRange.max - singleRange.min) / 4 + (+singleRange.min)));
-					$(".third-ins").text(Math.round((singleRange.max - singleRange.min) / 2 + (+singleRange.min)));
-					$(".fourth-ins").text(Math.round(singleRange.max - ((singleRange.max - singleRange.min) / 4)));
-					$(".fifth-ins").text(singleRange.max);
+				scaleSingle(min:number, max:number) {
+					let scaleSingleObj = {
+						first: min,
+						second: Math.floor((max - min) / 4 + (+min)),
+						third: Math.round((max - min) / 2 + (+min)),
+						fourth: Math.round(max - ((max - min) / 4)),
+						fifth: max
+					}
+					// console.log(scaleSingleObj.first)
+					$(".first-ins").text(scaleSingleObj.first);
+					console.log($(".first-ins").text())
+					$(".second-ins").text(scaleSingleObj.second);
+					$(".third-ins").text(scaleSingleObj.third);
+					$(".fourth-ins").text(scaleSingleObj.fourth);
+					$(".fifth-ins").text(scaleSingleObj.fifth);
 				}
-			};
-			view.getLeftValue();
-			view.getRightValue();
-			view.scaleMulti();
-			view.countProgress();
-			view.typeBubbleValue();
-			view.getSingleValue();
-			view.scaleSingle();
+			}
+			let view = new View
+			module.exports = View
+			view.getLeftValue(settings.min, settings.max);
+			view.getRightValue(settings.min, settings.max);
+			view.scaleMulti(settings.min, settings.max);
+			view.countProgress(settings.min, settings.max);
+			// view.typeBubbleValue();
+			view.getSingleValue(settings.min, settings.max);
+			view.scaleSingle(settings.min, settings.max);
 
 			//=======================================================================
 			var controller = {
@@ -332,12 +357,12 @@
 				},
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				inGetLeft: function() {inputLeft.addEventListener('input', view.getLeftValue);},
-				inGetRight: function() {inputRight.addEventListener('input', view.getRightValue);},
+				inGetLeft: function() {inputLeft.addEventListener('input', view.getLeftValue)},
+				inGetRight: function() {inputRight.addEventListener('input', view.getRightValue)},
 				
 				/////////////////////////////////SINGLE
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-				showBubbleValue: function() {singleRange.addEventListener('input', view.getSingleValue)}
+				// showBubbleValue: function() {singleRange.addEventListener('input', view.getSingleValue)}
 			};
 			controller.inTouchLeft();
 			controller.inTouchRight();
@@ -345,9 +370,9 @@
 			controller.inMoveRight();
 			controller.inGetLeft();
 			controller.inGetRight();
-			controller.showBubbleValue();
-		// });
-// 	};
-// })(jQuery);	
+			// controller.showBubbleValue();
+		});
+	};
+})(jQuery);	
 
-// (<any>$("body")).rangeSliders();
+(<any>$("body")).rangeSliders();

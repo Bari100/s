@@ -1,13 +1,14 @@
-// const impObj = require('../src/range2.ts')
-import model from '../src/range2.ts'
-console.log(model)
+const Model = require('../src/range2.ts')
+let model = new Model()
 
 //MODEL
 
 describe("Тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
+    var range = document.querySelector(".slider > .range")
     it("при min = 10, max = 100, sliders.width = 372.828(26vw), valueLeft = 37 и valueRight = 73 range.style.left = 30%; range.style.right = 30%", function () {
       model.setLeftValue(10,100, 37, 73)
       model.setRightValue(10,100, 37, 73)
+      
       assert.equal(range.style.left, 30 + '%')
       assert.equal(range.style.right, 30 + '%')
     })
@@ -31,6 +32,8 @@ describe("Тест z-index inputLeft и inputRight при перемещении
     })
 })
 describe("Тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
+  var inputLeft = document.getElementById("input-left"),
+      inputRight = document.getElementById("input-right")
   it("при min = 30, max = 380, sliders.width = 372.828, valueLeft = 117, valueRight = 380 и mousePosition = 147 inputLeft.zIndex = 2", function () {
     model.MouseMove(1, 30, 380, 372.828, 117, 380, 147)
     assert.equal(inputLeft.style.zIndex, 2)
@@ -58,7 +61,10 @@ describe("Тест z-index inputLeft и inputRight при перемещении
   });
 });
 
-//VIEW
+// const View = require('../src/range2.ts')
+// let view = new View()
+
+// // VIEW
 
 // describe("тест шкалы single-range", function() {
 //   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
