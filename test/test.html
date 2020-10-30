@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
     <script>
     // включаем режим тестирования в стиле BDD
-    mocha.setup('bdd');
+    mocha.setup('bdd')
     // var chai = require("chai");
     // var sinonChai = require("sinon-chai");
 
@@ -21,8 +21,8 @@
     <script src="../node_modules/sinon/pkg/sinon.js"></script>
     <script>
     // chai предоставляет большое количество функций. Объявим assert глобально
-    let assert = chai.assert;
-    let expect = chai.expect;
+    let assert = chai.assert
+    let expect = chai.expect
     </script>
 </head>
 
@@ -35,14 +35,15 @@
 
     <!-- скрипт со спецификацией (describe, it...) -->
     <!-- <script src="test.js"></script> -->
-    <script src="view.test.js"></script>
+    <!-- <script src="view.test.js"></script> -->
+    <script src="1/controller.test.js"></script>
 
     <!-- элемент с id="mocha" будет содержать результаты тестов -->
     <div id="mocha"></div>
 
     <!-- запускаем тесты! -->
     <script>
-    mocha.run();
+    mocha.run()
     </script>
 </body>
 

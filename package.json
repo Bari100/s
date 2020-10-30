@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "parcel src/range.html",
     "dev2": "parcel test/test.html",
-    "prod": "parcel build src/range.html"
+    "prod": "parcel build src/range.html",
+    "test": "mocha"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "cssnano": "^4.1.10",
+    "mocha": "^8.2.0",
     "sinon-chai": "^3.5.0",
     "typescript": "^4.0.2"
   },

@@ -76,56 +76,56 @@ describe("тест шкалы multi-range", function() {
 describe("тест прогресс-бара", function() {
   it("при min = 0, max = 100 и val = 50 progress-bar width: 50%", function () {
     view.countProgress(0, 100, 50)
-    assert.equal(progressBarWidth, 50)
+    assert.equal(View.progressBarWidth, 50)
   });
   it("при min = 44, max = 1055.5 и val = 651 progress-bar width: 60%", function () {
     view.countProgress(44, 1055.5, 651)
-    assert.equal(Math.round(progressBarWidth), 60)
+    assert.equal(Math.round(View.progressBarWidth), 60)
   });
   it("при min = 250, max = 200 и val = 60 progress-bar width: 69%", function () {
     view.countProgress(-250, 200, 60)
-    assert.equal(Math.round(progressBarWidth), 69)
+    assert.equal(Math.round(View.progressBarWidth), 69)
   });
   it("при min = 20, max = 280 и val = 215 progress-bar width: 75%", function () {
     view.countProgress(20, 280, 215)
-    assert.equal(progressBarWidth, 75)
+    assert.equal(View.progressBarWidth, 75)
   });
 });
 
 describe("тест расположения bubble single-range", function() {
   it("при min = 0, max = 10 и val = 6 .bubble-single left: calc(60% + -10px)", function () {
     view.getSingleValue(0, 10, 6)
-    assert.equal(countSinglePosition, 'calc(60% + (-10px))')
+    assert.equal(View.countSinglePosition, 'calc(60% + (-10px))')
   });
   it("при min = 2001, max = 2020 и val = 2007 .bubble-single left: calc(31.57894736842105% + (-2.894736842105263px))", function () {
     view.getSingleValue(2001, 2020, 2007)
-    assert.equal(countSinglePosition, 'calc(31.57894736842105% + (-2.894736842105263px))')
+    assert.equal(View.countSinglePosition, 'calc(31.57894736842105% + (-2.894736842105263px))')
   });
   it("при min = -100, max = 100 и val = 0 .bubble-single left: calc(50% + (-7.5px))", function () {
     view.getSingleValue(-100, 100, 0)
-    assert.equal(countSinglePosition, 'calc(50% + (-7.5px))')
+    assert.equal(View.countSinglePosition, 'calc(50% + (-7.5px))')
   });
   it("при min = 1.6, max = 3759 и val = 456 .bubble-single left: calc(12.093468888060892% + (1.976632777984777px))", function () {
     view.getSingleValue(1.6, 3759, 456)
-    assert.equal(countSinglePosition, 'calc(12.093468888060892% + (1.976632777984777px))')
+    assert.equal(View.countSinglePosition, 'calc(12.093468888060892% + (1.976632777984777px))')
   });
 });
 
 describe("тест расположения bubble multi-range", function() {
   it("при min = 0, max = 10 и val = 6 .bubble-multi-left left: calc(60% + -10px)", function () {
     view.getLeftValue(0, 10, 6)
-    assert.equal(countMultiPosition, 'calc(60% + (-13px))')
+    assert.equal(View.countMultiPosition, 'calc(60% + (-13px))')
   });
   it("при min = 2001, max = 2020 и val = 2007 .bubble-multi-left left: calc(31.57894736842105% + (-2.894736842105263px))", function () {
     view.getLeftValue(2001, 2020, 2007)
-    assert.equal(countMultiPosition, 'calc(31.57894736842105% + (-11.578947368421053px))')
+    assert.equal(View.countMultiPosition, 'calc(31.57894736842105% + (-11.578947368421053px))')
   });
   it("при min = -100, max = 100 и val = 0 .bubble-multi-right left: calc(50% + (-7.5px))", function () {
     view.getRightValue(-100, 100, 0)
-    assert.equal(countMultiPosition, 'calc(50% + (-12.5px))')
+    assert.equal(View.countMultiPosition, 'calc(50% + (-12.5px))')
   });
   it("при min = 1.6, max = 3759 и val = 456 .bubble-multi-right left: calc(12.093468888060892% + (1.976632777984777px))", function () {
     view.getRightValue(1.6, 3759, 456)
-    assert.equal(countMultiPosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
+    assert.equal(View.countMultiPosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
   });
 });

@@ -232,6 +232,7 @@
 			class View {
 				/////////////////////////////////MULTI
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
+				static countMultiPosition:number|string
 				getLeftValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$('#single-range').on('input', function(){
@@ -241,8 +242,8 @@
 							newValue = (val - min) * 100 / (max - min)
 						} else {newValue = (testVal - min) * 100 / (max - min)}
 						let newPosition = -10 - (newValue * 0.05);
-						let countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-						$(".bubble-multi-left").css("left", countMultiPosition)
+						View.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
+						$(".bubble-multi-left").css("left", View.countMultiPosition)
 						$(".bubble-multi-left").css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 						$(".value-multi-left-span").text(inputLeft.value)
@@ -257,8 +258,8 @@
 							newValue = (val - min) * 100 / (max - min)
 						} else {newValue = (testVal - min) * 100 / (max - min)}
 						let newPosition = -10 - (newValue * 0.05)
-						let countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-						$(".bubble-multi-right").css("left", countMultiPosition)
+						View.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
+						$(".bubble-multi-right").css("left", View.countMultiPosition)
 						$(".bubble-multi-right").css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 						$(".value-multi-right-span").text(inputRight.value)
@@ -275,29 +276,30 @@
 						fifth: max
 					}
 
-					$(".multi-first-ins").text(scaleMultiObj.first);
-					$(".multi-second-ins").text(scaleMultiObj.second);
-					$(".multi-third-ins").text(scaleMultiObj.third);
-					$(".multi-fourth-ins").text(scaleMultiObj.fourth);
-					$(".multi-fifth-ins").text(scaleMultiObj.fifth);
+					$(".multi-first-ins").first().text(scaleMultiObj.first);//.first() because .text() makes double value when testing scaleMulti()
+					$(".multi-second-ins").first().text(scaleMultiObj.second);
+					$(".multi-third-ins").first().text(scaleMultiObj.third);
+					$(".multi-fourth-ins").first().text(scaleMultiObj.fourth);
+					$(".multi-fifth-ins").first().text(scaleMultiObj.fifth);
 				}
 
 				/////////////////////////////////SINGLE
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
+				static progressBarWidth:number//because can't create const or let here
 				countProgress(min:number, max:number, testVal:number = -666.666) {
 					$('#single-range').on('input', function(e){
 						let val:number = +((<HTMLInputElement>e.target).value);
-						let progressBarWidth:number
 						if (testVal == -666.666) {
-							progressBarWidth = (val - min) * 100 / (max - min)
-						} else {progressBarWidth = (testVal - min) * 100 / (max - min)}
+							View.progressBarWidth = (val - min) * 100 / (max - min)
+						} else {View.progressBarWidth = (testVal - min) * 100 / (max - min)}
 						$('.progress-bar').css({
-							'width': progressBarWidth + '%'
+							'width': View.progressBarWidth + '%'
 						});
 					}).trigger('input');
 				}
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
+				static countSinglePosition:number|string//because can't create const or let here
 				getSingleValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$('#single-range').on('input', function(){
@@ -307,8 +309,8 @@
 							newValue = (val - min) * 100 / (max - min)
 						} else {newValue = (testVal - min) * 100 / (max - min)}
 						let	newPosition = 5 - (newValue * 0.25)
-						let countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
-						$(".bubble-single").css("left", countSinglePosition);
+						View.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+						$(".bubble-single").css("left", View.countSinglePosition);
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 						$(".value-single-span").text(singleRange.value);
 					}).trigger('input')
@@ -324,12 +326,11 @@
 						fifth: max
 					}
 					// console.log(scaleSingleObj.first)
-					$(".first-ins").text(scaleSingleObj.first);
-					console.log($(".first-ins").text())
-					$(".second-ins").text(scaleSingleObj.second);
-					$(".third-ins").text(scaleSingleObj.third);
-					$(".fourth-ins").text(scaleSingleObj.fourth);
-					$(".fifth-ins").text(scaleSingleObj.fifth);
+					$(".first-ins").first().text(scaleSingleObj.first);//.first() because .text() makes double value when testing scaleSingle()
+					$(".second-ins").first().text(scaleSingleObj.second);
+					$(".third-ins").first().text(scaleSingleObj.third);
+					$(".fourth-ins").first().text(scaleSingleObj.fourth);
+					$(".fifth-ins").first().text(scaleSingleObj.fifth);
 				}
 			}
 			let view = new View
@@ -343,27 +344,31 @@
 			view.scaleSingle(settings.min, settings.max);
 
 			//=======================================================================
-			var controller = {
+			class Сontroller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				inTouchLeft: function() {inputLeft.addEventListener("input", model.setLeftValue);},
-				inTouchRight: function() {inputRight.addEventListener("input", model.setRightValue);},
+				inTouchLeft() {inputLeft.addEventListener("input", model.setLeftValue);}
+				inTouchRight() {inputRight.addEventListener("input", model.setRightValue);}
 			
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				inMoveLeft: function() {inputLeft.onmousemove = function(e: number) {
-					model.MouseMove.call(inputLeft, e);};
-				},
-				inMoveRight: function() {inputRight.onmousemove = function(e: number) {
-					model.MouseMove.call(inputRight, e);};
-				},
+				// inMoveLeft() {inputLeft.onmousemove = function(e: number) {
+				// 	model.MouseMove.call(inputLeft, e);};
+				// }
+				// inMoveRight() {inputRight.onmousemove = function(e: number) {
+				// 	model.MouseMove.call(inputRight, e);};
+				// }
+				inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}
+				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				inGetLeft: function() {inputLeft.addEventListener('input', view.getLeftValue)},
-				inGetRight: function() {inputRight.addEventListener('input', view.getRightValue)},
+				inGetLeft() {inputLeft.addEventListener('input', view.getLeftValue)}
+				inGetRight() {inputRight.addEventListener('input', view.getRightValue)}
 				
 				/////////////////////////////////SINGLE
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
 				// showBubbleValue: function() {singleRange.addEventListener('input', view.getSingleValue)}
 			};
+			let controller = new Сontroller
+			module.exports = Сontroller
 			controller.inTouchLeft();
 			controller.inTouchRight();
 			controller.inMoveLeft();
