@@ -20,8 +20,9 @@
 		// 	"max": 100
 		//   };///DELETE THIS
 			var sliders:any = <HTMLElement>document.querySelector(".sliders"),
+			// var sliders:any = $('<div>', {'class': 'sliders'}),
 				radioMulti = document.querySelector(".choose-multi");
-			
+			// $('body').append(sliders);
 			var sliderSingle = $('<div>', {'class': 'slider-single'});
 			$(sliders).append(sliderSingle);
 			var bubbleSingle = $('<div>', {'class': 'bubble-single'});
@@ -227,7 +228,7 @@
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
-			module.exports = Model
+			// module.exports = Model
 			//=======================================================================
 			class View {
 				/////////////////////////////////MULTI
@@ -334,7 +335,7 @@
 				}
 			}
 			let view = new View
-			module.exports = View
+			// module.exports = View
 			view.getLeftValue(settings.min, settings.max);
 			view.getRightValue(settings.min, settings.max);
 			view.scaleMulti(settings.min, settings.max);

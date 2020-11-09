@@ -1,29 +1,30 @@
-(function ($) {
+// (function ($) {
 	
-	($.fn).rangeSliders = function range(options) {
-		var settings = $.extend({
+// 	($.fn).rangeSliders = function range(options) {
+// 		var settings = $.extend({
+// 			"step": 1,
+// 			"vertical": false,
+// 			"multirange": true,
+// 			"bubbles": true,
+// 			"width": 26,
+// 			"min": 10,
+// 			"max": 100
+// 		  }, options);
+		  
+		var settings = {
 			"step": 1,
 			"vertical": false,
 			"multirange": true,
 			"bubbles": true,
 			"width": 26,
-			"min": 10,
-			"max": 100
-		  }, options);
+			"min": 30,
+			"max": 380
+		  };
 		  
-		// var settings = {
-		// 	"step": 1,
-		// 	"vertical": false,
-		// 	"multirange": true,
-		// 	"bubbles": true,
-		// 	"width": 26,
-		// 	"min": 30,
-		// 	"max": 380
-		//   };
-		  
-		return this.each(function () {
-			var sliders = document.querySelector(".sliders"),
-			radioMulti = document.querySelector(".choose-multi");
+		// return this.each(function () {
+			var sliders = $('<div>', {'class': 'sliders'}),
+			// var sliders = document.querySelector(".sliders"),
+				radioMulti = document.querySelector(".choose-multi");
 		
 		var sliderSingle = $('<div>', {'class': 'slider-single'});
 		$(sliders).append(sliderSingle);
@@ -351,37 +352,39 @@
 		view.scaleSingle(settings.min, settings.max);
 
 		//=======================================================================
-		var controller = {
+		class Сontroller {
 			//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-			inTouchLeft: function(){inputLeft.addEventListener("input", model.setLeftValue)},
-			inTouchRight: function(){inputRight.addEventListener("input", model.setRightValue)},
+			inTouchLeft() {inputLeft.addEventListener("input", model.setLeftValue);}
+			inTouchRight() {inputRight.addEventListener("input", model.setRightValue);}
 		
 			//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-			// inMoveLeft: function(){inputLeft.onmousemove = function(e) {
-			// 	model.MouseMove.call(inputLeft, e);
-			// }},
-			inMoveLeft: function(){inputLeft.addEventListener('mousemove', model.MouseMove)},
-			// inMoveRight: function(){inputRight.onmousemove = function(e) {
-			// 	model.MouseMove.call(inputRight, e);
-			// }},
-			inMoveRight: function(){inputRight.addEventListener('mousemove', model.MouseMove)},
+			// inMoveLeft() {inputLeft.onmousemove = function(e: number) {
+			// 	model.MouseMove.call(inputLeft, e);};
+			// }
+			// inMoveRight() {inputRight.onmousemove = function(e: number) {
+			// 	model.MouseMove.call(inputRight, e);};
+			// }
+			inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}
+			inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
 
 			//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-			inGetLeft: function(){inputLeft.addEventListener('input', view.getLeftValue)},
-			inGetRight: function(){inputRight.addEventListener('input', view.getRightValue)},
+			inGetLeft() {inputLeft.addEventListener('input', view.getLeftValue)}
+			inGetRight() {inputRight.addEventListener('input', view.getRightValue)}
 			
 			/////////////////////////////////SINGLE
 			//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-			// showBubbleValue: singleRange.addEventListener('input', view.getSingleValue)
-		};
+			// showBubbleValue: function() {singleRange.addEventListener('input', view.getSingleValue)}
+		}
+		let controller = new Сontroller()
+		module.exports = Сontroller
 		controller.inTouchLeft();
 		controller.inTouchRight();
 		controller.inMoveLeft();
 		controller.inMoveRight();
 		controller.inGetLeft();
 		controller.inGetRight();
-		});
-	};
-})(jQuery);	
+// 		});
+// 	};
+// })(jQuery);	
 
-($("body")).rangeSliders();
+// ($("body")).rangeSliders();

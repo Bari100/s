@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js dev
+  C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js dev2
 
 PATH: 
   C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;D:\Program Files (x86)\Brackets\command;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Roaming\npm;C:\Users\user\AppData\Local\GitHubDesktop\bin;d:\Users\user\AppData\Local\Programs\Microsoft VS Code\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: D:\Projects\GitHub\s\package.json: Unexpected token } in JSON at position 136
+  SyntaxError: D:\Projects\GitHub\s\package.json: Unexpected token } in JSON at position 660
       at JSON.parse (<anonymous>)
       at C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1625:59
       at Generator.next (<anonymous>)
@@ -28,8 +28,29 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "dev": "parcel src/index.html"
+      "dev": "parcel src/range.html",
+      "dev2": "parcel test/test.html",
+      "prod": "parcel build src/range.html",
+      "test": "jest"
     },
+    "devDependencies": {
+      "chai": "^4.2.0",
+      "cssnano": "^4.1.10",
+      "jest": "^26.6.1",
+      "mocha": "^8.2.0",
+      "sinon-chai": "^3.5.0",
+      "typescript": "^4.0.2"
+    },
+    "dependencies": {
+      "@babel/preset-typescript": "^7.12.1",
+      "@types/jquery": "^3.5.1",
+      "@types/node": "^14.14.5",
+      "chai-spies": "^1.0.0",
+      "sinon": "^9.2.0"
+    },
+      "jest": {
+          "setupFiles": ["./source/setup-jest.js"]
+   },
   }
 
 yarn manifest: 

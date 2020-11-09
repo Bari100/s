@@ -7,19 +7,33 @@
     "dev": "parcel src/range.html",
     "dev2": "parcel test/test.html",
     "prod": "parcel build src/range.html",
-    "test": "mocha"
+    "test": "karma"
   },
   "devDependencies": {
+    "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "cssnano": "^4.1.10",
+    "jest": "^26.6.1",
+    "karma": "^5.2.3",
+    "karma-browserify": "^7.0.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-typescript": "^5.2.0",
+    "karma-typescript-preprocessor": "^0.4.0",
     "mocha": "^8.2.0",
     "sinon-chai": "^3.5.0",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "watchify": "^3.11.1"
   },
   "dependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
     "@types/jquery": "^3.5.1",
     "@types/node": "^14.14.5",
+    "babel-jest": "^26.6.1",
     "chai-spies": "^1.0.0",
+    "jquery": "^3.5.1",
     "sinon": "^9.2.0"
   }
 }

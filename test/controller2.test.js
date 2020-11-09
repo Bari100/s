@@ -1,9 +1,5 @@
-// mocha.setup('bdd')
-// let assert = chai.assert
-// let expect = chai.expect
-// mocha.run()
 
-const Сontroller = require('../../src/range2.ts')
+const Сontroller = require('../src/range2.ts')
 let controller = new Сontroller()
 const sinon = require('sinon')//node.js does't work without this string 
 
