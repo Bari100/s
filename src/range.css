@@ -153,21 +153,21 @@ input[type=range]::-webkit-slider-thumb {
 	margin-top: -4px;
 	margin-left: -3px;
 }
-#single-range {
+.single-range {
 	width: 26vw;
 	-webkit-appearance: none;
 	outline: none;
 	background-color: transparent;;
 	position: absolute;
 }
-#single-range::-webkit-slider-runnable-track {
+.single-range::-webkit-slider-runnable-track {
 	background-color: #c6aee7;
 	border-radius: 5px;
 	height: 10px;
 	position: static;
 	z-index: -2;
 }
-#single-range::-webkit-slider-thumb {
+.single-range::-webkit-slider-thumb {
 	width: 30px;
 	height: 30px;
 	background-color: #6200ee;

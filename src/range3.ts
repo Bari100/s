@@ -1,5 +1,5 @@
-;(function ($) {
-	(<any>$.fn).rangeSliders = function (options, input) {
+(function ($) {
+	(<any>$.fn).rangeSliders = function (options: object) {
 		var settings = $.extend({
 			"step": 1,
 			"vertical": false,
@@ -8,7 +8,7 @@
 			"width": 26,
 			"min": 20,
 			"max": 280
-		  });
+		  }, options);
 		return this.each(function () {
         //     let settings = { ///DELETE THIS
 		// 	"step": 1,
@@ -19,8 +19,7 @@
 		// 	"min": 10,
 		// 	"max": 100
 		//   };///DELETE THIS
-			
-			var sliders:any = <HTMLElement>document.querySelector(options),
+			var sliders:any = <HTMLElement>document.querySelector(".sliders"),
 			// var sliders:any = $('<div>', {'class': 'sliders'}),
 				radioMulti = document.querySelector(".choose-multi");
 			// $('body').append(sliders);
@@ -30,8 +29,7 @@
 			$(sliderSingle).append(bubbleSingle);
 			var valueSingleSpan = $('<span>', {'class': 'value-single-span'})
 			$(bubbleSingle).append(valueSingleSpan);
-			// var singleRange:any = $('<input>', {'class': 'single-range', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
-			var singleRange:any = <HTMLElement>document.querySelector(input);
+			var singleRange:any = $('<input>', {'id': 'single-range', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
 			$(sliderSingle).append(singleRange);
 			$(sliderSingle).append($('<div>', {'class': 'progress-bar'}));
 			var scaleSingle = $('<div>', {'class': 'scale'});
@@ -52,7 +50,7 @@
 			$(scaleSingle).append(spanScaleSingle5);
 			$(spanScaleSingle5).append($('<ins>', {'class': 'fifth-ins'}));
 
-			var singleRange:any = document.querySelector(".single-range");
+			var singleRange:any = document.getElementById("single-range");
 
 
 
@@ -190,43 +188,43 @@
 					range.style.right = (100 - percent) + "%"
 				}
 
-				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				MouseMove(eventArg, min:number, max:number, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {
-					var positionXY: number,
-						compareInputs: boolean,
-						countPosition: number,
-						inputLeftMath: number,
-						inputRightMath: number,
-						x100: number;
-					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
-					let testCountPosition = (min + max) / width
-					/* percentage position Y of cursor  */
-					if(testPosition == -666.666) {
-						x100 = positionXY * countPosition
-					} else {x100 = testPosition * testCountPosition}
-					
-					/* absolute distance from respective slider values */
-					inputLeftMath = Math.abs(inputLeft.value - x100)
-					inputRightMath = Math.abs(inputRight.value - x100)
-					let testInputLeftMath = Math.abs(testValLeft - x100)
-					let testInputRightMath = Math.abs(testValRight - x100)
-					if(testValLeft == -666.666 && testValRight == -666.666) {
-						compareInputs = inputLeftMath < inputRightMath
-					} else {compareInputs = testInputLeftMath < testInputRightMath}
-					
-					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-					if (!eventArg.buttons) {
-						if (compareInputs) {
-							inputLeft.style.zIndex = 2;
-							inputRight.style.zIndex = 1;
-						} else {
-							inputRight.style.zIndex = 2;
-							inputLeft.style.zIndex = 1;
-						}
-					}
-				}
-			};
+					//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
+					MouseMove(eventArg, min:number, max:number, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {
+						var positionXY: number,
+							compareInputs: boolean,
+							countPosition: number,
+							inputLeftMath: number,
+							inputRightMath: number,
+							x100: number;
+                        positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+                        countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
+                        let testCountPosition = (min + max) / width
+                        /* percentage position Y of cursor  */
+                        if(testPosition == -666.666) {
+                            x100 = positionXY * countPosition
+                        } else {x100 = testPosition * testCountPosition}
+                        
+                        /* absolute distance from respective slider values */
+                        inputLeftMath = Math.abs(inputLeft.value - x100)
+                        inputRightMath = Math.abs(inputRight.value - x100)
+                        let testInputLeftMath = Math.abs(testValLeft - x100)
+                        let testInputRightMath = Math.abs(testValRight - x100)
+                        if(testValLeft == -666.666 && testValRight == -666.666) {
+                            compareInputs = inputLeftMath < inputRightMath
+                        } else {compareInputs = testInputLeftMath < testInputRightMath}
+                        
+                        // Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
+                        if (!eventArg.buttons) {
+                            if (compareInputs) {
+                                inputLeft.style.zIndex = 2;
+                                inputRight.style.zIndex = 1;
+                            } else {
+                                inputRight.style.zIndex = 2;
+                                inputLeft.style.zIndex = 1;
+                            }
+                        }
+                    }
+				};
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
@@ -238,7 +236,7 @@
 				static countMultiPosition:number|string
 				getLeftValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$('.single-range').on('input', function(){
+					$('#single-range').on('input', function(){
 						let newValue
 						let val = inputLeft.value
 						if (testVal == -666.666) {
@@ -254,7 +252,7 @@
 				}
 				getRightValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$('.single-range').on('input', function(){
+					$('#single-range').on('input', function(){
 						let newValue
 						let val = inputRight.value
 						if (testVal == -666.666) {
@@ -290,7 +288,7 @@
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 				static progressBarWidth:number//because can't create const or let here
 				countProgress(min:number, max:number, testVal:number = -666.666) {
-					$('.single-range').on('input', function(e){
+					$('#single-range').on('input', function(e){
 						let val:number = +((<HTMLInputElement>e.target).value);
 						if (testVal == -666.666) {
 							View.progressBarWidth = (val - min) * 100 / (max - min)
@@ -305,7 +303,7 @@
 				static countSinglePosition:number|string//because can't create const or let here
 				getSingleValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$('.single-range').on('input', function(){
+					$('#single-range').on('input', function(){
 						let newValue:number
 						let val = singleRange.value;
 						if (testVal == -666.666) {
@@ -379,12 +377,8 @@
 			controller.inGetLeft();
 			controller.inGetRight();
 			// controller.showBubbleValue();
-
-
-
-			// (new (<any>$.fn).rangeSliders())
 		});
 	};
 })(jQuery);	
 
-// (<any>$("body")).rangeSliders();
+(<any>$("body")).rangeSliders();
