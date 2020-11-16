@@ -1,5 +1,5 @@
 ;(function ($) {
-	(<any>$.fn).rangeSliders = function (options, input) {
+	(<any>$.fn).rangeSliders = function (silderNum: number) {
 		var settings = $.extend({
 			"step": 1,
 			"vertical": false,
@@ -20,39 +20,44 @@
 		// 	"max": 100
 		//   };///DELETE THIS
 			
-			var sliders:any = <HTMLElement>document.querySelector(options),
+			// silderNum = 1
+			var sliders:any = <HTMLElement>document.querySelector(`.sliders${silderNum}`),
 			// var sliders:any = $('<div>', {'class': 'sliders'}),
 				radioMulti = document.querySelector(".choose-multi");
 			// $('body').append(sliders);
-			var sliderSingle = $('<div>', {'class': 'slider-single'});
-			$(sliders).append(sliderSingle);
-			var bubbleSingle = $('<div>', {'class': 'bubble-single'});
-			$(sliderSingle).append(bubbleSingle);
-			var valueSingleSpan = $('<span>', {'class': 'value-single-span'})
-			$(bubbleSingle).append(valueSingleSpan);
-			// var singleRange:any = $('<input>', {'class': 'single-range', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
-			var singleRange:any = <HTMLElement>document.querySelector(input);
-			$(sliderSingle).append(singleRange);
-			$(sliderSingle).append($('<div>', {'class': 'progress-bar'}));
-			var scaleSingle = $('<div>', {'class': 'scale'});
-			$(sliderSingle).append(scaleSingle);
-			var spanScaleSingle1 = $('<span>', {'style': 'left: 0%'});
-			$(scaleSingle).append(spanScaleSingle1);
-			$(spanScaleSingle1).append($('<ins>', {'class': 'first-ins'}));
-			var spanScaleSingle2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
-			$(scaleSingle).append(spanScaleSingle2);
-			$(spanScaleSingle2).append($('<ins>', {'class': 'second-ins'}));
-			var spanScaleSingle3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
-			$(scaleSingle).append(spanScaleSingle3);
-			$(spanScaleSingle3).append($('<ins>', {'class': 'third-ins'}));
-			var spanScaleSingle4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
-			$(scaleSingle).append(spanScaleSingle4);
-			$(spanScaleSingle4).append($('<ins>', {'class': 'fourth-ins'}));
-			var spanScaleSingle5 = $('<span>', {'style': 'left: 95%'});
-			$(scaleSingle).append(spanScaleSingle5);
-			$(spanScaleSingle5).append($('<ins>', {'class': 'fifth-ins'}));
 
-			var singleRange:any = document.querySelector(".single-range");
+			// if(sliders) {
+				var sliderSingle = $('<div>', {'class': `slider-single${silderNum}`});
+				$(sliders).append(sliderSingle);
+				var bubbleSingle = $('<div>', {'class': `bubble-single${silderNum}`});
+				$(sliderSingle).append(bubbleSingle);
+				var valueSingleSpan = $('<span>', {'class': `value-single-span${silderNum}`})
+				$(bubbleSingle).append(valueSingleSpan);
+				var singleRange:any = $('<input>', {'class': `single-range${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
+				// var singleRange:any = <HTMLElement>document.querySelector(input);
+				$(sliderSingle).append(singleRange);
+				$(sliderSingle).append($('<div>', {'class': `progress-bar${silderNum}`}));
+				var scaleSingle = $('<div>', {'class': `scale${silderNum}`});
+				$(sliderSingle).append(scaleSingle);
+				var spanScaleSingle1 = $('<span>', {'style': 'left: 0%'});
+				$(scaleSingle).append(spanScaleSingle1);
+				$(spanScaleSingle1).append($('<ins>', {'class': 'first-ins'}));
+				var spanScaleSingle2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
+				$(scaleSingle).append(spanScaleSingle2);
+				$(spanScaleSingle2).append($('<ins>', {'class': 'second-ins'}));
+				var spanScaleSingle3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
+				$(scaleSingle).append(spanScaleSingle3);
+				$(spanScaleSingle3).append($('<ins>', {'class': 'third-ins'}));
+				var spanScaleSingle4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
+				$(scaleSingle).append(spanScaleSingle4);
+				$(spanScaleSingle4).append($('<ins>', {'class': 'fourth-ins'}));
+				var spanScaleSingle5 = $('<span>', {'style': 'left: 95%'});
+				$(scaleSingle).append(spanScaleSingle5);
+				$(spanScaleSingle5).append($('<ins>', {'class': 'fifth-ins'}));
+			// }
+			
+			console.log(sliderSingle)
+			var singleRange:any = document.querySelector(`.single-range${silderNum}`);
 
 
 
@@ -290,12 +295,12 @@
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 				static progressBarWidth:number//because can't create const or let here
 				countProgress(min:number, max:number, testVal:number = -666.666) {
-					$('.single-range').on('input', function(e){
+					$(singleRange).on('input', function(e){
 						let val:number = +((<HTMLInputElement>e.target).value);
 						if (testVal == -666.666) {
 							View.progressBarWidth = (val - min) * 100 / (max - min)
 						} else {View.progressBarWidth = (testVal - min) * 100 / (max - min)}
-						$('.progress-bar').css({
+						$(`.progress-bar${silderNum}`).css({
 							'width': View.progressBarWidth + '%'
 						});
 					}).trigger('input');
@@ -305,7 +310,7 @@
 				static countSinglePosition:number|string//because can't create const or let here
 				getSingleValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$('.single-range').on('input', function(){
+					$(singleRange).on('input', function(){
 						let newValue:number
 						let val = singleRange.value;
 						if (testVal == -666.666) {
