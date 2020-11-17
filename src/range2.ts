@@ -41,22 +41,22 @@
 				$(sliderSingle).append(scaleSingle);
 				var spanScaleSingle1 = $('<span>', {'style': 'left: 0%'});
 				$(scaleSingle).append(spanScaleSingle1);
-				$(spanScaleSingle1).append($('<ins>', {'class': 'first-ins'}));
+				$(spanScaleSingle1).append($('<ins>', {'class': `first-ins${silderNum}`}));
 				var spanScaleSingle2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
 				$(scaleSingle).append(spanScaleSingle2);
-				$(spanScaleSingle2).append($('<ins>', {'class': 'second-ins'}));
+				$(spanScaleSingle2).append($('<ins>', {'class': `second-ins${silderNum}`}));
 				var spanScaleSingle3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
 				$(scaleSingle).append(spanScaleSingle3);
-				$(spanScaleSingle3).append($('<ins>', {'class': 'third-ins'}));
+				$(spanScaleSingle3).append($('<ins>', {'class': `third-ins${silderNum}`}));
 				var spanScaleSingle4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
 				$(scaleSingle).append(spanScaleSingle4);
-				$(spanScaleSingle4).append($('<ins>', {'class': 'fourth-ins'}));
+				$(spanScaleSingle4).append($('<ins>', {'class': `fourth-ins${silderNum}`}));
 				var spanScaleSingle5 = $('<span>', {'style': 'left: 95%'});
 				$(scaleSingle).append(spanScaleSingle5);
-				$(spanScaleSingle5).append($('<ins>', {'class': 'fifth-ins'}));
+				$(spanScaleSingle5).append($('<ins>', {'class': `fifth-ins${silderNum}`}));
 			// }
 			
-			console.log(sliderSingle)
+			
 			var singleRange:any = document.querySelector(`.single-range${silderNum}`);
 
 
@@ -318,9 +318,9 @@
 						} else {newValue = (testVal - min) * 100 / (max - min)}
 						let	newPosition = 5 - (newValue * 0.25)
 						View.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
-						$(".bubble-single").css("left", View.countSinglePosition);
+						$(`.bubble-single${silderNum}`).css("left", View.countSinglePosition);
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-						$(".value-single-span").text(singleRange.value);
+						$(`.value-single-span${silderNum}`).text(singleRange.value);
 					}).trigger('input')
 				}
 
@@ -333,12 +333,11 @@
 						fourth: Math.round(max - ((max - min) / 4)),
 						fifth: max
 					}
-					// console.log(scaleSingleObj.first)
-					$(".first-ins").first().text(scaleSingleObj.first);//.first() because .text() makes double value when testing scaleSingle()
-					$(".second-ins").first().text(scaleSingleObj.second);
-					$(".third-ins").first().text(scaleSingleObj.third);
-					$(".fourth-ins").first().text(scaleSingleObj.fourth);
-					$(".fifth-ins").first().text(scaleSingleObj.fifth);
+					$(`.first-ins${silderNum}`).first().text(scaleSingleObj.first);//.first() because .text() makes double value when testing scaleSingle()
+					$(`.second-ins${silderNum}`).first().text(scaleSingleObj.second);
+					$(`.third-ins${silderNum}`).first().text(scaleSingleObj.third);
+					$(`.fourth-ins${silderNum}`).first().text(scaleSingleObj.fourth);
+					$(`.fifth-ins${silderNum}`).first().text(scaleSingleObj.fifth);
 				}
 			}
 			let view = new View
@@ -351,6 +350,13 @@
 			view.getSingleValue(settings.min, settings.max);
 			view.scaleSingle(settings.min, settings.max);
 
+			// for(let i = 0; i < 100; i++) {
+			// 	let a = `.single-range,`
+			// 	return a
+			// }
+				// let i = 1; i < 100
+				// let b = `.single-range${i++}`.repeat(100)
+				// console.log(b)
 			//=======================================================================
 			class Сontroller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)

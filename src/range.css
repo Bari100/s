@@ -95,15 +95,7 @@
 	width: 26vw;
 	z-index: 1;
 }
-input[type=range]::-webkit-slider-thumb {
-	pointer-events: all;
-	width: 30px;
-	height: 30px;
-	border-radius: 0;
-	border: 0 none;
-	background-color: red;
-	-webkit-appearance: none;
-}
+
 
 /*BUBBLES MULTI*/
 .bubble-multi-left, .bubble-multi-right {
@@ -153,21 +145,32 @@ input[type=range]::-webkit-slider-thumb {
 	margin-top: -4px;
 	margin-left: -3px;
 }
-.single-range {
+
+input[type=range]::-webkit-slider-thumb {
+	pointer-events: all;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 0 none;
+	background-color: #6200ee;
+	-webkit-appearance: none;
+}
+
+.single-range1, .single-range2, .single-range3, .single-range4, .single-range5, .single-range6, .single-range7, .single-range8, .single-range9, .single-range10 {
 	width: 26vw;
 	-webkit-appearance: none;
 	outline: none;
 	background-color: transparent;;
 	position: absolute;
 }
-.single-range::-webkit-slider-runnable-track {
+.single-range1::-webkit-slider-runnable-track, .single-range2::-webkit-slider-runnable-track {
 	background-color: #c6aee7;
 	border-radius: 5px;
 	height: 10px;
 	position: static;
 	z-index: -2;
 }
-.single-range::-webkit-slider-thumb {
+.single-range1::-webkit-slider-thumb, .single-range2::-webkit-slider-thumb {
 	width: 30px;
 	height: 30px;
 	background-color: #6200ee;
@@ -186,7 +189,7 @@ input[type=range]::-webkit-slider-thumb {
 	z-index: -1;
 }
 /*BUBBLES SINGLE*/
-.bubble-single {
+.bubble-single1, .bubble-single2 {
 	position: absolute;
 	width: 25px;
 	height: 20px;
@@ -199,7 +202,7 @@ input[type=range]::-webkit-slider-thumb {
     font-size: 14px;
     padding-top: 1px;
 }
-.bubble-single:after {
+.bubble-single1:after, .bubble-single2:after {
     content: "";
     background-color: #9452f2;
 	position: absolute;
@@ -211,7 +214,7 @@ input[type=range]::-webkit-slider-thumb {
     box-shadow: 0 0 4px #000;
     transform: rotate(225deg);
 }
-.value-single-span {
+.value-single-span1, .value-single-span2 {
     position: absolute;
     left: 5px;
     top: 3px;
@@ -219,15 +222,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 /*ДИАПАЗОН-ШКАЛА*/
-.scale, .multi-scale {
+.scale1, .scale2, .multi-scale {
     position: relative;
     top: 20px;
     height: 20px;
-    width: 26vw;
+	width: 26vw;
+	color: #000;
 }
-.scale span, .multi-scale span {
+.scale1 span, .scale2 span, .multi-scale span {
     position: absolute;
 }
-.scale ins, .multi-scale ins {
+.scale1 ins, .scale2 ins, .multi-scale ins {
     text-decoration: none;
 }
