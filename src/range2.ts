@@ -1,14 +1,17 @@
+import { htmlPrefilter } from "jquery";
+
 ;(function ($) {
-	(<any>$.fn).rangeSliders = function (silderNum: number) {
-		var settings = $.extend({
+	(<any>$.fn).rangeSliders = function (silderNum: number, vertical: boolean) {
+		let settings = {
 			"step": 1,
-			"vertical": false,
-			"multirange": false,
+			vertical: vertical,
+			"multirange": true,
 			"bubbles": true,
 			"width": 26,
 			"min": 20,
 			"max": 280
-		  });
+		  };
+		
 		return this.each(function () {
         //     let settings = { ///DELETE THIS
 		// 	"step": 1,
@@ -19,7 +22,6 @@
 		// 	"min": 10,
 		// 	"max": 100
 		//   };///DELETE THIS
-			
 			// silderNum = 1
 			var sliders:any = <HTMLElement>document.querySelector(`.sliders${silderNum}`),
 			// var sliders:any = $('<div>', {'class': 'sliders'}),
@@ -61,49 +63,49 @@
 
 
 
-			var multiRangeSlider = $('<div>', {'class': 'multi-range-slider'});
+			var multiRangeSlider = $('<div>', {'class': `multi-range-slider${silderNum}`});
 			$(sliders).append(multiRangeSlider);
-			var bubbleMultiLeft = $('<div>', {'class': 'bubble-multi-left'});
+			var bubbleMultiLeft = $('<div>', {'class': `bubble-multi-left${silderNum}`});
 			$(multiRangeSlider).append(bubbleMultiLeft);
-			var valueMultiLeftSpan = $('<span>', {'class': 'value-multi-left-span'})
+			var valueMultiLeftSpan = $('<span>', {'class': `value-multi-left-span${silderNum}`})
 			$(bubbleMultiLeft).append(valueMultiLeftSpan);
-			var bubbleMultiRight = $('<div>', {'class': 'bubble-multi-right'});
+			var bubbleMultiRight = $('<div>', {'class': `bubble-multi-right${silderNum}`});
 			$(multiRangeSlider).append(bubbleMultiRight);
-			var valueMultiRightSpan = $('<span>', {'class': 'value-multi-right-span'})
+			var valueMultiRightSpan = $('<span>', {'class': `value-multi-right-span${silderNum}`})
 			$(bubbleMultiRight).append(valueMultiRightSpan);
-			var inputLeft:any = $('<input>', {'id': 'input-left', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
-			var inputRight:any = $('<input>', {'id': 'input-right', 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
+			var inputLeft:any = $('<input>', {'class': `input-left${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
+			var inputRight:any = $('<input>', {'class': `input-right${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
 			$(multiRangeSlider).append(inputLeft);
 			$(multiRangeSlider).append(inputRight);
-			var slider = $('<div>', {'class': 'slider'});
+			var slider = $('<div>', {'class': `slider${silderNum}`});
 			$(multiRangeSlider).append(slider);
-			$(slider).append($('<div>', {'class': 'track'}));
-			$(slider).append($('<div>', {'class': 'range'}));
-			$(slider).append($('<div>', {'class': 'thumb left'}));
-			$(slider).append($('<div>', {'class': 'thumb right'}));
-			var multiScale = $('<div>', {'class': 'multi-scale'});
+			$(slider).append($('<div>', {'class': `track${silderNum}`}));
+			$(slider).append($('<div>', {'class': `range${silderNum}`}));
+			$(slider).append($('<div>', {'class': `thumb${silderNum} left${silderNum}`}));
+			$(slider).append($('<div>', {'class': `thumb${silderNum} right${silderNum}`}));
+			var multiScale = $('<div>', {'class': `multi-scale${silderNum}`});
 			$(multiRangeSlider).append(multiScale);
 			var spanMultiScale1 = $('<span>', {'style': 'left: 0%'});
 			$(multiScale).append(spanMultiScale1);
-			$(spanMultiScale1).append($('<ins>', {'class': 'multi-first-ins'}));
+			$(spanMultiScale1).append($('<ins>', {'class': `multi-first-ins${silderNum}`}));
 			var spanMultiScale2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
 			$(multiScale).append(spanMultiScale2);
-			$(spanMultiScale2).append($('<ins>', {'class': 'multi-second-ins'}));
+			$(spanMultiScale2).append($('<ins>', {'class': `multi-second-ins${silderNum}`}));
 			var spanMultiScale3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
 			$(multiScale).append(spanMultiScale3);
-			$(spanMultiScale3).append($('<ins>', {'class': 'multi-third-ins'}));
+			$(spanMultiScale3).append($('<ins>', {'class': `multi-third-ins${silderNum}`}));
 			var spanMultiScale4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
 			$(multiScale).append(spanMultiScale4);
-			$(spanMultiScale4).append($('<ins>', {'class': 'multi-fourth-ins'}));
+			$(spanMultiScale4).append($('<ins>', {'class': `multi-fourth-ins${silderNum}`}));
 			var spanMultiScale5 = $('<span>', {'style': 'left: 95%'});
 			$(multiScale).append(spanMultiScale5);
-			$(spanMultiScale5).append($('<ins>', {'class': 'multi-fifth-ins'}));
+			$(spanMultiScale5).append($('<ins>', {'class': `multi-fifth-ins${silderNum}`}));
 
-			var range = <HTMLInputElement>document.querySelector(".slider > .range"),
-				thumbLeft = <HTMLInputElement>document.querySelector(".slider > .thumb.left"),
-				thumbRight = <HTMLInputElement>document.querySelector(".slider > .thumb.right"),
-				inputLeft:any = <HTMLInputElement>document.getElementById("input-left"),
-				inputRight:any = <HTMLInputElement>document.getElementById("input-right")
+			var range = <HTMLInputElement>document.querySelector(`.slider${silderNum} > .range${silderNum}`),
+				thumbLeft = <HTMLInputElement>document.querySelector(`.slider${silderNum} > .thumb${silderNum}.left${silderNum}`),
+				thumbRight = <HTMLInputElement>document.querySelector(`.slider${silderNum} > .thumb${silderNum}.right${silderNum}`),
+				inputLeft:any = <HTMLInputElement>document.querySelector(`.input-left${silderNum}`),
+				inputRight:any = <HTMLInputElement>document.querySelector(`.input-right${silderNum}`)
 
 
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
@@ -131,10 +133,10 @@
 			//SINGLE ИЛИ MULTIRANGE
 			if(settings.multirange) {
 				$(sliderSingle).hide();
-				$(".multi-range-slider").show();
+				$(`.multi-range-slider${silderNum}`).show();
 			} else {
 				$(sliderSingle).show();
-				$(".multi-range-slider").hide();
+				$(`.multi-range-slider${silderNum}`).hide();
 			}
 
 			//BUBBLES ВКЛ. ВЫКЛ.
@@ -243,7 +245,7 @@
 				static countMultiPosition:number|string
 				getLeftValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$('.single-range').on('input', function(){
+					$(`.input-left${silderNum}`).on('input', function(){
 						let newValue
 						let val = inputLeft.value
 						if (testVal == -666.666) {
@@ -251,15 +253,15 @@
 						} else {newValue = (testVal - min) * 100 / (max - min)}
 						let newPosition = -10 - (newValue * 0.05);
 						View.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-						$(".bubble-multi-left").css("left", View.countMultiPosition)
-						$(".bubble-multi-left").css("bottom", "50px")
+						$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPosition)
+						$(`.bubble-multi-left${silderNum}`).css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-						$(".value-multi-left-span").text(inputLeft.value)
+						$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 					}).trigger('input')
 				}
 				getRightValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$('.single-range').on('input', function(){
+					$(`.input-right${silderNum}`).on('input', function(){
 						let newValue
 						let val = inputRight.value
 						if (testVal == -666.666) {
@@ -267,10 +269,10 @@
 						} else {newValue = (testVal - min) * 100 / (max - min)}
 						let newPosition = -10 - (newValue * 0.05)
 						View.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-						$(".bubble-multi-right").css("left", View.countMultiPosition)
-						$(".bubble-multi-right").css("bottom", "50px")
+						$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPosition)
+						$(`.bubble-multi-right${silderNum}`).css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-						$(".value-multi-right-span").text(inputRight.value)
+						$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
 					}).trigger('input')
 				}
 
@@ -284,11 +286,11 @@
 						fifth: max
 					}
 
-					$(".multi-first-ins").first().text(scaleMultiObj.first);//.first() because .text() makes double value when testing scaleMulti()
-					$(".multi-second-ins").first().text(scaleMultiObj.second);
-					$(".multi-third-ins").first().text(scaleMultiObj.third);
-					$(".multi-fourth-ins").first().text(scaleMultiObj.fourth);
-					$(".multi-fifth-ins").first().text(scaleMultiObj.fifth);
+					$(`.multi-first-ins${silderNum}`).first().text(scaleMultiObj.first);//.first() because .text() makes double value when testing scaleMulti()
+					$(`.multi-second-ins${silderNum}`).first().text(scaleMultiObj.second);
+					$(`.multi-third-ins${silderNum}`).first().text(scaleMultiObj.third);
+					$(`.multi-fourth-ins${silderNum}`).first().text(scaleMultiObj.fourth);
+					$(`.multi-fifth-ins${silderNum}`).first().text(scaleMultiObj.fifth);
 				}
 
 				/////////////////////////////////SINGLE
@@ -349,14 +351,16 @@
 			// view.typeBubbleValue();
 			view.getSingleValue(settings.min, settings.max);
 			view.scaleSingle(settings.min, settings.max);
-
-			// for(let i = 0; i < 100; i++) {
-			// 	let a = `.single-range,`
-			// 	return a
-			// }
+			let article = document.querySelector('article')
+			for(let i = 0; i < 100; i++) {
+				let a:any = `.value-multi-right-span${i},`
+				// console.log(a)
+				let txt = document.createTextNode(a)
+				article.appendChild(txt)
+			}
 				// let i = 1; i < 100
 				// let b = `.single-range${i++}`.repeat(100)
-				// console.log(b)
+			
 			//=======================================================================
 			class Сontroller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
