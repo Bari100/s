@@ -3,13 +3,14 @@ import { htmlPrefilter } from "jquery";
 ;(function ($) {
 	(<any>$.fn).rangeSliders = function (silderNum: number, vertical: boolean) {
 		let settings = {
-			"step": 1,
+			step: 1,
 			vertical: vertical,
-			"multirange": true,
-			"bubbles": true,
-			"width": 26,
-			"min": 20,
-			"max": 280
+			multirange: false,
+			bubbles: true,
+			width: 26,
+			min: 20,
+			max: 280,
+			color: 'red'
 		  };
 		
 		return this.each(function () {
@@ -167,6 +168,10 @@ import { htmlPrefilter } from "jquery";
 			inputLeft.max = settings.max
 			inputRight.max = settings.max
 
+			//ИЗМЕНЕНИЕ ЦВЕТА
+			$('input[type=range]::-webkit-slider-thumb').css('background-color', settings.color)
+			$(`.single-range${silderNum}::-webkit-slider-thumb`).css('background-color', settings.color)
+
 
 			//=======================================================================
 			class Model {
@@ -233,10 +238,33 @@ import { htmlPrefilter } from "jquery";
 						}
 					}
 				}
+				static countSinglePosition:number|string//because can't create const or let here
+				getSingleValueModel(min:number, max:number, testVal:number = -666.666) {
+					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
+					$(singleRange).on('input', function(){
+						let newValue:number
+						let val = singleRange.value;
+						if (testVal == -666.666) {
+							newValue = (val - min) * 100 / (max - min)
+						} else {newValue = (testVal - min) * 100 / (max - min)}
+						let	newPosition = 5 - (newValue * 0.25)
+						Model.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+					})
+					// $(`.first-ins1`).on('click', function(){
+					// 	let newValue:number
+					// 	let val = singleRange.value;
+					// 	if (testVal == -666.666) {
+					// 		newValue = (val - min) * 100 / (max - min)
+					// 	} else {newValue = (testVal - min) * 100 / (max - min)}
+					// 	let	newPosition = 5 - (newValue * 0.25)
+					// 	Model.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+					// })
+				}
 			};
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
+			model.getSingleValueModel(settings.min, settings.max)
 			// module.exports = Model
 			//=======================================================================
 			class View {
@@ -309,18 +337,19 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-				static countSinglePosition:number|string//because can't create const or let here
+				// static countSinglePosition:number|string//because can't create const or let here
 				getSingleValue(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(singleRange).on('input', function(){
-						let newValue:number
-						let val = singleRange.value;
-						if (testVal == -666.666) {
-							newValue = (val - min) * 100 / (max - min)
-						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let	newPosition = 5 - (newValue * 0.25)
-						View.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
-						$(`.bubble-single${silderNum}`).css("left", View.countSinglePosition);
+						// let newValue:number
+						// let val = singleRange.value;
+						// if (testVal == -666.666) {
+						// 	newValue = (val - min) * 100 / (max - min)
+						// } else {newValue = (testVal - min) * 100 / (max - min)}
+						// let	newPosition = 5 - (newValue * 0.25)
+						// View.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+						$(`.bubble-single${silderNum}`).css("left", Model.countSinglePosition);
+
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 						$(`.value-single-span${silderNum}`).text(singleRange.value);
 					}).trigger('input')
@@ -351,16 +380,26 @@ import { htmlPrefilter } from "jquery";
 			// view.typeBubbleValue();
 			view.getSingleValue(settings.min, settings.max);
 			view.scaleSingle(settings.min, settings.max);
-			let article = document.querySelector('article')
-			for(let i = 0; i < 100; i++) {
-				let a:any = `.value-multi-right-span${i},`
-				// console.log(a)
-				let txt = document.createTextNode(a)
-				article.appendChild(txt)
-			}
+			// let article = document.querySelector('article')
+			// for(let i = 0; i < 100; i++) {
+			// 	let a:any = `.value-multi-right-span${i},`
+			// 	// console.log(a)
+			// 	let txt = document.createTextNode(a)
+			// 	article.appendChild(txt)
+			// }
 				// let i = 1; i < 100
 				// let b = `.single-range${i++}`.repeat(100)
-			
+			$(`.first-ins1`).on('click', function(){
+				let newValue:number
+				let val = singleRange.value;
+				newValue = (val - settings.min) * 100 / (settings.max - settings.min)
+				let	newPosition = 5 - (newValue * 0.25)
+				let countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+				singleRange.value = $(`.first-ins1`).text()
+				$(`.bubble-single${silderNum}`).css("left", countSinglePosition)
+				$(`.value-single-span${silderNum}`).text(singleRange.value)
+			})
+			console.log(Model.countSinglePosition)
 			//=======================================================================
 			class Сontroller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
