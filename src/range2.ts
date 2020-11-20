@@ -168,10 +168,6 @@ import { htmlPrefilter } from "jquery";
 			inputLeft.max = settings.max
 			inputRight.max = settings.max
 
-			//ИЗМЕНЕНИЕ ЦВЕТА
-			$('input[type=range]::-webkit-slider-thumb').css('background-color', settings.color)
-			$(`.single-range${silderNum}::-webkit-slider-thumb`).css('background-color', settings.color)
-
 
 			//=======================================================================
 			class Model {
@@ -239,6 +235,7 @@ import { htmlPrefilter } from "jquery";
 					}
 				}
 				static countSinglePosition:number|string//because can't create const or let here
+				static insCountSinglePosition:number|string
 				getSingleValueModel(min:number, max:number, testVal:number = -666.666) {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(singleRange).on('input', function(){
@@ -250,14 +247,15 @@ import { htmlPrefilter } from "jquery";
 						let	newPosition = 5 - (newValue * 0.25)
 						Model.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
 					})
-					// $(`.first-ins1`).on('click', function(){
-					// 	let newValue:number
-					// 	let val = singleRange.value;
-					// 	if (testVal == -666.666) {
-					// 		newValue = (val - min) * 100 / (max - min)
-					// 	} else {newValue = (testVal - min) * 100 / (max - min)}
-					// 	let	newPosition = 5 - (newValue * 0.25)
-					// 	Model.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+				}
+				insCatchBubble(){
+					// $(`first-ins1`).on('input', function(){
+						let newValue:number
+						// var val = +$(`.first-ins1`).text();
+						var val = singleRange.value
+						newValue = (val - settings.min) * 100 / (settings.max - settings.min)
+						let	newPosition = 5 - (newValue * 0.25)
+						Model.insCountSinglePosition = `calc(${newValue}% + (${newPosition}px))`
 					// })
 				}
 			};
@@ -265,6 +263,7 @@ import { htmlPrefilter } from "jquery";
 			model.setLeftValue();
 			model.setRightValue();
 			model.getSingleValueModel(settings.min, settings.max)
+			model.insCatchBubble()
 			// module.exports = Model
 			//=======================================================================
 			class View {
@@ -364,6 +363,8 @@ import { htmlPrefilter } from "jquery";
 						fourth: Math.round(max - ((max - min) / 4)),
 						fifth: max
 					}
+					// $(`.${insNum}-ins${silderNum}`).first().text(scaleSingleObj.${insNum})
+
 					$(`.first-ins${silderNum}`).first().text(scaleSingleObj.first);//.first() because .text() makes double value when testing scaleSingle()
 					$(`.second-ins${silderNum}`).first().text(scaleSingleObj.second);
 					$(`.third-ins${silderNum}`).first().text(scaleSingleObj.third);
@@ -389,17 +390,32 @@ import { htmlPrefilter } from "jquery";
 			// }
 				// let i = 1; i < 100
 				// let b = `.single-range${i++}`.repeat(100)
-			$(`.first-ins1`).on('click', function(){
-				let newValue:number
-				let val = singleRange.value;
-				newValue = (val - settings.min) * 100 / (settings.max - settings.min)
-				let	newPosition = 5 - (newValue * 0.25)
-				let countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
+			$(`.first-ins1, .second-ins1`).on('click', function(){
+				// let newValue:number
+				// console.log(singleRange.value)
+				// var firstClick = $(`.first-ins1`).data('clickedFirst')
+				// var secondClick = $(`.second-ins1`).data('clickedSecond')
+				// if (firstClick == true) {
+				// 	var val = +$(`.first-ins1`).text()
+				// } else if(secondClick == true) {
+				// 	var val = +$(`.second-ins1`).text()
+				// }!!!!!!ВСЕ ТАКИ НАПИШУ .first-ins1.on('click' .second-ins1.on('click' ИТД!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				
+				// newValue = (val - settings.min) * 100 / (settings.max - settings.min)
+				// let	newPosition = 5 - (newValue * 0.25)
+				// let countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
 				singleRange.value = $(`.first-ins1`).text()
-				$(`.bubble-single${silderNum}`).css("left", countSinglePosition)
+				// $(`.bubble-single${silderNum}`).css("left", `calc(${(val - settings.min) * 100 / (settings.max - settings.min)}% + ${5-((val - settings.min) * 100 / (settings.max - settings.min))*0.25}px)`)
+				$(`.bubble-single${silderNum}`).css("left", Model.insCountSinglePosition)
 				$(`.value-single-span${silderNum}`).text(singleRange.value)
 			})
-			console.log(Model.countSinglePosition)
+			console.log(singleRange.value)
+			console.log(Model.insCountSinglePosition)
+			$(`.first-ins1`).on('click', function(){
+				console.log(singleRange.value)
+				console.log(Model.insCountSinglePosition)
+			})
+			
 			//=======================================================================
 			class Сontroller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
