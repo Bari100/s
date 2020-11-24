@@ -6,8 +6,8 @@ const sinon = require('sinon')//node.js does't work without this string
 //CONTROLLER
 
 describe("тест добавления eventListener для multirange-slider", function() {
-  var inputLeft = document.getElementById("input-left"),
-      inputRight = document.getElementById("input-right")
+  var inputLeft = document.querySelector(".input-left1"),
+      inputRight = document.querySelector(".input-right1")
   it('addEventListener при вызове controller.inTouchLeft()', function() {
     sinon.spy(inputLeft, 'addEventListener')
     expect(inputLeft.addEventListener.calledOnce).not.to.be.true
