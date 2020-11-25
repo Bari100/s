@@ -32,13 +32,17 @@
             </label>
         </div>
         <div>
-            <button onclick="changeStep()">Step</button>
-            <input type="number" id="number">
+            <button class="change-step">Step</button>
+            <input type="number" id="step_number">
+        </div>
+        <div>
+            <button class="change-value">Value</button>
+            <input type="number" id="slider_value">
         </div>
     </div>
     
     
-    <div class="sliders">
+    <div class="sliders1">
         <!-- <div class="slider-single">
             <div class="bubble-single"><span class="value-single-span"></span></div>
             <input type="range" id="single-range" min="12" max="250" value="50">
@@ -98,10 +102,10 @@
     <script src="index.js"></script>
 
 
-    <div style="background-color: black; width: 200px; height: 200px;"></div>
-
-    <div class="sliders1"></div>
     <script src="range2.ts"></script>
+    <div class="sliders1"></div>
     <script>$("body").rangeSliders(1)</script>
+    
+    
 </body>
 </html>

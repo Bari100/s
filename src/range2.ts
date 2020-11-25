@@ -1,27 +1,27 @@
 import { htmlPrefilter } from "jquery";
 
-// ;(function ($) {
-// 	(<any>$.fn).rangeSliders = function (silderNum: number, vertical: boolean) {
-// 		let settings = {
-// 			step: 1,
-// 			vertical: vertical,
-// 			multirange: false,
-// 			bubbles: true,
-// 			width: 26,
-// 			min: 20,
-// 			max: 280,
-// 		  };
+;(function ($) {
+	(<any>$.fn).rangeSliders = function (silderNum: number, vertical: boolean) {
+		let settings = {
+			step: 1,
+			vertical: vertical,
+			multirange: false,
+			bubbles: true,
+			width: 26,
+			min: 20,
+			max: 280,
+		  };
 		
-// 		return this.each(function () {
-            let settings = { ///DELETE THIS
-			"step": 1,
-			"vertical": false,
-			"multirange": true,
-			"bubbles": true,
-			"width": 26,
-			"min": 10,
-			"max": 100
-		  };let silderNum = 1///DELETE THIS
+		return this.each(function () {
+        //     let settings = { ///DELETE THIS
+		// 	"step": 1,
+		// 	"vertical": false,
+		// 	"multirange": true,
+		// 	"bubbles": true,
+		// 	"width": 26,
+		// 	"min": 10,
+		// 	"max": 100
+		//   };let silderNum = 1///DELETE THIS
 			
 			var sliders:any = <HTMLElement>document.querySelector(`.sliders${silderNum}`),
 			// var sliders:any = $('<div>', {'class': 'sliders'}),
@@ -109,16 +109,62 @@ import { htmlPrefilter } from "jquery";
 
 
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
-			$("input[type='radio']").change(function(){
+			$("input[type='radio']").on('click', function(){
 				if($(radioMulti).prop("checked")) {
 					$(sliderSingle).hide();
-					$(".multi-range-slider").show();
+					$(`.multi-range-slider${silderNum}`).show();
 				} else {
 					$(sliderSingle).show();
-					$(".multi-range-slider").hide();
+					$(`.multi-range-slider${silderNum}`).hide();
 				}
-			});
-			
+			})
+
+			//*-DEMO-* BUBBLE ON/OFF
+			$("input[type='radio']").on('click', function(){
+				if($('.bubble-on').prop("checked")){
+					$(`.bubble-single${silderNum}`).removeClass("none");
+					$(`.bubble-multi-right${silderNum}`).removeClass("none");
+					$(`.bubble-multi-left${silderNum}`).removeClass("none");
+				} else if($('.bubble-off').prop("checked")) {
+					$(`.bubble-single${silderNum}`).addClass("none");
+					$(`.bubble-multi-right${silderNum}`).addClass("none");
+					$(`.bubble-multi-left${silderNum}`).addClass("none");
+				}
+			})
+
+			//*-DEMO-* ФУНКЦИЯ ВЫБОРА ГОРИЗОНТ ИЛИ ВЕРТИКАЛЬ
+			$("input[type='radio']").on('click', function(){
+				if($('.horizontal').prop("checked")){
+					sliders.style.transform = "rotate(0deg)"
+				} else {
+					sliders.style.transform = "rotate(270deg)"
+				}
+			})
+
+			//*-DEMO-* ФУНКЦИЯ STEP
+			$(".change-step").on('click', function(){
+				$(singleRange).on('input', function(){singleRange.step = (<HTMLInputElement>document.getElementById("step_number")).value})
+				// singleRange.step = (<HTMLInputElement>document.getElementById("number")).value
+				inputLeft.step = (<HTMLInputElement>document.getElementById("step_number")).value
+				inputRight.step = (<HTMLInputElement>document.getElementById("step_number")).value
+			})
+			$(`.first-ins${silderNum}, .second-ins${silderNum}, .third-ins${silderNum}, .fourth-ins${silderNum}, .fifth-ins${silderNum}`)
+				.on('mouseout', function(){
+					$(singleRange).on('input', function(){singleRange.step = (<HTMLInputElement>document.getElementById("step_number")).value})})
+				
+
+
+
+
+			//!!!!!!!!!!!!!!!!!ПЕРЕМЕСТИТЬ В MODEL И CONTROLLER 		
+			// $(`.first-ins${silderNum}, .second-ins${silderNum}, .third-ins${silderNum}, .fourth-ins${silderNum}, .fifth-ins${silderNum}`)
+			// 	.on('mouseover', function(){singleRange.step = 1})
+			// 	.on('mouseout', function(){
+			// 		$(singleRange).on('input', function(){singleRange.step = settings.step})})//!!!!!!!!!!!!!!!!!ПЕРЕМЕСТИТЬ В MODEL И CONTROLLER 
+
+
+
+
 			//ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЕ ШАГА (STEP)
 			if(settings.vertical) {
 				sliders.style.transform = "rotate(270deg)";
@@ -546,6 +592,6 @@ import { htmlPrefilter } from "jquery";
 			controller.inInsCatchBubbleProgress()
 			controller.inGetSingleValue()
 			controller.inCountProgress()
-// 		});
-// 	};
-// })(jQuery);	
+		});
+	};
+})(jQuery);	
