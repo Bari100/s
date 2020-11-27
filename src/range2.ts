@@ -57,43 +57,43 @@ import { htmlPrefilter } from "jquery";
 
 
 
-			var multiRangeSlider = $('<div>', {'class': `multi-range-slider${silderNum}`});
-			$(sliders).append(multiRangeSlider);
-			var bubbleMultiLeft = $('<div>', {'class': `bubble-multi-left${silderNum}`});
-			$(multiRangeSlider).append(bubbleMultiLeft);
+			var multiRangeSlider = $('<div>', {'class': `multi-range-slider${silderNum}`})
+			$(sliders).append(multiRangeSlider)
+			var bubbleMultiLeft = $('<div>', {'class': `bubble-multi-left${silderNum}`})
+			$(multiRangeSlider).append(bubbleMultiLeft)
 			var valueMultiLeftSpan = $('<span>', {'class': `value-multi-left-span${silderNum}`})
-			$(bubbleMultiLeft).append(valueMultiLeftSpan);
-			var bubbleMultiRight = $('<div>', {'class': `bubble-multi-right${silderNum}`});
-			$(multiRangeSlider).append(bubbleMultiRight);
+			$(bubbleMultiLeft).append(valueMultiLeftSpan)
+			var bubbleMultiRight = $('<div>', {'class': `bubble-multi-right${silderNum}`})
+			$(multiRangeSlider).append(bubbleMultiRight)
 			var valueMultiRightSpan = $('<span>', {'class': `value-multi-right-span${silderNum}`})
-			$(bubbleMultiRight).append(valueMultiRightSpan);
-			var inputLeft:any = $('<input>', {'class': `input-left${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '100'});
-			var inputRight:any = $('<input>', {'class': `input-right${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '200'});
-			$(multiRangeSlider).append(inputLeft);
-			$(multiRangeSlider).append(inputRight);
-			var slider = $('<div>', {'class': `slider${silderNum}`});
-			$(multiRangeSlider).append(slider);
-			$(slider).append($('<div>', {'class': `track${silderNum}`}));
-			$(slider).append($('<div>', {'class': `range${silderNum}`}));
-			$(slider).append($('<div>', {'class': `thumb${silderNum} left${silderNum}`}));
-			$(slider).append($('<div>', {'class': `thumb${silderNum} right${silderNum}`}));
-			var multiScale = $('<div>', {'class': `multi-scale${silderNum}`});
-			$(multiRangeSlider).append(multiScale);
+			$(bubbleMultiRight).append(valueMultiRightSpan)
+			var inputLeft:any = $('<input>', {'class': `input-left${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '100'})
+			var inputRight:any = $('<input>', {'class': `input-right${silderNum}`, 'type': 'range', 'min': '50', 'max': '250', 'value': '200'})
+			$(multiRangeSlider).append(inputLeft)
+			$(multiRangeSlider).append(inputRight)
+			var slider = $('<div>', {'class': `slider${silderNum}`})
+			$(multiRangeSlider).append(slider)
+			$(slider).append($('<div>', {'class': `track${silderNum}`}))
+			$(slider).append($('<div>', {'class': `range${silderNum}`}))
+			$(slider).append($('<div>', {'class': `thumb${silderNum} left${silderNum}`}))
+			$(slider).append($('<div>', {'class': `thumb${silderNum} right${silderNum}`}))
+			var multiScale = $('<div>', {'class': `multi-scale${silderNum}`})
+			$(multiRangeSlider).append(multiScale)
 			var spanMultiScale1 = $('<span>', {'style': 'left: 0%'});
-			$(multiScale).append(spanMultiScale1);
-			$(spanMultiScale1).append($('<ins>', {'class': `multi-first-ins${silderNum}`}));
-			var spanMultiScale2 = $('<span>', {'class': 'second', 'style': 'left: 25%'});
-			$(multiScale).append(spanMultiScale2);
-			$(spanMultiScale2).append($('<ins>', {'class': `multi-second-ins${silderNum}`}));
-			var spanMultiScale3 = $('<span>', {'class': 'third', 'style': 'left: 49%'});
-			$(multiScale).append(spanMultiScale3);
-			$(spanMultiScale3).append($('<ins>', {'class': `multi-third-ins${silderNum}`}));
-			var spanMultiScale4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'});
-			$(multiScale).append(spanMultiScale4);
-			$(spanMultiScale4).append($('<ins>', {'class': `multi-fourth-ins${silderNum}`}));
-			var spanMultiScale5 = $('<span>', {'style': 'left: 95%'});
-			$(multiScale).append(spanMultiScale5);
-			$(spanMultiScale5).append($('<ins>', {'class': `multi-fifth-ins${silderNum}`}));
+			$(multiScale).append(spanMultiScale1)
+			$(spanMultiScale1).append($('<ins>', {'class': `multi-first-ins${silderNum}`}))
+			var spanMultiScale2 = $('<span>', {'class': 'second', 'style': 'left: 25%'})
+			$(multiScale).append(spanMultiScale2)
+			$(spanMultiScale2).append($('<ins>', {'class': `multi-second-ins${silderNum}`}))
+			var spanMultiScale3 = $('<span>', {'class': 'third', 'style': 'left: 49%'})
+			$(multiScale).append(spanMultiScale3)
+			$(spanMultiScale3).append($('<ins>', {'class': `multi-third-ins${silderNum}`}))
+			var spanMultiScale4 = $('<span>', {'class': 'fourth', 'style': 'left: 73%'})
+			$(multiScale).append(spanMultiScale4)
+			$(spanMultiScale4).append($('<ins>', {'class': `multi-fourth-ins${silderNum}`}))
+			var spanMultiScale5 = $('<span>', {'style': 'left: 95%'})
+			$(multiScale).append(spanMultiScale5)
+			$(spanMultiScale5).append($('<ins>', {'class': `multi-fifth-ins${silderNum}`}))
 
 			var range = <HTMLInputElement>document.querySelector(`.slider${silderNum} > .range${silderNum}`),
 				thumbLeft = <HTMLInputElement>document.querySelector(`.slider${silderNum} > .thumb${silderNum}.left${silderNum}`),
@@ -226,15 +226,16 @@ import { htmlPrefilter } from "jquery";
 			//=====================================================================================================================================================================================================================
 			class Model {
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				static percent
+				static percentLeft
+				static percentRight
 				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
 					let	min = settings.min,
 						max = settings.max
 					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
 					let testCountVal = Math.min(testLeftVal, testRightVal - 1)
 					if(testLeftVal == -666.666) {
-						Model.percent = ((inputLeft.value - min) / (max - min)) * 100
-					} else {Model.percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+						Model.percentLeft = ((inputLeft.value - min) / (max - min)) * 100
+					} else {Model.percentLeft = ((testCountVal - testMin) / (testMax - testMin)) * 100}
 					// thumbLeft.style.left = percent + "%"
 					// range.style.left = percent + "%"
 				}
@@ -245,8 +246,8 @@ import { htmlPrefilter } from "jquery";
 					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
 					let testCountVal = Math.max(testRightVal, testLeftVal + 1)
 					if(testRightVal == -666.666){
-						Model.percent = ((inputRight.value - min) / (max - min)) * 100
-					} else {Model.percent = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+						Model.percentRight = ((inputRight.value - min) / (max - min)) * 100
+					} else {Model.percentRight = ((testCountVal - testMin) / (testMax - testMin)) * 100}
 					// thumbRight.style.right = (100 - percent) + "%"
 					// range.style.right = (100 - percent) + "%"
 				}
@@ -288,44 +289,46 @@ import { htmlPrefilter } from "jquery";
 					}
 				}
 
-				insCatchInputLR(){
-					// var positionXY: number,
-					// 	compareInputs: boolean,
-					// 	countPosition: number,
-					// 	inputLeftMath: number,
-					// 	inputRightMath: number,
-					// 	x100: number;
-					// positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					// countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
+				insCatchInputLR(eventArg){
+					var positionXY: number,
+						compareInputs: boolean,
+						countPosition: number,
+						inputLeftMath: number,
+						inputRightMath: number,
+						x100: number
+					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
 					// let testCountPosition = (min + max) / width
-					// /* percentage position Y of cursor  */
+					/* percentage position Y of cursor  */
 					// if(testPosition == -666.666) {
-					// 	x100 = positionXY * countPosition
+						x100 = positionXY * countPosition
 					// } else {x100 = testPosition * testCountPosition}
 					
-					// /* absolute distance from respective slider values */
-					// inputLeftMath = Math.abs(inputLeft.value - x100)
-					// inputRightMath = Math.abs(inputRight.value - x100)
+					/* absolute distance from respective slider values */
+					inputLeftMath = Math.abs(inputLeft.value - x100)
+					inputRightMath = Math.abs(inputRight.value - x100)
 					// let testInputLeftMath = Math.abs(testValLeft - x100)
 					// let testInputRightMath = Math.abs(testValRight - x100)
 					// if(testValLeft == -666.666 && testValRight == -666.666) {
-					// 	compareInputs = inputLeftMath < inputRightMath
+						compareInputs = inputLeftMath < inputRightMath
 					// } else {compareInputs = testInputLeftMath < testInputRightMath}
 					
 					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-					// let inputLR
-					// if (!eventArg.buttons) {
-					// 	if (compareInputs) {
-					// 		inputLR = inputLeft.value
-					// 	} else {
-					// 		inputLR = inputRight.value
-					// 	}
-					// }
-					// $(`.multi-third-ins${silderNum}`).on('click', function(){inputLR = $(`.multi-third-ins${silderNum}`).text()})
+					let inputLR
+					if (compareInputs) {
+						inputLeft.value = inputLR 
+					} else {
+						inputRight.value = inputLR
+					}
+					$(`.multi-third-ins${silderNum}`).on('click', function(){inputLR = $(`.multi-third-ins${silderNum}`).text()})
 					$(`.multi-third-ins${silderNum}`).on('click', function(){
-						inputLeft.value = +$(`.multi-third-ins${silderNum}`).text()
+						// inputLeft.value = +$(`.multi-third-ins${silderNum}`).text()
 						console.log(inputLeft.value)
+						// console.log(compareInputs)
+						// console.log(inputRight.value)
+						console.log(inputLR)
 					})
+					// console.log(positionXY)
 				}
 
 				static progressBarWidth:number//because can't create const or let here
@@ -389,7 +392,7 @@ import { htmlPrefilter } from "jquery";
 			model.getSingleValueModel(settings.min, settings.max)
 			model.insCatchBubbleProgress()
 			model.countProgress(settings.min, settings.max)
-			model.insCatchInputLR()
+			// model.insCatchInputLR()
 			// module.exports = Model
 			//=====================================================================================================================================================================================================================
 			class View {
@@ -398,7 +401,6 @@ import { htmlPrefilter } from "jquery";
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
 				}
-
 				setRightValueView(){
 					thumbRight.style.right = (100 - View.position) + "%"
 					range.style.right = (100 - View.position) + "%"
@@ -525,18 +527,19 @@ import { htmlPrefilter } from "jquery";
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 				inTouchLeft() {
 					inputLeft.addEventListener("input", model.setLeftValue)
-					$(inputLeft).on("input", function(){View.position = Model.percent}).trigger('input').on("input", view.setLeftValueView).trigger('input')
+					$(inputLeft).on("input", function(){View.position = Model.percentLeft}).trigger('input').on("input", view.setLeftValueView).trigger('input')
 				}
 				inTouchRight() {
 					inputRight.addEventListener("input", model.setRightValue)
-					$(inputRight).on("input", function(){View.position = Model.percent}).trigger('input').on("input", view.setRightValueView).trigger('input')
+					$(inputRight).on("input", function(){View.position = Model.percentRight}).trigger('input').on("input", view.setRightValueView).trigger('input')
 				}
 			
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
 				inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}
 				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
 
-				// inInsCatchInputLR() {$(multiScale).on('mousemove', model.insCatchInputLR)}
+				inInsCatchInputLR() {document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
+				// inInsCatchInputLR() {document.querySelector(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				inGetLeft() {inputLeft.addEventListener('input', view.getLeftValue)}
@@ -579,7 +582,7 @@ import { htmlPrefilter } from "jquery";
 			controller.inInsCatchBubbleProgress()
 			controller.inGetSingleValue()
 			controller.inCountProgress()
-			// controller.inInsCatchInputLR()
+			controller.inInsCatchInputLR()
 		});
 	};
 })(jQuery);	
