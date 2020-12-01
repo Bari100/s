@@ -287,21 +287,38 @@ import { htmlPrefilter } from "jquery";
 							inputLeft.style.zIndex = 1;
 						}
 					}
+					// console.log(positionXY)
+					// console.log($(sliders).width())
+					// console.log(inputLeftMath)
+					// console.log(inputRightMath)
 				}
-
+				static positionXY: number
 				insCatchInputLR(eventArg){
-					var positionXY: number,
-						compareInputs: boolean,
+					// var positionXY: number,
+					var	compareInputs: boolean,
 						countPosition: number,
 						inputLeftMath: number,
 						inputRightMath: number,
 						x100: number
-					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
+					// positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
+					// $('.multi-first-ins1').on('mousemove', function() {positionXY = +$('.multi-first-ins1').text()})
+					// $('.multi-second-ins1').on('mousemove', function() {positionXY = +$('.multi-second-ins1').text()})
+					// $('.multi-third-ins1').on('mousemove', function() {positionXY = +$('.multi-third-ins1').text()})
+					// $('.multi-fourth-ins1').on('mousemove', function() {positionXY = +$('.multi-fourth-ins1').text()})
+					// $('.multi-fifth-ins1').on('mousemove', function() {positionXY = +$('.multi-fifth-ins1').text()})
+					// if($('.multi-first-ins1').on('click', function(){})){positionXY = +$('.multi-first-ins1').text()}
+					// else if($('.multi-second-ins1').on('click', function(){})){positionXY = +$('.multi-second-ins1').text()}
+					// else if($('.multi-third-ins1').on('click', function(){})){positionXY = +$('.multi-third-ins1').text()}
+					// else if($('.multi-fourth-ins1').on('click', function(){})){positionXY = +$('.multi-fourth-ins1').text()}
+					// else if($('.multi-fifth-ins1').on('click', function(){})){positionXY = +$('.multi-fifth-ins1').text()}
+					// console.log(positionXY)
+					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()//1.08
 					// let testCountPosition = (min + max) / width
 					/* percentage position Y of cursor  */
 					// if(testPosition == -666.666) {
-						x100 = positionXY * countPosition
+						// console.log(countPosition)
+						x100 = Model.positionXY * countPosition
+						// console.log(x100)
 					// } else {x100 = testPosition * testCountPosition}
 					
 					/* absolute distance from respective slider values */
@@ -324,9 +341,11 @@ import { htmlPrefilter } from "jquery";
 					$(`.multi-third-ins${silderNum}`).on('click', function(){
 						// inputLeft.value = +$(`.multi-third-ins${silderNum}`).text()
 						console.log(inputLeft.value)
-						// console.log(compareInputs)
-						// console.log(inputRight.value)
-						console.log(inputLR)
+						// console.log($(sliders).width())
+						console.log(inputRight.value)
+						// console.log(inputLeftMath)
+						// console.log(inputLR)
+						// console.log(x100)
 					})
 					// console.log(positionXY)
 				}
@@ -538,7 +557,14 @@ import { htmlPrefilter } from "jquery";
 				inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}
 				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
 
-				inInsCatchInputLR() {document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
+				inInsCatchInputLR() {
+					$(`.multi-first-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-first-ins${silderNum}`).text()})
+					$(`.multi-second-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-second-ins${silderNum}`).text()})
+					$(`.multi-third-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-third-ins${silderNum}`).text()})
+					$(`.multi-fourth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fourth-ins${silderNum}`).text()})
+					$(`.multi-fifth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fifth-ins${silderNum}`).text()})
+					document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)
+				}
 				// inInsCatchInputLR() {document.querySelector(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
