@@ -287,48 +287,19 @@ import { htmlPrefilter } from "jquery";
 							inputLeft.style.zIndex = 1;
 						}
 					}
-					// console.log(positionXY)
-					// console.log($(sliders).width())
-					// console.log(inputLeftMath)
-					// console.log(inputRightMath)
 				}
 				static positionXY: number
-				insCatchInputLR(eventArg){
-					// var positionXY: number,
+				insCatchInputLR(){
 					var	compareInputs: boolean,
 						countPosition: number,
 						inputLeftMath: number,
 						inputRightMath: number,
 						x100: number
-					// positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
-					// $('.multi-first-ins1').on('mousemove', function() {positionXY = +$('.multi-first-ins1').text()})
-					// $('.multi-second-ins1').on('mousemove', function() {positionXY = +$('.multi-second-ins1').text()})
-					// $('.multi-third-ins1').on('mousemove', function() {positionXY = +$('.multi-third-ins1').text()})
-					// $('.multi-fourth-ins1').on('mousemove', function() {positionXY = +$('.multi-fourth-ins1').text()})
-					// $('.multi-fifth-ins1').on('mousemove', function() {positionXY = +$('.multi-fifth-ins1').text()})
-					// if($('.multi-first-ins1').on('click', function(){})){positionXY = +$('.multi-first-ins1').text()}
-					// else if($('.multi-second-ins1').on('click', function(){})){positionXY = +$('.multi-second-ins1').text()}
-					// else if($('.multi-third-ins1').on('click', function(){})){positionXY = +$('.multi-third-ins1').text()}
-					// else if($('.multi-fourth-ins1').on('click', function(){})){positionXY = +$('.multi-fourth-ins1').text()}
-					// else if($('.multi-fifth-ins1').on('click', function(){})){positionXY = +$('.multi-fifth-ins1').text()}
-					// console.log(positionXY)
 					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()//1.08
-					// let testCountPosition = (min + max) / width
-					/* percentage position Y of cursor  */
-					// if(testPosition == -666.666) {
-						// console.log(countPosition)
 						x100 = Model.positionXY * countPosition
-						// console.log(x100)
-					// } else {x100 = testPosition * testCountPosition}
-					
-					/* absolute distance from respective slider values */
 					inputLeftMath = Math.abs(inputLeft.value - x100)
 					inputRightMath = Math.abs(inputRight.value - x100)
-					// let testInputLeftMath = Math.abs(testValLeft - x100)
-					// let testInputRightMath = Math.abs(testValRight - x100)
-					// if(testValLeft == -666.666 && testValRight == -666.666) {
 						compareInputs = inputLeftMath < inputRightMath
-					// } else {compareInputs = testInputLeftMath < testInputRightMath}
 					
 					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
 					let inputLR
@@ -339,15 +310,33 @@ import { htmlPrefilter } from "jquery";
 					}
 					$(`.multi-third-ins${silderNum}`).on('click', function(){inputLR = $(`.multi-third-ins${silderNum}`).text()})
 					$(`.multi-third-ins${silderNum}`).on('click', function(){
-						// inputLeft.value = +$(`.multi-third-ins${silderNum}`).text()
-						console.log(inputLeft.value)
-						// console.log($(sliders).width())
-						console.log(inputRight.value)
-						// console.log(inputLeftMath)
-						// console.log(inputLR)
-						// console.log(x100)
 					})
-					// console.log(positionXY)
+				}
+
+				static countMultiPositionLeft:number|string
+				multiBubbleLeft(min:number, max:number, testVal:number = -666.666) {
+					$(inputLeft).on('input', function(){
+						let newValue
+						let val = inputLeft.value
+						if (testVal == -666.666) {
+							newValue = (val - min) * 100 / (max - min)
+						} else {newValue = (testVal - min) * 100 / (max - min)}
+						let newPosition = -10 - (newValue * 0.05);
+						Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
+					}).trigger('input')
+				}
+
+				static countMultiPositionRight:number|string
+				multiBubbleRight(min:number, max:number, testVal:number = -666.666) {
+					$(inputRight).on('input', function(){
+						let newValue
+						let val = inputRight.value
+						if (testVal == -666.666) {
+							newValue = (val - min) * 100 / (max - min)
+						} else {newValue = (testVal - min) * 100 / (max - min)}
+						let newPosition = -10 - (newValue * 0.05);
+						Model.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
+					}).trigger('input')
 				}
 
 				static progressBarWidth:number//because can't create const or let here
@@ -411,6 +400,8 @@ import { htmlPrefilter } from "jquery";
 			model.getSingleValueModel(settings.min, settings.max)
 			model.insCatchBubbleProgress()
 			model.countProgress(settings.min, settings.max)
+			model.multiBubbleLeft(settings.min, settings.max)
+			model.multiBubbleRight(settings.min, settings.max)
 			// model.insCatchInputLR()
 			// module.exports = Model
 			//=====================================================================================================================================================================================================================
@@ -427,34 +418,35 @@ import { htmlPrefilter } from "jquery";
 
 				/////////////////////////////////MULTI
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				static countMultiPosition:number|string
-				getLeftValue(min:number, max:number, testVal:number = -666.666) {
+				static countMultiPositionLeft:number|string
+				getLeftValue() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$(`.input-left${silderNum}`).on('input', function(){
-						let newValue
-						let val = inputLeft.value
-						if (testVal == -666.666) {
-							newValue = (val - min) * 100 / (max - min)
-						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let newPosition = -10 - (newValue * 0.05);
-						View.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-						$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPosition)
+					$(inputLeft).on('input', function(){
+						// let newValue
+						// let val = inputLeft.value
+						// if (testVal == -666.666) {
+						// 	newValue = (val - min) * 100 / (max - min)
+						// } else {newValue = (testVal - min) * 100 / (max - min)}
+						// let newPosition = -10 - (newValue * 0.05);
+						// View.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
+						$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
 						$(`.bubble-multi-left${silderNum}`).css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 						$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 					}).trigger('input')
 				}
-				getRightValue(min:number, max:number, testVal:number = -666.666) {
+				static countMultiPositionRight:number|string
+				getRightValue() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$(`.input-right${silderNum}`).on('input', function(){
-						let newValue
-						let val = inputRight.value
-						if (testVal == -666.666) {
-							newValue = (val - min) * 100 / (max - min)
-						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let newPosition = -10 - (newValue * 0.05)
-						View.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-						$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPosition)
+					$(inputRight).on('input', function(){
+						// let newValue
+						// let val = inputRight.value
+						// if (testVal == -666.666) {
+						// 	newValue = (val - min) * 100 / (max - min)
+						// } else {newValue = (testVal - min) * 100 / (max - min)}
+						// let newPosition = -10 - (newValue * 0.05);
+						// View.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
+						$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
 						$(`.bubble-multi-right${silderNum}`).css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 						$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
@@ -526,8 +518,8 @@ import { htmlPrefilter } from "jquery";
 			// module.exports = View
 			view.setLeftValueView()
 			view.setRightValueView()
-			view.getLeftValue(settings.min, settings.max)
-			view.getRightValue(settings.min, settings.max)
+			view.getLeftValue()
+			view.getRightValue()
 			view.scaleMulti(settings.min, settings.max)
 			view.countProgress()
 			view.getSingleValue()
@@ -568,8 +560,16 @@ import { htmlPrefilter } from "jquery";
 				// inInsCatchInputLR() {document.querySelector(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				inGetLeft() {inputLeft.addEventListener('input', view.getLeftValue)}
-				inGetRight() {inputRight.addEventListener('input', view.getRightValue)}
+				inMultiBubble() {
+					$(inputLeft)
+					.on('input', function(){View.countMultiPositionLeft = Model.countMultiPositionLeft})
+					// .on('input', view.getLeftValue).trigger('input')
+					$(inputRight)
+					.on('input', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
+					// .on('input', view.getRightValue).trigger('input')
+					inputLeft.addEventListener('input', view.getLeftValue)
+					inputRight.addEventListener('input', view.getRightValue)
+				}
 				
 				/////////////////////////////////SINGLE
 				inInsCatchBubbleProgress(){
@@ -603,12 +603,11 @@ import { htmlPrefilter } from "jquery";
 			controller.inTouchRight();
 			controller.inMoveLeft();
 			controller.inMoveRight();
-			controller.inGetLeft();
-			controller.inGetRight();
 			controller.inInsCatchBubbleProgress()
 			controller.inGetSingleValue()
 			controller.inCountProgress()
 			controller.inInsCatchInputLR()
+			controller.inMultiBubble()
 		});
 	};
 })(jQuery);	
