@@ -294,7 +294,8 @@ import { htmlPrefilter } from "jquery";
 						countPosition: number,
 						inputLeftMath: number,
 						inputRightMath: number,
-						x100: number
+						x100: number,
+						newValue
 					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()//1.08
 						x100 = Model.positionXY * countPosition
 					inputLeftMath = Math.abs(inputLeft.value - x100)
@@ -308,9 +309,15 @@ import { htmlPrefilter } from "jquery";
 					} else {
 						inputRight.value = inputLR
 					}
-					$(`.multi-third-ins${silderNum}`).on('click', function(){inputLR = $(`.multi-third-ins${silderNum}`).text()})
 					$(`.multi-third-ins${silderNum}`).on('click', function(){
+						inputLR = $(`.multi-third-ins${silderNum}`).text()
+						newValue = (inputLR - settings.min) * 100 / (settings.max - settings.min)
+						let newPosition = -10 - (newValue * 0.05)
+						Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
+						console.log(inputLeft.value)
 					})
+					// $(`.multi-third-ins${silderNum}`).on('click', function(){
+					// })
 				}
 
 				static countMultiPositionLeft:number|string
@@ -334,7 +341,7 @@ import { htmlPrefilter } from "jquery";
 						if (testVal == -666.666) {
 							newValue = (val - min) * 100 / (max - min)
 						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let newPosition = -10 - (newValue * 0.05);
+						let newPosition = -10 - (newValue * 0.05)
 						Model.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
 					}).trigger('input')
 				}
@@ -422,13 +429,6 @@ import { htmlPrefilter } from "jquery";
 				getLeftValue() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputLeft).on('input', function(){
-						// let newValue
-						// let val = inputLeft.value
-						// if (testVal == -666.666) {
-						// 	newValue = (val - min) * 100 / (max - min)
-						// } else {newValue = (testVal - min) * 100 / (max - min)}
-						// let newPosition = -10 - (newValue * 0.05);
-						// View.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
 						$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
 						$(`.bubble-multi-left${silderNum}`).css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
@@ -439,13 +439,6 @@ import { htmlPrefilter } from "jquery";
 				getRightValue() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputRight).on('input', function(){
-						// let newValue
-						// let val = inputRight.value
-						// if (testVal == -666.666) {
-						// 	newValue = (val - min) * 100 / (max - min)
-						// } else {newValue = (testVal - min) * 100 / (max - min)}
-						// let newPosition = -10 - (newValue * 0.05);
-						// View.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
 						$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
 						$(`.bubble-multi-right${silderNum}`).css("bottom", "50px")
 						//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
@@ -556,16 +549,23 @@ import { htmlPrefilter } from "jquery";
 					$(`.multi-fourth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fourth-ins${silderNum}`).text()})
 					$(`.multi-fifth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fifth-ins${silderNum}`).text()})
 					document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)
+
+					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+					.on('click', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
+					.on('click', view.getLeftValue).trigger('input')
 				}
 				// inInsCatchInputLR() {document.querySelector(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				inMultiBubble() {
+					
 					$(inputLeft)
 					.on('input', function(){View.countMultiPositionLeft = Model.countMultiPositionLeft})
+					.on('input',  model.multiBubbleLeft(settings.min, settings.max)).trigger('input')
 					// .on('input', view.getLeftValue).trigger('input')
 					$(inputRight)
 					.on('input', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
+					.on('input',  model.multiBubbleRight(settings.min, settings.max)).trigger('input')
 					// .on('input', view.getRightValue).trigger('input')
 					inputLeft.addEventListener('input', view.getLeftValue)
 					inputRight.addEventListener('input', view.getRightValue)
