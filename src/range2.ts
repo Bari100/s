@@ -236,8 +236,6 @@ import { htmlPrefilter } from "jquery";
 					if(testLeftVal == -666.666) {
 						Model.percentLeft = ((inputLeft.value - min) / (max - min)) * 100
 					} else {Model.percentLeft = ((testCountVal - testMin) / (testMax - testMin)) * 100}
-					// thumbLeft.style.left = percent + "%"
-					// range.style.left = percent + "%"
 				}
 
 				setRightValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
@@ -248,8 +246,6 @@ import { htmlPrefilter } from "jquery";
 					if(testRightVal == -666.666){
 						Model.percentRight = ((inputRight.value - min) / (max - min)) * 100
 					} else {Model.percentRight = ((testCountVal - testMin) / (testMax - testMin)) * 100}
-					// thumbRight.style.right = (100 - percent) + "%"
-					// range.style.right = (100 - percent) + "%"
 				}
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
@@ -289,35 +285,79 @@ import { htmlPrefilter } from "jquery";
 					}
 				}
 				static positionXY: number
+				static inputLR
+				static inputLRight
 				insCatchInputLR(){
-					var	compareInputs: boolean,
-						countPosition: number,
-						inputLeftMath: number,
-						inputRightMath: number,
-						x100: number,
-						newValue
-					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()//1.08
-						x100 = Model.positionXY * countPosition
-					inputLeftMath = Math.abs(inputLeft.value - x100)
-					inputRightMath = Math.abs(inputRight.value - x100)
-						compareInputs = inputLeftMath < inputRightMath
+					// var	compareInputs: boolean,
+					// 	countPosition: number,
+					// 	inputLeftMath: number,
+					// 	inputRightMath: number,
+					// 	x100: number,
+					let	newValue
+					// countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()//1.08
+					// 	x100 = Model.positionXY * countPosition
+					// inputLeftMath = Math.abs(inputLeft.value - x100)
+					// inputRightMath = Math.abs(inputRight.value - x100)
+					// 	compareInputs = inputLeftMath < inputRightMath
 					
-					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-					let inputLR
-					if (compareInputs) {
-						inputLeft.value = inputLR 
-					} else {
-						inputRight.value = inputLR
-					}
-					$(`.multi-third-ins${silderNum}`).on('click', function(){
-						inputLR = $(`.multi-third-ins${silderNum}`).text()
-						newValue = (inputLR - settings.min) * 100 / (settings.max - settings.min)
-						let newPosition = -10 - (newValue * 0.05)
-						Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
-						console.log(inputLeft.value)
-					})
-					// $(`.multi-third-ins${silderNum}`).on('click', function(){
+					// // Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
+					// // let inputLR
+					// if (compareInputs) {
+					// 	inputLeft.value = Model.inputLR 
+					// } else {
+					// 	inputRight.value = Model.inputLR
+					// }
+					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+					// .on('click', () => {
+					// 	let clicked = false
+					// 	if(clicked){
+					// 		inputRight.value = Model.inputLR
+					// 		clicked = false
+					// 	} else {
+					// 		inputLeft.value = Model.inputLR
+					// 		clicked = true
+					// 	}
 					// })
+					$(`.multi-first-ins${silderNum}`).on('click', function(){
+						Model.inputLR = +$(`.multi-first-ins${silderNum}`).text()
+					})
+					$(`.multi-second-ins${silderNum}`).on('click', function(){
+						Model.inputLR = +$(`.multi-second-ins${silderNum}`).text()
+					})
+					$(`.multi-third-ins${silderNum}`).on('click', function(){
+						Model.inputLR = +$(`.multi-third-ins${silderNum}`).text()
+					})
+					$(`.multi-fourth-ins${silderNum}`).on('click', function(){
+						Model.inputLR = +$(`.multi-fourth-ins${silderNum}`).text()
+					})
+					$(`.multi-fifth-ins${silderNum}`).on('click', function(){
+						Model.inputLR = +$(`.multi-fifth-ins${silderNum}`).text()
+					})
+					newValue = (Model.inputLR - settings.min) * 100 / (settings.max - settings.min)
+					let newPosition = -10 - (newValue * 0.05)
+					Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
+				}
+
+				insCatchInputLRight(){
+					let	newValue
+					$(`.multi-first-ins${silderNum}`).on('click', function(){
+						Model.inputLRight = +$(`.multi-first-ins${silderNum}`).text()
+					})
+					$(`.multi-second-ins${silderNum}`).on('click', function(){
+						Model.inputLRight = +$(`.multi-second-ins${silderNum}`).text()
+					})
+					$(`.multi-third-ins${silderNum}`).on('click', function(){
+						Model.inputLRight = +$(`.multi-third-ins${silderNum}`).text()
+					})
+					$(`.multi-fourth-ins${silderNum}`).on('click', function(){
+						Model.inputLRight = +$(`.multi-fourth-ins${silderNum}`).text()
+					})
+					$(`.multi-fifth-ins${silderNum}`).on('click', function(){
+						Model.inputLRight = +$(`.multi-fifth-ins${silderNum}`).text()
+					})
+					newValue = (Model.inputLRight - settings.min) * 100 / (settings.max - settings.min)
+					let newPosition = -10 - (newValue * 0.05)
+					Model.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
 				}
 
 				static countMultiPositionLeft:number|string
@@ -410,6 +450,8 @@ import { htmlPrefilter } from "jquery";
 			model.multiBubbleLeft(settings.min, settings.max)
 			model.multiBubbleRight(settings.min, settings.max)
 			// model.insCatchInputLR()
+			$(`.multi-third-ins${silderNum}`).on('click', function(){console.log(Model.inputLR)})
+			// model.insCatchInputLR()
 			// module.exports = Model
 			//=====================================================================================================================================================================================================================
 			class View {
@@ -423,9 +465,17 @@ import { htmlPrefilter } from "jquery";
 					range.style.right = (100 - View.position) + "%"
 				}
 
+				catchBubbleLeft(){
+					$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
+				}
+				catchBubbleRight(){
+					$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
+				}
+
 				/////////////////////////////////MULTI
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				static countMultiPositionLeft:number|string
+				static inputLRview
 				getLeftValue() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputLeft).on('input', function(){
@@ -543,16 +593,45 @@ import { htmlPrefilter } from "jquery";
 				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
 
 				inInsCatchInputLR() {
-					$(`.multi-first-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-first-ins${silderNum}`).text()})
-					$(`.multi-second-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-second-ins${silderNum}`).text()})
-					$(`.multi-third-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-third-ins${silderNum}`).text()})
-					$(`.multi-fourth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fourth-ins${silderNum}`).text()})
-					$(`.multi-fifth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fifth-ins${silderNum}`).text()})
-					document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)
+					// $(`.multi-first-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-first-ins${silderNum}`).text()})
+					// $(`.multi-second-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-second-ins${silderNum}`).text()})
+					// $(`.multi-third-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-third-ins${silderNum}`).text()})
+					// .on('click', function(){console.log(inputLeft.value == Model.inputLR)})
+					// $(`.multi-fourth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fourth-ins${silderNum}`).text()})
+					// $(`.multi-fifth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fifth-ins${silderNum}`).text()})
+					// document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)
+					// $(`.multi-third-ins${silderNum}`).on('click', model.insCatchInputLR)
 
+					let clicked = false
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-					.on('click', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
-					.on('click', view.getLeftValue).trigger('input')
+					.on('click', () => {
+						
+						if(clicked){
+							$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+							.on('click', model.insCatchInputLRight)
+							.on('click', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
+							.on('click', view.catchBubbleRight).trigger('input')
+							// inputRight.value = Model.inputLR
+							// .on('click', () => clicked = false)
+							.on('click', () => console.log(clicked))
+							clicked = false
+						} else {
+							$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+							.on('click', model.insCatchInputLR)
+							.on('click', function(){View.countMultiPositionLeft = Model.countMultiPositionLeft})
+							.on('click', view.catchBubbleLeft).trigger('input')
+							// inputLeft.value = Model.inputLR
+							// .on('click', () => clicked = true)
+							.on('click', () => console.log(clicked))
+							clicked = true
+						}
+					})
+					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+					// .on('click', () => console.log(clicked))
+						// .on('click', function(){
+						// 	if(inputLeft.value == Model.inputLR){view.getLeftValue()}
+						// }).trigger('input')
+						// .on('click', view.getLeftValue).trigger('input')
 				}
 				// inInsCatchInputLR() {document.querySelector(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
 
