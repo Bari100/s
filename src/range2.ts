@@ -601,31 +601,78 @@ import { htmlPrefilter } from "jquery";
 					// $(`.multi-fifth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fifth-ins${silderNum}`).text()})
 					// document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)
 					// $(`.multi-third-ins${silderNum}`).on('click', model.insCatchInputLR)
-
-					let clicked = false
+					
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 					.on('click', () => {
-						
-						if(clicked){
-							$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-							.on('click', model.insCatchInputLRight)
-							.on('click', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
-							.on('click', view.catchBubbleRight).trigger('input')
-							// inputRight.value = Model.inputLR
-							// .on('click', () => clicked = false)
-							.on('click', () => console.log(clicked))
-							clicked = false
-						} else {
-							$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-							.on('click', model.insCatchInputLR)
-							.on('click', function(){View.countMultiPositionLeft = Model.countMultiPositionLeft})
-							.on('click', view.catchBubbleLeft).trigger('input')
-							// inputLeft.value = Model.inputLR
-							// .on('click', () => clicked = true)
-							.on('click', () => console.log(clicked))
-							clicked = true
-						}
+						$(`.multi-scale${silderNum}`).toggleClass("mul-ins-a")
 					})
+					if($(`.multi-scale${silderNum}`).hasClass('mul-ins-a')) {
+						$(`.multi-first-ins${silderNum}`).on('click', () => {
+							model.insCatchInputLR()
+							View.countMultiPositionLeft = Model.countMultiPositionLeft
+							view.catchBubbleLeft()
+						})
+					} else {
+						$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+						.on('click', () => {
+							model.insCatchInputLRight()
+							View.countMultiPositionRight = Model.countMultiPositionRight
+							view.catchBubbleRight()
+							console.log($(`.multi-first-ins${silderNum}.mul-ins-a`).text())
+						})
+					}
+					
+					
+
+					// let clicked = false
+
+					// $(`.multi-scale${silderNum}`).on('click', () => {
+					// 	$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).toggleClass("mul-ins-a")
+					// })
+					// $(`.multi-first-ins${silderNum}.mul-ins-a`)
+					// .on('click', () => {
+					// 	model.insCatchInputLR()
+					// 	View.countMultiPositionLeft = Model.countMultiPositionLeft
+					// 	view.catchBubbleLeft()
+					// })
+					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+					// .on('click', () => {
+					// 	model.insCatchInputLRight()
+					// 	View.countMultiPositionRight = Model.countMultiPositionRight
+					// 	view.catchBubbleRight()
+					// 	console.log($(`.multi-first-ins${silderNum}.mul-ins-a`).text())
+					// })
+					
+					// .on('click', () => {
+					// // 	var clicks = $(this).data('clicks');
+					// // 	if (clicks) {
+					// // 		model.insCatchInputLRight()
+					// // 		View.countMultiPositionRight = Model.countMultiPositionRight
+					// // 		view.catchBubbleRight()
+					// // 	} else {
+					// // 		model.insCatchInputLR()
+					// // 		View.countMultiPositionLeft = Model.countMultiPositionLeft
+					// // 		view.catchBubbleLeft()
+					// // 	}
+					// // 	$(this).data("clicks", !clicks);
+					// 	if(clicked){
+					// 		model.insCatchInputLRight()
+					// 		View.countMultiPositionRight = Model.countMultiPositionRight
+					// 		view.catchBubbleRight()
+					// 		// inputRight.value = Model.inputLR
+					// 		// .on('click', () => clicked = false)
+					// 		// .on('click', () => console.log(clicked))
+					// 		clicked = false
+					// 	} else {
+					// 		model.insCatchInputLR()
+					// 		View.countMultiPositionLeft = Model.countMultiPositionLeft
+					// 		view.catchBubbleLeft()
+					// 		// inputLeft.value = Model.inputLR
+					// 		// .on('click', () => clicked = true)
+					// 		// .on('click', () => console.log(clicked))
+					// 		clicked = true
+					// 	}
+					// })
 					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 					// .on('click', () => console.log(clicked))
 						// .on('click', function(){
