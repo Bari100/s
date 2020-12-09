@@ -105,13 +105,18 @@ import { htmlPrefilter } from "jquery";
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
 			$("input[type='radio']").on('click', function(){
 				if($(radioMulti).prop("checked")) {
-					$(sliderSingle).hide();
-					$(`.multi-range-slider${silderNum}`).show();
+					$(sliderSingle).hide()
+					$(`.multi-range-slider${silderNum}`).show()
+					$(`.change-value-multi-block`).show()
+					$(`.change-value-block`).hide()
 				} else {
-					$(sliderSingle).show();
-					$(`.multi-range-slider${silderNum}`).hide();
+					$(sliderSingle).show()
+					$(`.multi-range-slider${silderNum}`).hide()
+					$(`.change-value-multi-block`).hide()
+					$(`.change-value-block`).show()
 				}
 			})
+			if(settings.multirange){$(`.change-value-block`).hide()}
 
 			//*-DEMO-* BUBBLE ON/OFF
 			$("input[type='radio']").on('click', function(){
@@ -162,6 +167,38 @@ import { htmlPrefilter } from "jquery";
 			})
 			$(singleRange).on('input', function(){
 				(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
+			})
+
+			$(".change-value-multi").on('click', function(){
+				inputLeft.value = (<HTMLInputElement>document.getElementById('multislider-value-1')).value
+				inputRight.value = (<HTMLInputElement>document.getElementById('multislider-value-2')).value
+				inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+				Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
+				inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
+				Model.percentRight = ((inputRight.value - settings.min) / (settings.max - settings.min)) * 100
+				thumbLeft.style.left = Model.percentLeft + "%"
+				range.style.left = Model.percentLeft + "%"
+				thumbRight.style.right = (100 - Model.percentRight) + "%"
+				range.style.right = (100 - Model.percentRight) + "%"
+
+				let newValueLeft
+				let newValueRight
+				newValueLeft = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
+				newValueRight = (inputRight.value - settings.min) * 100 / (settings.max - settings.min)
+				let newPositionLeft = -10 - (newValueLeft * 0.05)
+				let newPositionRight = -10 - (newValueLeft * 0.05)
+				Model.countMultiPositionLeft = `calc(${newValueLeft}% + (${newPositionLeft}px))`
+				Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
+				$(`.bubble-multi-left${silderNum}`).css("left", Model.countMultiPositionLeft)
+				$(`.bubble-multi-right${silderNum}`).css("left", Model.countMultiPositionRight)
+				$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
+				$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
+			})
+			$(inputLeft).on('input', function(){
+				(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
+			})
+			$(inputRight).on('input', function(){
+				(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
 			})
 
 
@@ -611,14 +648,16 @@ import { htmlPrefilter } from "jquery";
 							model.insCatchInputLR()
 							View.countMultiPositionLeft = Model.countMultiPositionLeft
 							view.catchBubbleLeft()
+							console.log($(`.multi-scale${silderNum}`).hasClass('mul-ins-a'))
 						})
-					} else {
+					} else if(!$(`.multi-scale${silderNum}`).hasClass('mul-ins-a')) {
 						$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 						.on('click', () => {
 							model.insCatchInputLRight()
 							View.countMultiPositionRight = Model.countMultiPositionRight
 							view.catchBubbleRight()
-							console.log($(`.multi-first-ins${silderNum}.mul-ins-a`).text())
+							// console.log($(`.multi-first-ins${silderNum}.mul-ins-a`).text())
+							console.log($(`.multi-scale${silderNum}`).hasClass('mul-ins-a'))
 						})
 					}
 					
