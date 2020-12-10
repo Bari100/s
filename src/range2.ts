@@ -398,30 +398,19 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				static countMultiPositionLeft:number|string
-				multiBubbleLeft(min:number, max:number, testVal:number = -666.666) {
-					$(inputLeft).on('input', function(){
+				static countMultiPosition:number|string
+				multiBubble(input, min:number, max:number, testVal:number = -666.666) {
+					$(input).on('input', function(){
 						let newValue
-						let val = inputLeft.value
 						if (testVal == -666.666) {
-							newValue = (val - min) * 100 / (max - min)
+							newValue = (input.value - min) * 100 / (max - min)
 						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let newPosition = -10 - (newValue * 0.05);
-						Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
+						let newPosition = -10 - (newValue * 0.05)
+						Model.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
 					}).trigger('input')
 				}
 
 				static countMultiPositionRight:number|string
-				multiBubbleRight(min:number, max:number, testVal:number = -666.666) {
-					$(inputRight).on('input', function(){
-						let newValue
-						let val = inputRight.value
-						if (testVal == -666.666) {
-							newValue = (val - min) * 100 / (max - min)
-						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let newPosition = -10 - (newValue * 0.05)
-						Model.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
-					}).trigger('input')
-				}
 
 				static progressBarWidth:number//because can't create const or let here
 				countProgress(min:number, max:number, testVal:number = -666.666) {
@@ -484,8 +473,9 @@ import { htmlPrefilter } from "jquery";
 			model.getSingleValueModel(settings.min, settings.max)
 			model.insCatchBubbleProgress()
 			model.countProgress(settings.min, settings.max)
-			model.multiBubbleLeft(settings.min, settings.max)
-			model.multiBubbleRight(settings.min, settings.max)
+			model.multiBubble(inputLeft, settings.min, settings.max)
+			model.multiBubble(inputRight, settings.min, settings.max)
+			// model.multiBubbleRight(settings.min, settings.max)
 			// model.insCatchInputLR()
 			$(`.multi-third-ins${silderNum}`).on('click', function(){console.log(Model.inputLR)})
 			// model.insCatchInputLR()
@@ -614,7 +604,7 @@ import { htmlPrefilter } from "jquery";
 			// }
 
 			//=====================================================================================================================================================================================================================
-			class Сontroller {
+			class Controller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 				inTouchLeft() {
 					inputLeft.addEventListener("input", model.setLeftValue)
@@ -723,16 +713,13 @@ import { htmlPrefilter } from "jquery";
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				inMultiBubble() {
-					
 					$(inputLeft)
-					.on('input', function(){View.countMultiPositionLeft = Model.countMultiPositionLeft})
-					.on('input',  model.multiBubbleLeft(settings.min, settings.max)).trigger('input')
-					// .on('input', view.getLeftValue).trigger('input')
-					$(inputRight)
-					.on('input', function(){View.countMultiPositionRight = Model.countMultiPositionRight})
-					.on('input',  model.multiBubbleRight(settings.min, settings.max)).trigger('input')
-					// .on('input', view.getRightValue).trigger('input')
+					.on('input', function(){View.countMultiPositionLeft = Model.countMultiPosition})
+					.on('input',  model.multiBubble(inputLeft, settings.min, settings.max)).trigger('input')
 					inputLeft.addEventListener('input', view.getLeftValue)
+					$(inputRight)
+					.on('input', function(){View.countMultiPositionRight = Model.countMultiPosition})
+					.on('input',  model.multiBubble(inputRight, settings.min, settings.max)).trigger('input')
 					inputRight.addEventListener('input', view.getRightValue)
 				}
 				
@@ -762,12 +749,12 @@ import { htmlPrefilter } from "jquery";
 					.on('input', view.countProgress).trigger('input')
 				}
 			};
-			let controller = new Сontroller
-			module.exports = Сontroller
-			controller.inTouchLeft();
-			controller.inTouchRight();
-			controller.inMoveLeft();
-			controller.inMoveRight();
+			let controller = new Controller
+			module.exports = Controller
+			controller.inTouchLeft()
+			controller.inTouchRight()
+			controller.inMoveLeft()
+			controller.inMoveRight()
 			controller.inInsCatchBubbleProgress()
 			controller.inGetSingleValue()
 			controller.inCountProgress()
