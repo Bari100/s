@@ -12,7 +12,7 @@
 //     var chai = require("chai");
 //     var sinonChai = require("sinon-chai");
 
-    // chai.use(sinonChai);
+//     chai.use(sinonChai);
     </script>
     <!-- добавим chai -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
@@ -28,18 +28,19 @@
 
 <body>
     
-    
+    <div class="sliders1" style="display: none"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
     <!-- <script src="range.227ef839.js"></script> -->
+    
+    
     <script src="../src/range2.ts"></script>
-    <div class="sliders1" style="display: none"></div>
     <script>$("body").rangeSliders(1)</script>
     
 
     <!-- скрипт со спецификацией (describe, it...) -->
     <!-- <script src="test.js"></script> -->
-    <!-- <script src="view.test.js"></script> -->
-    <script src="controller2.test.js"></script>
+     <script src="view.test.js"></script> 
+<!--    <script src="controller2.test.js"></script>-->
 
     <!-- элемент с id="mocha" будет содержать результаты тестов -->
     <div id="mocha"></div>

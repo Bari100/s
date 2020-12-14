@@ -397,19 +397,6 @@ import { htmlPrefilter } from "jquery";
 					Model.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
 				}
 
-				static countMultiPositionLeft:number|string
-				static countMultiPosition:number|string
-				multiBubble(input, min:number, max:number, testVal:number = -666.666) {
-					$(input).on('input', function(){
-						let newValue
-						if (testVal == -666.666) {
-							newValue = (input.value - min) * 100 / (max - min)
-						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let newPosition = -10 - (newValue * 0.05)
-						Model.countMultiPosition = `calc(${newValue}% + (${newPosition}px))`
-					}).trigger('input')
-				}
-
 				static countMultiPositionRight:number|string
 
 				static progressBarWidth:number//because can't create const or let here
@@ -424,18 +411,6 @@ import { htmlPrefilter } from "jquery";
 
 				static countSinglePosition:number|string//because can't create const or let here
 				static insCountSinglePosition:number|string
-				getSingleValueModel(min:number, max:number, testVal:number = -666.666) {
-					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-					$(singleRange).on('input', function(){
-						let newValue:number
-						let val = singleRange.value;
-						if (testVal == -666.666) {
-							newValue = (val - min) * 100 / (max - min)
-						} else {newValue = (testVal - min) * 100 / (max - min)}
-						let	newPosition = 5 - (newValue * 0.25)
-						Model.countSinglePosition = `calc(${newValue}% + (${newPosition}px))`
-					})
-				}
 
 				static valResultIns:number
 				static varIns:number
@@ -466,15 +441,30 @@ import { htmlPrefilter } from "jquery";
 					Model.insCountSinglePosition = `calc(${newValue}% + (${newPosition}px))`
 					Model.progressBarWidth = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
 				}
+
+				static countMultiPositionLeft:number|string
+				static countBubblePosition:number|string
+				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {
+					$(input).on('input', function(){
+						let newValue
+						let newPosition
+						if (testVal == -666.666) newValue = (input.value - min) * 100 / (max - min)
+						else newValue = (testVal - min) * 100 / (max - min)
+						if (input == singleRange) newPosition = 5 - (newValue * 0.25)
+						else newPosition = -10 - (newValue * 0.05)
+						Model.countBubblePosition = `calc(${newValue}% + (${newPosition}px))`
+					}).trigger('input')
+				}
 			};
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
-			model.getSingleValueModel(settings.min, settings.max)
+			// model.getSingleValueModel(settings.min, settings.max)
 			model.insCatchBubbleProgress()
 			model.countProgress(settings.min, settings.max)
-			model.multiBubble(inputLeft, settings.min, settings.max)
-			model.multiBubble(inputRight, settings.min, settings.max)
+			model.bubbleCount(inputLeft, settings.min, settings.max)
+			model.bubbleCount(inputRight, settings.min, settings.max)
+			model.bubbleCount(singleRange, settings.min, settings.max)
 			// model.multiBubbleRight(settings.min, settings.max)
 			// model.insCatchInputLR()
 			$(`.multi-third-ins${silderNum}`).on('click', function(){console.log(Model.inputLR)})
@@ -585,7 +575,7 @@ import { htmlPrefilter } from "jquery";
 				}
 			}
 			let view = new View
-			// module.exports = View
+			module.exports = View
 			view.setLeftValueView()
 			view.setRightValueView()
 			view.getLeftValue()
@@ -714,12 +704,12 @@ import { htmlPrefilter } from "jquery";
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				inMultiBubble() {
 					$(inputLeft)
-					.on('input', function(){View.countMultiPositionLeft = Model.countMultiPosition})
-					.on('input',  model.multiBubble(inputLeft, settings.min, settings.max)).trigger('input')
+					.on('input', function(){View.countMultiPositionLeft = Model.countBubblePosition})
+					.on('input',  model.bubbleCount(inputLeft, settings.min, settings.max)).trigger('input')
 					inputLeft.addEventListener('input', view.getLeftValue)
 					$(inputRight)
-					.on('input', function(){View.countMultiPositionRight = Model.countMultiPosition})
-					.on('input',  model.multiBubble(inputRight, settings.min, settings.max)).trigger('input')
+					.on('input', function(){View.countMultiPositionRight = Model.countBubblePosition})
+					.on('input',  model.bubbleCount(inputRight, settings.min, settings.max)).trigger('input')
 					inputRight.addEventListener('input', view.getRightValue)
 				}
 				
@@ -737,10 +727,9 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				inGetSingleValue(){
-					$(singleRange)
-					.on('input', function(){
-						View.bubblePosition = Model.countSinglePosition})
-					.on('input', view.getSingleValue).trigger('input')
+					$(singleRange).on('input', () => View.bubblePosition = Model.countBubblePosition)
+					singleRange.addEventListener('input', model.bubbleCount(singleRange, settings.min, settings.max))
+					$(singleRange).on('input', view.getSingleValue).trigger('input')
 				}
 
 				inCountProgress(){
@@ -748,9 +737,9 @@ import { htmlPrefilter } from "jquery";
 					.on('input', function(){View.progressBarWidth = Model.progressBarWidth})
 					.on('input', view.countProgress).trigger('input')
 				}
-			};
+			}
 			let controller = new Controller
-			module.exports = Controller
+			// module.exports = Controller
 			controller.inTouchLeft()
 			controller.inTouchRight()
 			controller.inMoveLeft()
@@ -760,6 +749,6 @@ import { htmlPrefilter } from "jquery";
 			controller.inCountProgress()
 			controller.inInsCatchInputLR()
 			controller.inMultiBubble()
-		});
-	};
-})(jQuery);	
+		})
+	}
+})(jQuery)
