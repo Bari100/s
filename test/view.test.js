@@ -1,4 +1,5 @@
 const View = require('../src/range2.ts')
+// import View from '../src/range2.ts'
 let view = new View()
 
 // VIEW
@@ -6,19 +7,19 @@ let view = new View()
 describe("тест шкалы single-range", function() {
   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
     view.scaleSingle(300, 600)
-    assert.equal($(".first-ins").text(), 300)
-    assert.equal($(".second-ins").text(), 375)
-    assert.equal($(".third-ins").text(), 450)
-    assert.equal($(".fourth-ins").text(), 525)
-    assert.equal($(".fifth-ins").text(), 600)
+    assert.equal($(".first-ins1").text(), 300)
+    assert.equal($(".second-ins1").text(), 375)
+    assert.equal($(".third-ins1").text(), 450)
+    assert.equal($(".fourth-ins1").text(), 525)
+    assert.equal($(".fifth-ins1").text(), 600)
   });
   it("при min = 0 и max = 100 шкала имеет значения: 0, 25, 50, 75, 100", function () {
     view.scaleSingle(0, 100)
-    assert.equal($(".first-ins").text(), 0)
-    assert.equal($(".second-ins").text(), 25)
-    assert.equal($(".third-ins").text(), 50)
-    assert.equal($(".fourth-ins").text(), 75)
-    assert.equal($(".fifth-ins").text(), 100)
+    assert.equal($(".first-ins1").text(), 0)
+    assert.equal($(".second-ins1").text(), 25)
+    assert.equal($(".third-ins1").text(), 50)
+    assert.equal($(".fourth-ins1").text(), 75)
+    assert.equal($(".fifth-ins1").text(), 100)
   });
   it("при min = -500 и max = 1000 шкала имеет значения: -500, -125, 250, 625, 1000", function () {
     view.scaleSingle(-500, 1000)

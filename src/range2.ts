@@ -165,9 +165,9 @@ import { htmlPrefilter } from "jquery";
 				$(`.bubble-single${silderNum}`).css("left", Model.insCountSinglePosition)
 				$(`.value-single-span${silderNum}`).text(singleRange.value);
 			})
-			$(singleRange).on('input', function(){
-				(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
-			})
+			// $(singleRange).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
+			// })
 
 			$(".change-value-multi").on('click', function(){
 				inputLeft.value = (<HTMLInputElement>document.getElementById('multislider-value-1')).value
@@ -194,12 +194,12 @@ import { htmlPrefilter } from "jquery";
 				$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 				$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
 			})
-			$(inputLeft).on('input', function(){
-				(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
-			})
-			$(inputRight).on('input', function(){
-				(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
-			})
+			// $(inputLeft).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
+			// })
+			// $(inputRight).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
+			// })
 
 
 
@@ -751,4 +751,6 @@ import { htmlPrefilter } from "jquery";
 			controller.inMultiBubble()
 		})
 	}
-})(jQuery)
+})(jQuery);
+
+// (<any>$("body")).rangeSliders(1)
