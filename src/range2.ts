@@ -165,9 +165,9 @@ import { htmlPrefilter } from "jquery";
 				$(`.bubble-single${silderNum}`).css("left", Model.insCountSinglePosition)
 				$(`.value-single-span${silderNum}`).text(singleRange.value);
 			})
-			// $(singleRange).on('input', function(){
-			// 	(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
-			// })
+			$(singleRange).on('input', function(){
+				(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
+			})
 
 			$(".change-value-multi").on('click', function(){
 				inputLeft.value = (<HTMLInputElement>document.getElementById('multislider-value-1')).value
@@ -194,12 +194,12 @@ import { htmlPrefilter } from "jquery";
 				$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 				$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
 			})
-			// $(inputLeft).on('input', function(){
-			// 	(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
-			// })
-			// $(inputRight).on('input', function(){
-			// 	(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
-			// })
+			$(inputLeft).on('input', function(){
+				(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
+			})
+			$(inputRight).on('input', function(){
+				(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
+			})
 
 
 
@@ -322,79 +322,34 @@ import { htmlPrefilter } from "jquery";
 					}
 				}
 				static positionXY: number
-				static inputLR
+				static inputL
 				static inputLRight
-				insCatchInputLR(){
-					// var	compareInputs: boolean,
-					// 	countPosition: number,
-					// 	inputLeftMath: number,
-					// 	inputRightMath: number,
-					// 	x100: number,
+				insCatchBubbleLeft(){
 					let	newValue
-					// countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()//1.08
-					// 	x100 = Model.positionXY * countPosition
-					// inputLeftMath = Math.abs(inputLeft.value - x100)
-					// inputRightMath = Math.abs(inputRight.value - x100)
-					// 	compareInputs = inputLeftMath < inputRightMath
-					
-					// // Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
-					// // let inputLR
-					// if (compareInputs) {
-					// 	inputLeft.value = Model.inputLR 
-					// } else {
-					// 	inputRight.value = Model.inputLR
-					// }
-					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-					// .on('click', () => {
-					// 	let clicked = false
-					// 	if(clicked){
-					// 		inputRight.value = Model.inputLR
-					// 		clicked = false
-					// 	} else {
-					// 		inputLeft.value = Model.inputLR
-					// 		clicked = true
-					// 	}
-					// })
 					$(`.multi-first-ins${silderNum}`).on('click', function(){
-						Model.inputLR = +$(`.multi-first-ins${silderNum}`).text()
+						inputLeft.value = +$(`.multi-first-ins${silderNum}`).text()
 					})
 					$(`.multi-second-ins${silderNum}`).on('click', function(){
-						Model.inputLR = +$(`.multi-second-ins${silderNum}`).text()
+						inputLeft.value = +$(`.multi-second-ins${silderNum}`).text()
 					})
 					$(`.multi-third-ins${silderNum}`).on('click', function(){
-						Model.inputLR = +$(`.multi-third-ins${silderNum}`).text()
+						inputLeft.value = +$(`.multi-third-ins${silderNum}`).text()
 					})
 					$(`.multi-fourth-ins${silderNum}`).on('click', function(){
-						Model.inputLR = +$(`.multi-fourth-ins${silderNum}`).text()
+						inputLeft.value = +$(`.multi-fourth-ins${silderNum}`).text()
 					})
 					$(`.multi-fifth-ins${silderNum}`).on('click', function(){
-						Model.inputLR = +$(`.multi-fifth-ins${silderNum}`).text()
+						inputLeft.value = +$(`.multi-fifth-ins${silderNum}`).text()
 					})
-					newValue = (Model.inputLR - settings.min) * 100 / (settings.max - settings.min)
+					newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
 					let newPosition = -10 - (newValue * 0.05)
 					Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
-				}
+					// inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+					Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
 
-				insCatchInputLRight(){
-					let	newValue
-					$(`.multi-first-ins${silderNum}`).on('click', function(){
-						Model.inputLRight = +$(`.multi-first-ins${silderNum}`).text()
-					})
-					$(`.multi-second-ins${silderNum}`).on('click', function(){
-						Model.inputLRight = +$(`.multi-second-ins${silderNum}`).text()
-					})
-					$(`.multi-third-ins${silderNum}`).on('click', function(){
-						Model.inputLRight = +$(`.multi-third-ins${silderNum}`).text()
-					})
-					$(`.multi-fourth-ins${silderNum}`).on('click', function(){
-						Model.inputLRight = +$(`.multi-fourth-ins${silderNum}`).text()
-					})
-					$(`.multi-fifth-ins${silderNum}`).on('click', function(){
-						Model.inputLRight = +$(`.multi-fifth-ins${silderNum}`).text()
-					})
-					newValue = (Model.inputLRight - settings.min) * 100 / (settings.max - settings.min)
-					let newPosition = -10 - (newValue * 0.05)
-					Model.countMultiPositionRight = `calc(${newValue}% + (${newPosition}px))`
+					let newValueRight = (+$(`.multi-fifth-ins${silderNum}`).text() - settings.min) * 100 / (settings.max - settings.min)
+					let newPositionRight = -10 - (newValueRight * 0.05)
+					Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
 				}
 
 				static countMultiPositionRight:number|string
@@ -466,8 +421,7 @@ import { htmlPrefilter } from "jquery";
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
 			// model.multiBubbleRight(settings.min, settings.max)
-			// model.insCatchInputLR()
-			$(`.multi-third-ins${silderNum}`).on('click', function(){console.log(Model.inputLR)})
+			model.insCatchBubbleLeft()
 			// model.insCatchInputLR()
 			// module.exports = Model
 			//=====================================================================================================================================================================================================================
@@ -484,9 +438,15 @@ import { htmlPrefilter } from "jquery";
 
 				catchBubbleLeft(){
 					$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
+					$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
+					thumbLeft.style.left = View.position + "%"
+					range.style.left = View.position + "%"
 				}
 				catchBubbleRight(){
 					$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
+					$(`.value-multi-right-span${silderNum}`).text(settings.max)
+					thumbRight.style.right = '0'
+					range.style.right = '0'
 				}
 
 				/////////////////////////////////MULTI
@@ -610,96 +570,17 @@ import { htmlPrefilter } from "jquery";
 				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
 
 				inInsCatchInputLR() {
-					// $(`.multi-first-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-first-ins${silderNum}`).text()})
-					// $(`.multi-second-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-second-ins${silderNum}`).text()})
-					// $(`.multi-third-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-third-ins${silderNum}`).text()})
-					// .on('click', function(){console.log(inputLeft.value == Model.inputLR)})
-					// $(`.multi-fourth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fourth-ins${silderNum}`).text()})
-					// $(`.multi-fifth-ins${silderNum}`).on('mousemove', function() {Model.positionXY = +$(`.multi-fifth-ins${silderNum}`).text()})
-					// document.querySelector(`.multi-scale${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)
-					// $(`.multi-third-ins${silderNum}`).on('click', model.insCatchInputLR)
-					
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 					.on('click', () => {
-						$(`.multi-scale${silderNum}`).toggleClass("mul-ins-a")
+						model.insCatchBubbleLeft()
+						View.countMultiPositionLeft = Model.countMultiPositionLeft
+						View.position = Model.percentLeft
+						view.catchBubbleLeft()
+
+						View.countMultiPositionRight = Model.countMultiPositionRight
+						view.catchBubbleRight()
 					})
-					if($(`.multi-scale${silderNum}`).hasClass('mul-ins-a')) {
-						$(`.multi-first-ins${silderNum}`).on('click', () => {
-							model.insCatchInputLR()
-							View.countMultiPositionLeft = Model.countMultiPositionLeft
-							view.catchBubbleLeft()
-							console.log($(`.multi-scale${silderNum}`).hasClass('mul-ins-a'))
-						})
-					} else if(!$(`.multi-scale${silderNum}`).hasClass('mul-ins-a')) {
-						$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-						.on('click', () => {
-							model.insCatchInputLRight()
-							View.countMultiPositionRight = Model.countMultiPositionRight
-							view.catchBubbleRight()
-							// console.log($(`.multi-first-ins${silderNum}.mul-ins-a`).text())
-							console.log($(`.multi-scale${silderNum}`).hasClass('mul-ins-a'))
-						})
-					}
-					
-					
-
-					// let clicked = false
-
-					// $(`.multi-scale${silderNum}`).on('click', () => {
-					// 	$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).toggleClass("mul-ins-a")
-					// })
-					// $(`.multi-first-ins${silderNum}.mul-ins-a`)
-					// .on('click', () => {
-					// 	model.insCatchInputLR()
-					// 	View.countMultiPositionLeft = Model.countMultiPositionLeft
-					// 	view.catchBubbleLeft()
-					// })
-					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-					// .on('click', () => {
-					// 	model.insCatchInputLRight()
-					// 	View.countMultiPositionRight = Model.countMultiPositionRight
-					// 	view.catchBubbleRight()
-					// 	console.log($(`.multi-first-ins${silderNum}.mul-ins-a`).text())
-					// })
-					
-					// .on('click', () => {
-					// // 	var clicks = $(this).data('clicks');
-					// // 	if (clicks) {
-					// // 		model.insCatchInputLRight()
-					// // 		View.countMultiPositionRight = Model.countMultiPositionRight
-					// // 		view.catchBubbleRight()
-					// // 	} else {
-					// // 		model.insCatchInputLR()
-					// // 		View.countMultiPositionLeft = Model.countMultiPositionLeft
-					// // 		view.catchBubbleLeft()
-					// // 	}
-					// // 	$(this).data("clicks", !clicks);
-					// 	if(clicked){
-					// 		model.insCatchInputLRight()
-					// 		View.countMultiPositionRight = Model.countMultiPositionRight
-					// 		view.catchBubbleRight()
-					// 		// inputRight.value = Model.inputLR
-					// 		// .on('click', () => clicked = false)
-					// 		// .on('click', () => console.log(clicked))
-					// 		clicked = false
-					// 	} else {
-					// 		model.insCatchInputLR()
-					// 		View.countMultiPositionLeft = Model.countMultiPositionLeft
-					// 		view.catchBubbleLeft()
-					// 		// inputLeft.value = Model.inputLR
-					// 		// .on('click', () => clicked = true)
-					// 		// .on('click', () => console.log(clicked))
-					// 		clicked = true
-					// 	}
-					// })
-					// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-					// .on('click', () => console.log(clicked))
-						// .on('click', function(){
-						// 	if(inputLeft.value == Model.inputLR){view.getLeftValue()}
-						// }).trigger('input')
-						// .on('click', view.getLeftValue).trigger('input')
 				}
-				// inInsCatchInputLR() {document.querySelector(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`).addEventListener('mousemove', model.insCatchInputLR)}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				inMultiBubble() {
