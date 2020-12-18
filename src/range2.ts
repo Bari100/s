@@ -4,7 +4,7 @@ import { htmlPrefilter } from "jquery";
 	(<any>$.fn).rangeSliders = function (silderNum: number, vertical: boolean) {
 		let settings = {
 			step: 1,
-			vertical: vertical,
+			vertical: false,
 			multirange: true,
 			bubbles: true,
 			width: 26,
@@ -165,9 +165,9 @@ import { htmlPrefilter } from "jquery";
 				$(`.bubble-single${silderNum}`).css("left", Model.insCountSinglePosition)
 				$(`.value-single-span${silderNum}`).text(singleRange.value);
 			})
-			$(singleRange).on('input', function(){
-				(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
-			})
+			// $(singleRange).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
+			// })
 
 			$(".change-value-multi").on('click', function(){
 				inputLeft.value = (<HTMLInputElement>document.getElementById('multislider-value-1')).value
@@ -194,12 +194,12 @@ import { htmlPrefilter } from "jquery";
 				$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 				$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
 			})
-			$(inputLeft).on('input', function(){
-				(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
-			})
-			$(inputRight).on('input', function(){
-				(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
-			})
+			// $(inputLeft).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
+			// })
+			// $(inputRight).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
+			// })
 
 
 
@@ -210,13 +210,28 @@ import { htmlPrefilter } from "jquery";
 			// 		$(singleRange).on('input', function(){singleRange.step = settings.step})})//!!!!!!!!!!!!!!!!!ПЕРЕМЕСТИТЬ В MODEL И CONTROLLER 
 
 
-
+			//WIDTH
+			$(sliders).css("width", settings.width + "vw")
+			$(inputLeft).css("width", settings.width + "vw")
+			$(inputRight).css("width", settings.width + "vw")
+			$(singleRange).css("width", settings.width + "vw")
+			$(sliderSingle).css("width", settings.width + "vw")
+			$(`.scale${silderNum}`).css("width", settings.width + "vw")
+			$(`.multi-scale${silderNum}`).css("width", settings.width + "vw")
 
 			//ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЕ ШАГА (STEP)
 			if(settings.vertical) {
-				sliders.style.transform = "rotate(270deg)";
+				sliders.style.transform = "rotate(270deg)"
+				settings.width = (window.screen.width * window.devicePixelRatio*settings.width)/100
+				$(sliders).css("width", settings.width + "px")
+				$(inputLeft).css("width", settings.width + "px")
+				$(inputRight).css("width", settings.width + "px")
+				$(singleRange).css("width", settings.width + "px")
+				$(sliderSingle).css("width", settings.width + "px")
+				$(`.scale${silderNum}`).css("width", settings.width + "px")
+				$(`.multi-scale${silderNum}`).css("width", settings.width + "px")
 			} else {
-				sliders.style.transform = "rotate(0deg)";
+				sliders.style.transform = "rotate(0deg)"
 			}
 			singleRange.step = settings.step;
 			inputLeft.step = settings.step;
@@ -242,15 +257,6 @@ import { htmlPrefilter } from "jquery";
 				$(".bubble-multi-right").addClass("none");
 				$(".bubble-multi-left").addClass("none");
 			}
-
-			//WIDTH
-			$(sliders).css("width", settings.width + "vw");
-			$(inputLeft).css("width", settings.width + "vw");
-			$(inputRight).css("width", settings.width + "vw");
-			$(singleRange).css("width", settings.width + "vw");
-			$(sliderSingle).css("width", settings.width + "vw");
-			$(".scale").css("width", settings.width + "vw");
-			$(".multi-scale").css("width", settings.width + "vw");
 
 			//ИЗМЕНЕНИЕ MIN MAX
 			singleRange.min = settings.min
@@ -399,15 +405,28 @@ import { htmlPrefilter } from "jquery";
 
 				static countMultiPositionLeft:number|string
 				static countBubblePosition:number|string
+				static countSingBubblePosition
+				// bubbleCount(input, min:number, max:number, testVal:number = -666.666) {
+				// 	$(input).on('input', function(){
+				// 		let newValue
+				// 		let newPosition
+				// 		if (testVal == -666.666) newValue = (input.value - min) * 100 / (max - min)
+				// 		else newValue = (testVal - min) * 100 / (max - min)
+				// 		if (input == singleRange) newPosition = 5 - (newValue * 0.25)
+				// 		else newPosition = -10 - (newValue * 0.05)
+				// 		Model.countBubblePosition = `calc(${newValue}% + (${newPosition}px))`
+				// 	}).trigger('input')
+				// }
 				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {
 					$(input).on('input', function(){
 						let newValue
 						let newPosition
 						if (testVal == -666.666) newValue = (input.value - min) * 100 / (max - min)
 						else newValue = (testVal - min) * 100 / (max - min)
-						if (input == singleRange) newPosition = 5 - (newValue * 0.25)
-						else newPosition = -10 - (newValue * 0.05)
+						let newSingPosition = 5 - (newValue * 0.25)
+						newPosition = -10 - (newValue * 0.05)
 						Model.countBubblePosition = `calc(${newValue}% + (${newPosition}px))`
+						Model.countSingBubblePosition = `calc(${newValue}% + (${newSingPosition}px))`
 					}).trigger('input')
 				}
 			};
@@ -494,9 +513,9 @@ import { htmlPrefilter } from "jquery";
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 				static progressBarWidth:number//because can't create const or let here
 				countProgress() {
-						$(`.progress-bar${silderNum}`).css({
-							'width': View.progressBarWidth + '%'
-						});
+					$(`.progress-bar${silderNum}`).css({
+						'width': View.progressBarWidth + '%'
+					})
 				}
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
@@ -506,7 +525,7 @@ import { htmlPrefilter } from "jquery";
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
 
 					//ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
-					$(`.value-single-span${silderNum}`).text(singleRange.value);
+					$(`.value-single-span${silderNum}`).text(singleRange.value)
 				}
 
 				//ДИАПАЗОН-ШКАЛА(SINGLE)
@@ -535,7 +554,7 @@ import { htmlPrefilter } from "jquery";
 				}
 			}
 			let view = new View
-			module.exports = View
+			// module.exports = View
 			view.setLeftValueView()
 			view.setRightValueView()
 			view.getLeftValue()
@@ -608,7 +627,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				inGetSingleValue(){
-					$(singleRange).on('input', () => View.bubblePosition = Model.countBubblePosition)
+					$(singleRange).on('input', function(){View.bubblePosition = Model.countSingBubblePosition})
 					singleRange.addEventListener('input', model.bubbleCount(singleRange, settings.min, settings.max))
 					$(singleRange).on('input', view.getSingleValue).trigger('input')
 				}
@@ -630,8 +649,14 @@ import { htmlPrefilter } from "jquery";
 			controller.inCountProgress()
 			controller.inInsCatchInputLR()
 			controller.inMultiBubble()
+
+			module.exports = {
+				Model: Model,
+				View: View,
+				Controller: Controller
+			}
 		})
 	}
 })(jQuery);
 
-// (<any>$("body")).rangeSliders(1)
+(<any>$("body")).rangeSliders(1)

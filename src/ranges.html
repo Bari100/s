@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5</title>
+    <link href="range.css" rel="stylesheet">
+</head>
+<body>
+    <div class="settings">
+        <div class="single-multi">
+            <label> Single
+                <input id="mult-sing" class="choose-single" name="choose-slider" type="radio">
+            </label>
+            <label> Multi
+                <input id="mult-sing" class="choose-multi" name="choose-slider" type="radio" checked>
+            </label>
+        </div>
+        <div class="bubble-on-off">
+            <label> Bubble
+                <input class="bubble-on" name="bubble-radio" type="radio" checked>
+            </label>
+            <label> Without Bubble
+                <input class="bubble-off" name="bubble-radio" type="radio">
+            </label>
+        </div>
+        <div class="horizontal-vertical">
+            <label> horizontal
+                <input class="horizontal" name="horiz-vert" type="radio" checked>
+            </label>
+            <label> vertical
+                <input class="vertical" name="horiz-vert" type="radio">
+            </label>
+        </div>
+        <div>
+            <button class="change-step">Step</button>
+            <input type="number" id="step_number">
+        </div>
+        <div class="change-value-block">
+            <button class="change-value">Value</button>
+            <input type="number" id="slider-value">
+        </div>
+        <div class="change-value-multi-block">
+            <button class="change-value-multi">Value</button>
+            <input type="number" id="multislider-value-1">
+            <input type="number" id="multislider-value-2">
+        </div>
+    </div>
+    
+    
+    <div class="sliders1"></div>
+    <div class="sliders2"></div>
+    <div class="sliders3"></div>
+    <div class="sliders4"></div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <!-- <script src="range2.ts"></script> -->
+    <script src="index.js"></script>
+
+
+    <script src="range2.ts"></script>
+    <div class="sliders1"></div>
+    <script>$("body").rangeSliders(1)</script>
+    <div class="sliders2"></div>
+    <script>$("body").rangeSliders(2)</script>
+    <div class="sliders3"></div>
+    <script>$("body").rangeSliders(3)</script>
+    <div class="sliders4"></div>
+    <script>$("body").rangeSliders(4)</script>
+    
+    
+</body>
+</html>
