@@ -24,7 +24,7 @@ import { htmlPrefilter } from "jquery";
 		//   };let silderNum = 1///DELETE THIS
 			
 			var sliders:any = <HTMLElement>document.querySelector(`.sliders${silderNum}`),
-				radioMulti = document.querySelector(".choose-multi");
+				radioMulti = document.querySelector(`.choose-multi${silderNum}`);
 
 			var sliderSingle = $('<div>', {'class': `slider-single${silderNum}`});
 			$(sliders).append(sliderSingle);
@@ -103,56 +103,70 @@ import { htmlPrefilter } from "jquery";
 
 
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
-			$("input[type='radio']").on('click', function(){
-				if($(radioMulti).prop("checked")) {
-					$(sliderSingle).hide()
-					$(`.multi-range-slider${silderNum}`).show()
-					$(`.change-value-multi-block`).show()
-					$(`.change-value-block`).hide()
-				} else {
-					$(sliderSingle).show()
-					$(`.multi-range-slider${silderNum}`).hide()
-					$(`.change-value-multi-block`).hide()
-					$(`.change-value-block`).show()
-				}
+			$(`.choose-multi${silderNum}`).on('click', function(){
+				$(sliderSingle).hide()
+				$(`.multi-range-slider${silderNum}`).show()
+				$(`.change-value-multi-block${silderNum}`).show()
+				$(`.change-value-block${silderNum}`).hide()
 			})
-			if(settings.multirange){$(`.change-value-block`).hide()}
+			$(`.choose-single${silderNum}`).on('click', function(){
+				$(sliderSingle).show()
+				$(`.multi-range-slider${silderNum}`).hide()
+				$(`.change-value-multi-block${silderNum}`).hide()
+				$(`.change-value-block${silderNum}`).show()
+			})
+			
+			if(settings.multirange){$(`.change-value-block${silderNum}`).hide()}
 
 			//*-DEMO-* BUBBLE ON/OFF
-			$("input[type='radio']").on('click', function(){
-				if($('.bubble-on').prop("checked")){
-					$(`.bubble-single${silderNum}`).removeClass("none");
-					$(`.bubble-multi-right${silderNum}`).removeClass("none");
-					$(`.bubble-multi-left${silderNum}`).removeClass("none");
-				} else if($('.bubble-off').prop("checked")) {
-					$(`.bubble-single${silderNum}`).addClass("none");
-					$(`.bubble-multi-right${silderNum}`).addClass("none");
-					$(`.bubble-multi-left${silderNum}`).addClass("none");
-				}
+			$(`.bubble-on${silderNum}`).on('click', function(){
+				$(`.bubble-single${silderNum}`).removeClass("none")
+				$(`.bubble-multi-right${silderNum}`).removeClass("none")
+				$(`.bubble-multi-left${silderNum}`).removeClass("none")
+			})
+			$(`.bubble-off${silderNum}`).on('click', function(){
+				$(`.bubble-single${silderNum}`).addClass("none")
+				$(`.bubble-multi-right${silderNum}`).addClass("none")
+				$(`.bubble-multi-left${silderNum}`).addClass("none")
 			})
 
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА ГОРИЗОНТ ИЛИ ВЕРТИКАЛЬ
-			$("input[type='radio']").on('click', function(){
-				if($('.horizontal').prop("checked")){
-					sliders.style.transform = "rotate(0deg)"
-				} else {
-					sliders.style.transform = "rotate(270deg)"
-				}
+			$(`.horizontal${silderNum}`).on('click', function(){
+				sliders.style.transform = "rotate(0deg)"
+				// settings.width = settings.width
+				$(sliders).css("width", settings.width + "vw")
+				$(inputLeft).css("width", settings.width + "vw")
+				$(inputRight).css("width", settings.width + "vw")
+				$(singleRange).css("width", settings.width + "vw")
+				$(sliderSingle).css("width", settings.width + "vw")
+				$(`.scale${silderNum}`).css("width", settings.width + "vw")
+				$(`.multi-scale${silderNum}`).css("width", settings.width + "vw")
+			})
+			$(`.vertical${silderNum}`).on('click', function(){
+				sliders.style.transform = "rotate(270deg)"
+				let newWidth = (window.screen.width * window.devicePixelRatio*settings.width)/100
+				$(sliders).css("width", newWidth + "px")
+				$(inputLeft).css("width", newWidth + "px")
+				$(inputRight).css("width", newWidth + "px")
+				$(singleRange).css("width", newWidth + "px")
+				$(sliderSingle).css("width", newWidth + "px")
+				$(`.scale${silderNum}`).css("width", newWidth + "px")
+				$(`.multi-scale${silderNum}`).css("width", newWidth + "px")
 			})
 
 			//*-DEMO-* ФУНКЦИЯ STEP
-			$(".change-step").on('click', function(){
-				$(singleRange).on('input', function(){singleRange.step = (<HTMLInputElement>document.getElementById("step_number")).value})
-				inputLeft.step = (<HTMLInputElement>document.getElementById("step_number")).value
-				inputRight.step = (<HTMLInputElement>document.getElementById("step_number")).value
+			$(`.change-step${silderNum}`).on('click', function(){
+				$(singleRange).on('input', function(){singleRange.step = (<HTMLInputElement>document.getElementById(`step_number${silderNum}`)).value})
+				inputLeft.step = (<HTMLInputElement>document.getElementById(`step_number${silderNum}`)).value
+				inputRight.step = (<HTMLInputElement>document.getElementById(`step_number${silderNum}`)).value
 			})
 			$(`.first-ins${silderNum}, .second-ins${silderNum}, .third-ins${silderNum}, .fourth-ins${silderNum}, .fifth-ins${silderNum}`)
 				.on('mouseout', function(){
-					$(singleRange).on('input', function(){singleRange.step = (<HTMLInputElement>document.getElementById("step_number")).value})})
+					$(singleRange).on('input', function(){singleRange.step = (<HTMLInputElement>document.getElementById(`step_number${silderNum}`)).value})})
 				
 			//*-DEMO-* ФУНКЦИЯ ИЗМЕНЕНИЯ И ОТОБРАЖЕНИЯ VALUE
-			$(".change-value").on('click', function(){
-				singleRange.value = (<HTMLInputElement>document.getElementById('slider-value')).value
+			$(`.change-value${silderNum}`).on('click', function(){
+				singleRange.value = (<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value
 				Model.progressBarWidth = (singleRange.value - settings.min) * 100 / (settings.max - settings.min)
 				$(`.progress-bar${silderNum}`).css({
 					'width': Model.progressBarWidth + '%'
@@ -165,13 +179,28 @@ import { htmlPrefilter } from "jquery";
 				$(`.bubble-single${silderNum}`).css("left", Model.insCountSinglePosition)
 				$(`.value-single-span${silderNum}`).text(singleRange.value);
 			})
-			// $(singleRange).on('input', function(){
-			// 	(<HTMLInputElement>document.getElementById('slider-value')).value = singleRange.value
-			// })
+			$(singleRange).on('input', function(){
+				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = singleRange.value
+			})
+			$(`.first-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.first-ins${silderNum}`).text()
+			})
+			$(`.second-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.second-ins${silderNum}`).text()
+			})
+			$(`.third-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.third-ins${silderNum}`).text()
+			})
+			$(`.fourth-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.fourth-ins${silderNum}`).text()
+			})
+			$(`.fifth-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.fifth-ins${silderNum}`).text()
+			})
 
-			$(".change-value-multi").on('click', function(){
-				inputLeft.value = (<HTMLInputElement>document.getElementById('multislider-value-1')).value
-				inputRight.value = (<HTMLInputElement>document.getElementById('multislider-value-2')).value
+			$(`.change-value-multi${silderNum}`).on('click', function(){
+				inputLeft.value = (<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value
+				inputRight.value = (<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value
 				inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
 				Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
 				inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
@@ -194,12 +223,30 @@ import { htmlPrefilter } from "jquery";
 				$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 				$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
 			})
-			// $(inputLeft).on('input', function(){
-			// 	(<HTMLInputElement>document.getElementById('multislider-value-1')).value = inputLeft.value
-			// })
-			// $(inputRight).on('input', function(){
-			// 	(<HTMLInputElement>document.getElementById('multislider-value-2')).value = inputRight.value
-			// })
+			$(inputLeft).on('input', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = inputLeft.value
+				
+			})
+			$(`.multi-first-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-first-ins${silderNum}`).text()
+			})
+			$(`.multi-second-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-second-ins${silderNum}`).text()
+			})
+			$(`.multi-third-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-third-ins${silderNum}`).text()
+			})
+			$(`.multi-fourth-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-fourth-ins${silderNum}`).text()
+			})
+			$(`.multi-fifth-ins${silderNum}`).on('click', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-fifth-ins${silderNum}`).text()
+			})
+			$(inputRight).on('input', function(){
+				(<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value = inputRight.value
+			})
+			$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+				.on('click', () => {(<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value = $(`.multi-fifth-ins${silderNum}`).text()})
 
 
 
@@ -222,14 +269,14 @@ import { htmlPrefilter } from "jquery";
 			//ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЕ ШАГА (STEP)
 			if(settings.vertical) {
 				sliders.style.transform = "rotate(270deg)"
-				settings.width = (window.screen.width * window.devicePixelRatio*settings.width)/100
-				$(sliders).css("width", settings.width + "px")
-				$(inputLeft).css("width", settings.width + "px")
-				$(inputRight).css("width", settings.width + "px")
-				$(singleRange).css("width", settings.width + "px")
-				$(sliderSingle).css("width", settings.width + "px")
-				$(`.scale${silderNum}`).css("width", settings.width + "px")
-				$(`.multi-scale${silderNum}`).css("width", settings.width + "px")
+				let newWidth = (window.screen.width * window.devicePixelRatio*settings.width)/100
+				$(sliders).css("width", newWidth + "px")
+				$(inputLeft).css("width", newWidth + "px")
+				$(inputRight).css("width", newWidth + "px")
+				$(singleRange).css("width", newWidth + "px")
+				$(sliderSingle).css("width", newWidth + "px")
+				$(`.scale${silderNum}`).css("width", newWidth + "px")
+				$(`.multi-scale${silderNum}`).css("width", newWidth + "px")
 			} else {
 				sliders.style.transform = "rotate(0deg)"
 			}
@@ -350,7 +397,6 @@ import { htmlPrefilter } from "jquery";
 					newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
 					let newPosition = -10 - (newValue * 0.05)
 					Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
-					// inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
 					Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
 
 					let newValueRight = (+$(`.multi-fifth-ins${silderNum}`).text() - settings.min) * 100 / (settings.max - settings.min)
@@ -406,17 +452,6 @@ import { htmlPrefilter } from "jquery";
 				static countMultiPositionLeft:number|string
 				static countBubblePosition:number|string
 				static countSingBubblePosition
-				// bubbleCount(input, min:number, max:number, testVal:number = -666.666) {
-				// 	$(input).on('input', function(){
-				// 		let newValue
-				// 		let newPosition
-				// 		if (testVal == -666.666) newValue = (input.value - min) * 100 / (max - min)
-				// 		else newValue = (testVal - min) * 100 / (max - min)
-				// 		if (input == singleRange) newPosition = 5 - (newValue * 0.25)
-				// 		else newPosition = -10 - (newValue * 0.05)
-				// 		Model.countBubblePosition = `calc(${newValue}% + (${newPosition}px))`
-				// 	}).trigger('input')
-				// }
 				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {
 					$(input).on('input', function(){
 						let newValue
@@ -659,4 +694,4 @@ import { htmlPrefilter } from "jquery";
 	}
 })(jQuery);
 
-(<any>$("body")).rangeSliders(1)
+// (<any>$("body")).rangeSliders(1)
