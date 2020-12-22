@@ -179,24 +179,24 @@ import { htmlPrefilter } from "jquery";
 				$(`.bubble-single${silderNum}`).css("left", Model.insCountSinglePosition)
 				$(`.value-single-span${silderNum}`).text(singleRange.value);
 			})
-			$(singleRange).on('input', function(){
-				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = singleRange.value
-			})
-			$(`.first-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.first-ins${silderNum}`).text()
-			})
-			$(`.second-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.second-ins${silderNum}`).text()
-			})
-			$(`.third-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.third-ins${silderNum}`).text()
-			})
-			$(`.fourth-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.fourth-ins${silderNum}`).text()
-			})
-			$(`.fifth-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.fifth-ins${silderNum}`).text()
-			})
+			// $(singleRange).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = singleRange.value
+			// })
+			// $(`.first-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.first-ins${silderNum}`).text()
+			// })
+			// $(`.second-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.second-ins${silderNum}`).text()
+			// })
+			// $(`.third-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.third-ins${silderNum}`).text()
+			// })
+			// $(`.fourth-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.fourth-ins${silderNum}`).text()
+			// })
+			// $(`.fifth-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`slider-value${silderNum}`)).value = $(`.fifth-ins${silderNum}`).text()
+			// })
 
 			$(`.change-value-multi${silderNum}`).on('click', function(){
 				inputLeft.value = (<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value
@@ -223,30 +223,30 @@ import { htmlPrefilter } from "jquery";
 				$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 				$(`.value-multi-right-span${silderNum}`).text(inputRight.value)
 			})
-			$(inputLeft).on('input', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = inputLeft.value
+			// $(inputLeft).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = inputLeft.value
 				
-			})
-			$(`.multi-first-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-first-ins${silderNum}`).text()
-			})
-			$(`.multi-second-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-second-ins${silderNum}`).text()
-			})
-			$(`.multi-third-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-third-ins${silderNum}`).text()
-			})
-			$(`.multi-fourth-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-fourth-ins${silderNum}`).text()
-			})
-			$(`.multi-fifth-ins${silderNum}`).on('click', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-fifth-ins${silderNum}`).text()
-			})
-			$(inputRight).on('input', function(){
-				(<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value = inputRight.value
-			})
-			$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-				.on('click', () => {(<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value = $(`.multi-fifth-ins${silderNum}`).text()})
+			// })
+			// $(`.multi-first-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-first-ins${silderNum}`).text()
+			// })
+			// $(`.multi-second-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-second-ins${silderNum}`).text()
+			// })
+			// $(`.multi-third-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-third-ins${silderNum}`).text()
+			// })
+			// $(`.multi-fourth-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-fourth-ins${silderNum}`).text()
+			// })
+			// $(`.multi-fifth-ins${silderNum}`).on('click', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-1${silderNum}`)).value = $(`.multi-fifth-ins${silderNum}`).text()
+			// })
+			// $(inputRight).on('input', function(){
+			// 	(<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value = inputRight.value
+			// })
+			// $(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
+			// 	.on('click', () => {(<HTMLInputElement>document.getElementById(`multislider-value-2${silderNum}`)).value = $(`.multi-fifth-ins${silderNum}`).text()})
 
 
 
@@ -680,10 +680,10 @@ import { htmlPrefilter } from "jquery";
 			controller.inMoveLeft()
 			controller.inMoveRight()
 			controller.inInsCatchBubbleProgress()
-			controller.inGetSingleValue()
 			controller.inCountProgress()
 			controller.inInsCatchInputLR()
 			controller.inMultiBubble()
+			controller.inGetSingleValue()
 
 			module.exports = {
 				Model: Model,
@@ -694,4 +694,4 @@ import { htmlPrefilter } from "jquery";
 	}
 })(jQuery);
 
-// (<any>$("body")).rangeSliders(1)
+(<any>$("body")).rangeSliders(1)
