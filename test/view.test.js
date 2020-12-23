@@ -2,14 +2,11 @@ const Range = require('../src/range2.ts')
 const View = Range.View
 const Model = Range.Model
 const Controller = Range.Controller
-// import View from '../src/range2.ts'
 let view = new Range.View()
 let model = new Model()
 let controller = new Controller()
 
 const sinon = require('sinon')//node.js does't work without this string 
-
-// VIEW
 
 describe("тест шкалы single-range", function() {
   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
@@ -194,7 +191,7 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     assert.equal(range.style.right, 26.3158 + '%')
   })
 })
-describe("Тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
+describe("тест z-index inputLeft и inputRight при перемещении мыши по слайдеру", function() {
   inputLeft = document.querySelector(`.input-left1`)
   inputRight = document.querySelector(`.input-right1`)
   it("при min = 30, max = 380, sliders.width = 372.828, valueLeft = 117, valueRight = 380 и mousePosition = 147 inputLeft.zIndex = 2", function () {
@@ -246,13 +243,11 @@ describe("тест добавления eventListener для multirange-slider",
     expect(inputRight.addEventListener.calledOnce).to.be.true
   })
   it('addEventListener при вызове controller.inMoveLeft()', function() {
-    // sinon.spy(inputLeft, 'addEventListener')
     expect(inputLeft.addEventListener.calledTwice).not.to.be.true
     controller.inMoveLeft()
     expect(inputLeft.addEventListener.calledTwice).to.be.true
   })
   it('addEventListener при вызове controller.inMoveRight()', function() {
-    // sinon.spy(inputRight, 'addEventListener')
     expect(inputRight.addEventListener.calledTwice).not.to.be.true
     controller.inMoveRight()
     expect(inputRight.addEventListener.calledTwice).to.be.true

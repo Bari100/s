@@ -11,18 +11,7 @@ import { htmlPrefilter } from "jquery";
 			min: 20,
 			max: 280,
 		  };
-		
 		return this.each(function () {
-        //     let settings = { ///DELETE THIS
-		// 	"step": 1,
-		// 	"vertical": false,
-		// 	"multirange": true,
-		// 	"bubbles": true,
-		// 	"width": 26,
-		// 	"min": 10,
-		// 	"max": 100
-		//   };let silderNum = 1///DELETE THIS
-			
 			var sliders:any = <HTMLElement>document.querySelector(`.sliders${silderNum}`),
 				radioMulti = document.querySelector(`.choose-multi${silderNum}`);
 
@@ -468,16 +457,12 @@ import { htmlPrefilter } from "jquery";
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
-			// model.getSingleValueModel(settings.min, settings.max)
 			model.insCatchBubbleProgress()
 			model.countProgress(settings.min, settings.max)
 			model.bubbleCount(inputLeft, settings.min, settings.max)
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
-			// model.multiBubbleRight(settings.min, settings.max)
 			model.insCatchBubbleLeft()
-			// model.insCatchInputLR()
-			// module.exports = Model
 			//=====================================================================================================================================================================================================================
 			class View {
 				static position
@@ -589,7 +574,6 @@ import { htmlPrefilter } from "jquery";
 				}
 			}
 			let view = new View
-			// module.exports = View
 			view.setLeftValueView()
 			view.setRightValueView()
 			view.getLeftValue()
@@ -598,14 +582,6 @@ import { htmlPrefilter } from "jquery";
 			view.countProgress()
 			view.getSingleValue()
 			view.scaleSingle(settings.min, settings.max)
-
-			// let article = document.querySelector('article')
-			// for(let i = 0; i < 100; i++) {
-			// 	let a:any = `.value-multi-right-span${i},`
-			// 	// console.log(a)
-			// 	let txt = document.createTextNode(a)
-			// 	article.appendChild(txt)
-			// }
 
 			//=====================================================================================================================================================================================================================
 			class Controller {
@@ -674,7 +650,6 @@ import { htmlPrefilter } from "jquery";
 				}
 			}
 			let controller = new Controller
-			// module.exports = Controller
 			controller.inTouchLeft()
 			controller.inTouchRight()
 			controller.inMoveLeft()
