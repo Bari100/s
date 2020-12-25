@@ -198,28 +198,33 @@ describe("тест z-index inputLeft и inputRight при перемещении
     model.MouseMove(1, 30, 380, 372.828, 117, 380, 147)
     assert.equal(inputLeft.style.zIndex, 2)
     assert.equal(inputRight.style.zIndex, 1)
-  });
+  })
   it("при min = 0, max = 55, sliders.width = 206.953, valueLeft = 5, valueRight = 25 и mousePosition = 66 inputLeft.zIndex = 1", function () {
     model.MouseMove(1, 0, 55, 206.953, 5, 25, 66)
     assert.equal(inputLeft.style.zIndex, 1)
     assert.equal(inputRight.style.zIndex, 2)
-  });
+  })
   it("при min = 10, max = 100, sliders.width = 372.828, valueLeft = 20, valueRight = 50 и mousePosition = 120 inputRight.zIndex = 2", function () {
     model.MouseMove(1, 10, 100, 372.828, 20, 50, 120)
     assert.equal(inputRight.style.zIndex, 2)
     assert.equal(inputLeft.style.zIndex, 1)
-  });
+  })
   it("при min = 0, max = 200, sliders.width = 372.828, valueLeft = 100, valueRight = 200 и mousePosition = 135 inputRight.zIndex = 1", function () {
     model.MouseMove(1, 0, 200, 372.828, 100, 200, 135)
     assert.equal(inputRight.style.zIndex, 1)
     assert.equal(inputLeft.style.zIndex, 2)
-  });
+  })
   it("при min = 0, max = 100, sliders.width = 372.828, valueLeft = 15, valueRight = 50 и mousePosition = 235 inputLeft.zIndex = 1", function () {
     model.MouseMove(1, 0, 100, 372.828, 15, 50, 235)
     assert.equal(inputLeft.style.zIndex, 1)
     assert.equal(inputRight.style.zIndex, 2)
-  });
-});
+  })
+})
+describe('тест результата Model.percentLeft при клике на значения шкалы', function() {
+  it(, function() {
+    
+  })
+})
 
 
 
@@ -252,16 +257,4 @@ describe("тест добавления eventListener для multirange-slider",
     controller.inMoveRight()
     expect(inputRight.addEventListener.calledTwice).to.be.true
   })
-  // it('addEventListener при вызове controller.inGetLeft()', function() {
-  //   // sinon.spy(inputLeft, 'addEventListener')
-  //   expect(inputLeft.addEventListener.calledThrice).not.to.be.true
-  //   controller.inGetLeft()
-  //   expect(inputLeft.addEventListener.calledThrice).to.be.true
-  // })
-  // it('addEventListener при вызове controller.inGetRight()', function() {
-  //   // sinon.spy(inputRight, 'addEventListener')
-  //   expect(inputRight.addEventListener.calledThrice).not.to.be.true
-  //   controller.inGetRight()
-  //   expect(inputRight.addEventListener.calledThrice).to.be.true
-  // })
 })

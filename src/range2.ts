@@ -307,7 +307,7 @@ import { htmlPrefilter } from "jquery";
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 				static percentLeft
 				static percentRight
-				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
+				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {//!!!!!!!!!!
 					let	min = settings.min,
 						max = settings.max
 					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
@@ -317,7 +317,7 @@ import { htmlPrefilter } from "jquery";
 					} else {Model.percentLeft = ((testCountVal - testMin) / (testMax - testMin)) * 100}
 				}
 
-				setRightValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {
+				setRightValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {//!!!!!!!!!!
 					let	min = settings.min,
 						max = settings.max
 					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
@@ -328,7 +328,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				MouseMove(eventArg, min:number, max:number, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {
+				MouseMove(eventArg, min:number, max:number, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {//!!!!!!!!!!
 					var positionXY: number,
 						compareInputs: boolean,
 						countPosition: number,
@@ -366,7 +366,7 @@ import { htmlPrefilter } from "jquery";
 				static positionXY: number
 				static inputL
 				static inputLRight
-				insCatchBubbleLeft(){
+				insCatchBubbleLeft(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666){
 					let	newValue
 					$(`.multi-first-ins${silderNum}`).on('click', function(){
 						inputLeft.value = +$(`.multi-first-ins${silderNum}`).text()
@@ -386,6 +386,10 @@ import { htmlPrefilter } from "jquery";
 					newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
 					let newPosition = -10 - (newValue * 0.05)
 					Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
+					// let testCountVal = Math.min(testLeftVal, testRightVal - 1)
+					// if(testLeftVal == -666.666) {
+					// 	Model.percentLeft = ((inputLeft.value - min) / (max - min)) * 100
+					// } else {Model.percentLeft = ((testCountVal - testMin) / (testMax - testMin)) * 100}
 					Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
 
 					let newValueRight = (+$(`.multi-fifth-ins${silderNum}`).text() - settings.min) * 100 / (settings.max - settings.min)
@@ -396,7 +400,7 @@ import { htmlPrefilter } from "jquery";
 				static countMultiPositionRight:number|string
 
 				static progressBarWidth:number//because can't create const or let here
-				countProgress(min:number, max:number, testVal:number = -666.666) {
+				countProgress(min:number, max:number, testVal:number = -666.666) {//!!!!!!!!!!
 					$(singleRange).on('input', function(){
 						let val:number = singleRange.value
 						if (testVal == -666.666) {
@@ -441,7 +445,7 @@ import { htmlPrefilter } from "jquery";
 				static countMultiPositionLeft:number|string
 				static countBubblePosition:number|string
 				static countSingBubblePosition
-				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {
+				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {//!!!!!!!!!!
 					$(input).on('input', function(){
 						let newValue
 						let newPosition
@@ -492,7 +496,7 @@ import { htmlPrefilter } from "jquery";
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				static countMultiPositionLeft:number|string
 				static inputLRview
-				getLeftValue() {
+				getLeftValue() {//!!!!!!!!!!
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputLeft).on('input', function(){
 						$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
@@ -502,7 +506,7 @@ import { htmlPrefilter } from "jquery";
 					}).trigger('input')
 				}
 				static countMultiPositionRight:number|string
-				getRightValue() {
+				getRightValue() {//!!!!!!!!!!
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputRight).on('input', function(){
 						$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
@@ -513,7 +517,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//ДИАПАЗОН-ШКАЛА(MULTI)
-				scaleMulti(min:number, max:number) {
+				scaleMulti(min:number, max:number) {//!!!!!!!!!!
 					let scaleMultiObj = {
 						first: min,
 						second: Math.floor((max - min) / 4 + (+min)),
@@ -532,7 +536,7 @@ import { htmlPrefilter } from "jquery";
 				/////////////////////////////////SINGLE
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 				static progressBarWidth:number//because can't create const or let here
-				countProgress() {
+				countProgress() {//!!!!!!!!!!
 					$(`.progress-bar${silderNum}`).css({
 						'width': View.progressBarWidth + '%'
 					})
@@ -540,7 +544,7 @@ import { htmlPrefilter } from "jquery";
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
 				static bubblePosition
-				getSingleValue() {
+				getSingleValue() {//!!!!!!!!!!
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
 
@@ -549,7 +553,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//ДИАПАЗОН-ШКАЛА(SINGLE)
-				scaleSingle(min:number, max:number) {
+				scaleSingle(min:number, max:number) {//!!!!!!!!!!
 					let scaleSingleObj = {
 						first: min,
 						second: Math.floor((max - min) / 4 + (+min)),
@@ -586,18 +590,18 @@ import { htmlPrefilter } from "jquery";
 			//=====================================================================================================================================================================================================================
 			class Controller {
 				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				inTouchLeft() {
+				inTouchLeft() {//!!!!!!!!!!
 					inputLeft.addEventListener("input", model.setLeftValue)
 					$(inputLeft).on("input", function(){View.position = Model.percentLeft}).trigger('input').on("input", view.setLeftValueView).trigger('input')
 				}
-				inTouchRight() {
+				inTouchRight() {//!!!!!!!!!!
 					inputRight.addEventListener("input", model.setRightValue)
 					$(inputRight).on("input", function(){View.position = Model.percentRight}).trigger('input').on("input", view.setRightValueView).trigger('input')
 				}
 			
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}
-				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}
+				inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}//!!!!!!!!!!
+				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}//!!!!!!!!!!
 
 				inInsCatchInputLR() {
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
