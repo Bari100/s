@@ -42,7 +42,6 @@ describe("тест шкалы single-range", function() {
     assert.equal($(".fifth-ins1").text(), 380)
   });
 });
-
 describe("тест шкалы multi-range", function() {
   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
     view.scaleMulti(300, 600)
@@ -77,7 +76,6 @@ describe("тест шкалы multi-range", function() {
     assert.equal($(".multi-fifth-ins1").text(), 380)
   });
 });
-
 describe("тест прогресс-бара", function() {
   it("View.progressBarWidth = Model.progressBarWidth", function () {
     view.countProgress()
@@ -96,7 +94,6 @@ describe("тест прогресс-бара", function() {
     assert.equal(Model.progressBarWidth, 75)
   });
 });
-
 describe("тест расположения bubble single-range", function() {
   it("View.bubblePosition = Model.countSingBubblePosition", function () {
     view.getSingleValue()
@@ -116,7 +113,6 @@ describe("тест расположения bubble single-range", function() {
     assert.equal(Model.countSingBubblePosition, 'calc(12.093468888060892% + (1.976632777984777px))')
   });
 })
-
 describe("тест расположения bubble multi-range", function() {
   it("View.countMultiPositionLeft = Model.countBubblePosition", function () {
     view.getLeftValue()
@@ -137,6 +133,27 @@ describe("тест расположения bubble multi-range", function() {
     assert.equal(Model.countBubblePosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
   });
 })
+describe("тест расположения bubble multi-range", function() {
+  it("View.countMultiPositionLeft = Model.countBubblePosition", function () {
+    view.setLeftValueView()
+    assert.equal($('.thumb1.left1').position().left, View.position)
+    
+  })
+  // it("при min = 2001, max = 2020 и val = 2007 .bubble-multi-left left: calc(31.57894736842105% + (-2.894736842105263px))", function () {
+  //   inputLeft = document.querySelector(`.input-left1`)
+  //   inputRight = document.querySelector(`.input-right1`)
+  //   model.bubbleCount(inputLeft, 2001, 2020, 2007)
+  //   assert.equal(Model.countBubblePosition, 'calc(31.57894736842105% + (-11.578947368421053px))')
+  // });
+  // it("View.countMultiPositionRight = Model.countBubblePosition", function () {
+  //   view.getRightValue()
+  //   assert.equal(View.countMultiPositionRight, Model.countBubblePosition)
+  // })
+  // it("при min = 1.6, max = 3759 и val = 456 .bubble-multi-right left: calc(12.093468888060892% + (1.976632777984777px))", function () {
+  //   model.bubbleCount(inputRight, 1.6, 3759, 456)
+  //   assert.equal(Model.countBubblePosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
+  // });
+})
 
 
 
@@ -144,7 +161,7 @@ describe("тест расположения bubble multi-range", function() {
 
 
 
-describe("тест ширины range и значений Model.percentLeft, Model.percentRight", function() {
+describe("тест ширины range и значений Model.percentLeft, Model.percentRight в setLeftValue и setRightValue", function() {
   var range = document.querySelector(".slider1 > .range1")
   it("при min = 10, max = 100, sliders.width = 372.828(26vw), valueLeft = 37 и valueRight = 73 range.style.left = 30%; range.style.right = 30%", function () {
     model.setLeftValue(10,100, 37, 73)
@@ -220,9 +237,92 @@ describe("тест z-index inputLeft и inputRight при перемещении
     assert.equal(inputRight.style.zIndex, 2)
   })
 })
-describe('тест результата Model.percentLeft при клике на значения шкалы', function() {
-  it(, function() {
-    
+describe('тест результата Model.percentLeft при клике на значения шкалы в model.bindScaleBubbleProgressMulti()', function() {
+  it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
+    model.bindScaleBubbleProgressMulti(20, 280, 20)
+    assert.equal(Model.percentLeft, 0)
+  })
+  it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
+    model.bindScaleBubbleProgressMulti(0, 100, 25)
+    assert.equal(Model.percentLeft, 25)
+  })
+  it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
+    model.bindScaleBubbleProgressMulti(0, 1500, 750)
+    assert.equal(Model.percentLeft, 50)
+  })
+  it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
+    model.bindScaleBubbleProgressMulti(200, 300, 275)
+    assert.equal(Model.percentLeft, 75)
+  })
+  it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
+    model.bindScaleBubbleProgressMulti(20, 100000, 100000)
+    assert.equal(Model.percentLeft, 100)
+  })
+})
+describe('тест результата Model.countMultiPositionLeft при клике на значения шкалы в model.bindScaleBubbleProgressMulti()', function() {
+  it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
+    model.bindScaleBubbleProgressMulti(20, 280, 20)
+    assert.equal(Model.countMultiPositionLeft, 'calc(0% + (-10px))')
+  })
+  it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
+    model.bindScaleBubbleProgressMulti(0, 100, 25)
+    assert.equal(Model.countMultiPositionLeft, 'calc(25% + (-11.25px))')
+  })
+  it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
+    model.bindScaleBubbleProgressMulti(0, 1500, 750)
+    assert.equal(Model.countMultiPositionLeft, 'calc(50% + (-12.5px))')
+  })
+  it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
+    model.bindScaleBubbleProgressMulti(200, 300, 275)
+    assert.equal(Model.countMultiPositionLeft, 'calc(75% + (-13.75px))')
+  })
+  it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
+    model.bindScaleBubbleProgressMulti(20, 100000, 100000)
+    assert.equal(Model.countMultiPositionLeft, 'calc(100% + (-15px))')
+  })
+})
+describe('тест результата Model.progressBarWidth при клике на значения шкалы в model.bindScaleBubbleProgressSing()', function() {
+  it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
+    model.bindScaleBubbleProgressSing(20, 280, 20)
+    assert.equal(Model.progressBarWidth, 0)
+  })
+  it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
+    model.bindScaleBubbleProgressSing(0, 100, 25)
+    assert.equal(Model.progressBarWidth, 25)
+  })
+  it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
+    model.bindScaleBubbleProgressSing(0, 1500, 750)
+    assert.equal(Model.progressBarWidth, 50)
+  })
+  it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
+    model.bindScaleBubbleProgressSing(200, 300, 275)
+    assert.equal(Model.progressBarWidth, 75)
+  })
+  it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
+    model.bindScaleBubbleProgressSing(20, 100000, 100000)
+    assert.equal(Model.progressBarWidth, 100)
+  })
+})
+describe('тест результата Model.insCountSinglePosition при клике на значения шкалы в model.bindScaleBubbleProgressSing()', function() {
+  it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
+    model.bindScaleBubbleProgressSing(20, 280, 20)
+    assert.equal(Model.insCountSinglePosition, 'calc(0% + (5px))')
+  })
+  it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
+    model.bindScaleBubbleProgressSing(0, 100, 25)
+    assert.equal(Model.insCountSinglePosition, 'calc(25% + (-1.25px))')
+  })
+  it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
+    model.bindScaleBubbleProgressSing(0, 1500, 750)
+    assert.equal(Model.insCountSinglePosition, 'calc(50% + (-7.5px))')
+  })
+  it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
+    model.bindScaleBubbleProgressSing(200, 300, 275)
+    assert.equal(Model.insCountSinglePosition, 'calc(75% + (-13.75px))')
+  })
+  it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
+    model.bindScaleBubbleProgressSing(20, 100000, 100000)
+    assert.equal(Model.insCountSinglePosition, 'calc(100% + (-20px))')
   })
 })
 

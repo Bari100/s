@@ -366,7 +366,7 @@ import { htmlPrefilter } from "jquery";
 				static positionXY: number
 				static inputL
 				static inputLRight
-				insCatchBubbleLeft(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666){
+				bindScaleBubbleProgressMulti(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666){//!!!!!!!!!!
 					let	newValue
 					$(`.multi-first-ins${silderNum}`).on('click', function(){
 						inputLeft.value = +$(`.multi-first-ins${silderNum}`).text()
@@ -383,15 +383,16 @@ import { htmlPrefilter } from "jquery";
 					$(`.multi-fifth-ins${silderNum}`).on('click', function(){
 						inputLeft.value = +$(`.multi-fifth-ins${silderNum}`).text()
 					})
-					newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
+
+					if (testLeftVal == -666.666) newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
+					else newValue = (testLeftVal - testMin) * 100 / (testMax - testMin)
 					let newPosition = -10 - (newValue * 0.05)
 					Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
-					// let testCountVal = Math.min(testLeftVal, testRightVal - 1)
-					// if(testLeftVal == -666.666) {
-					// 	Model.percentLeft = ((inputLeft.value - min) / (max - min)) * 100
-					// } else {Model.percentLeft = ((testCountVal - testMin) / (testMax - testMin)) * 100}
-					Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
 
+					if(testLeftVal == -666.666) {
+						Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
+					} else {Model.percentLeft = ((testLeftVal - testMin) / (testMax - testMin)) * 100}
+					
 					let newValueRight = (+$(`.multi-fifth-ins${silderNum}`).text() - settings.min) * 100 / (settings.max - settings.min)
 					let newPositionRight = -10 - (newValueRight * 0.05)
 					Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
@@ -414,7 +415,7 @@ import { htmlPrefilter } from "jquery";
 
 				static valResultIns:number
 				static varIns:number
-				insCatchBubbleProgress(){
+				bindScaleBubbleProgressSing(testMin:number = -666.666, testMax:number = -666.666, testVal:number = -666.666){//!!!!!!!!!!
 					let newValue:number
 					$(`.first-ins${silderNum}`).on('click', function(){
 						Model.valResultIns = +$(`.first-ins${silderNum}`).text()
@@ -436,10 +437,14 @@ import { htmlPrefilter } from "jquery";
 						Model.valResultIns = +$(`.fifth-ins${silderNum}`).text()
 						singleRange.value = $(`.fifth-ins${silderNum}`).text()
 					})
-					newValue = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
+
+					if (testVal == -666.666) newValue = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
+					else newValue = (testVal - testMin) * 100 / (testMax - testMin)
 					let	newPosition = 5 - (newValue * 0.25)
 					Model.insCountSinglePosition = `calc(${newValue}% + (${newPosition}px))`
-					Model.progressBarWidth = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
+
+					if (testVal == -666.666) Model.progressBarWidth = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
+					else Model.progressBarWidth = (testVal - testMin) * 100 / (testMax - testMin)
 				}
 
 				static countMultiPositionLeft:number|string
@@ -461,12 +466,12 @@ import { htmlPrefilter } from "jquery";
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
-			model.insCatchBubbleProgress()
+			model.bindScaleBubbleProgressSing()
 			model.countProgress(settings.min, settings.max)
 			model.bubbleCount(inputLeft, settings.min, settings.max)
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
-			model.insCatchBubbleLeft()
+			model.bindScaleBubbleProgressMulti()
 			//=====================================================================================================================================================================================================================
 			class View {
 				static position
@@ -606,7 +611,7 @@ import { htmlPrefilter } from "jquery";
 				inInsCatchInputLR() {
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 					.on('click', () => {
-						model.insCatchBubbleLeft()
+						model.bindScaleBubbleProgressMulti()
 						View.countMultiPositionLeft = Model.countMultiPositionLeft
 						View.position = Model.percentLeft
 						view.catchBubbleLeft()
@@ -631,7 +636,7 @@ import { htmlPrefilter } from "jquery";
 				/////////////////////////////////SINGLE
 				inInsCatchBubbleProgress(){
 					$(`.first-ins${silderNum}, .second-ins${silderNum}, .third-ins${silderNum}, .fourth-ins${silderNum}, .fifth-ins${silderNum}`)
-					.on('click', model.insCatchBubbleProgress).trigger('input')
+					.on('click', model.bindScaleBubbleProgressSing).trigger('input')
 					.on('click', function(){
 						View.valResultInsView = Model.valResultIns})
 					.on('click', function(){
