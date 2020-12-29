@@ -366,7 +366,7 @@ import { htmlPrefilter } from "jquery";
 				static positionXY: number
 				static inputL
 				static inputLRight
-				bindScaleBubbleProgressMulti(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666){//!!!!!!!!!!
+				bindScaleBubbleRangeMulti(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666){//!!!!!!!!!!
 					let	newValue
 					$(`.multi-first-ins${silderNum}`).on('click', function(){
 						inputLeft.value = +$(`.multi-first-ins${silderNum}`).text()
@@ -415,7 +415,7 @@ import { htmlPrefilter } from "jquery";
 
 				static valResultIns:number
 				static varIns:number
-				bindScaleBubbleProgressSing(testMin:number = -666.666, testMax:number = -666.666, testVal:number = -666.666){//!!!!!!!!!!
+				bindScaleBubbleRangeSing(testMin:number = -666.666, testMax:number = -666.666, testVal:number = -666.666){//!!!!!!!!!!
 					let newValue:number
 					$(`.first-ins${silderNum}`).on('click', function(){
 						Model.valResultIns = +$(`.first-ins${silderNum}`).text()
@@ -466,31 +466,31 @@ import { htmlPrefilter } from "jquery";
 			let model = new Model
 			model.setLeftValue();
 			model.setRightValue();
-			model.bindScaleBubbleProgressSing()
+			model.bindScaleBubbleRangeSing()
 			model.countProgress(settings.min, settings.max)
 			model.bubbleCount(inputLeft, settings.min, settings.max)
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
-			model.bindScaleBubbleProgressMulti()
+			model.bindScaleBubbleRangeMulti()
 			//=====================================================================================================================================================================================================================
 			class View {
 				static position
-				setLeftValueView(){
+				setLeftValueView(){//!!!!!!!!!!
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
 				}
-				setRightValueView(){
+				setRightValueView(){//!!!!!!!!!!
 					thumbRight.style.right = (100 - View.position) + "%"
 					range.style.right = (100 - View.position) + "%"
 				}
-
-				catchBubbleLeft(){
+				
+				bindScaleBubbleRangeLeft(){//??????!!!
 					$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
 					$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
 				}
-				catchBubbleRight(){
+				bindScaleBubbleRangeRight(){//??????!!!
 					$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
 					$(`.value-multi-right-span${silderNum}`).text(settings.max)
 					thumbRight.style.right = '0'
@@ -576,10 +576,10 @@ import { htmlPrefilter } from "jquery";
 
 				
 				static valResultInsView
-				insCatchBubbleView(){
+				bindScaleBubbleSing(){
 					singleRange.value = View.valResultInsView
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
-					$(`.value-single-span${silderNum}`).text(View.valResultInsView)
+					$(`.value-single-span${silderNum}`).first().text(View.valResultInsView)
 				}
 			}
 			let view = new View
@@ -611,13 +611,13 @@ import { htmlPrefilter } from "jquery";
 				inInsCatchInputLR() {
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 					.on('click', () => {
-						model.bindScaleBubbleProgressMulti()
+						model.bindScaleBubbleRangeMulti()
 						View.countMultiPositionLeft = Model.countMultiPositionLeft
 						View.position = Model.percentLeft
-						view.catchBubbleLeft()
+						view.bindScaleBubbleRangeLeft()
 
 						View.countMultiPositionRight = Model.countMultiPositionRight
-						view.catchBubbleRight()
+						view.bindScaleBubbleRangeRight()
 					})
 				}
 
@@ -636,12 +636,12 @@ import { htmlPrefilter } from "jquery";
 				/////////////////////////////////SINGLE
 				inInsCatchBubbleProgress(){
 					$(`.first-ins${silderNum}, .second-ins${silderNum}, .third-ins${silderNum}, .fourth-ins${silderNum}, .fifth-ins${silderNum}`)
-					.on('click', model.bindScaleBubbleProgressSing).trigger('input')
+					.on('click', model.bindScaleBubbleRangeSing).trigger('input')
 					.on('click', function(){
 						View.valResultInsView = Model.valResultIns})
 					.on('click', function(){
 						View.bubblePosition = Model.insCountSinglePosition})
-					.on('click', view.insCatchBubbleView)
+					.on('click', view.bindScaleBubbleSing)
 					.on('click', function(){View.progressBarWidth = Model.progressBarWidth})
 					.on('click', view.countProgress)
 				}

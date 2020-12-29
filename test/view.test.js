@@ -133,26 +133,50 @@ describe("тест расположения bubble multi-range", function() {
     assert.equal(Model.countBubblePosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
   });
 })
-describe("тест расположения bubble multi-range", function() {
-  it("View.countMultiPositionLeft = Model.countBubblePosition", function () {
-    view.setLeftValueView()
-    assert.equal($('.thumb1.left1').position().left, View.position)
-    
+describe("тест расположения thumb и range multi-range", function() {
+  it("thumbLeft.style.left = View.position, range.style.left = View.position", function () {
+    var thumbLeft = document.querySelector(`.thumb1.left1`),
+        range = document.querySelector('.range1')
+    controller.inTouchLeft()
+    assert.equal(thumbLeft.style.left, View.position.toFixed(4) + '%')
+    assert.equal(range.style.left, View.position.toFixed(4) + '%')
   })
-  // it("при min = 2001, max = 2020 и val = 2007 .bubble-multi-left left: calc(31.57894736842105% + (-2.894736842105263px))", function () {
-  //   inputLeft = document.querySelector(`.input-left1`)
-  //   inputRight = document.querySelector(`.input-right1`)
-  //   model.bubbleCount(inputLeft, 2001, 2020, 2007)
-  //   assert.equal(Model.countBubblePosition, 'calc(31.57894736842105% + (-11.578947368421053px))')
-  // });
-  // it("View.countMultiPositionRight = Model.countBubblePosition", function () {
-  //   view.getRightValue()
-  //   assert.equal(View.countMultiPositionRight, Model.countBubblePosition)
-  // })
-  // it("при min = 1.6, max = 3759 и val = 456 .bubble-multi-right left: calc(12.093468888060892% + (1.976632777984777px))", function () {
-  //   model.bubbleCount(inputRight, 1.6, 3759, 456)
-  //   assert.equal(Model.countBubblePosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
-  // });
+  it("thumbRight.style.right = View.position, range.style.right = View.position", function () {
+    var thumbRight = document.querySelector(`.thumb1.right1`),
+        range = document.querySelector('.range1')
+    controller.inTouchRight()
+    assert.equal(thumbRight.style.right, (100 - View.position).toFixed(4) + '%')
+    assert.equal(range.style.right, (100 - View.position).toFixed(4) + '%')
+  })
+})
+describe("тест bindScaleBubbleRangeLeft и bindScaleBubbleRangeRight", function() {
+  it("thumbLeft.style.left = View.position, range.style.left = View.position", function () {
+    var thumbLeft = document.querySelector(`.thumb1.left1`),
+        range = document.querySelector('.range1')
+    view.bindScaleBubbleRangeLeft()
+    // assert.equal($(`.bubble-multi-left1`).css("left"), View.countMultiPositionLeft.replace(/[^.^ ^.\d]+/g, ''))
+    // console.log($(`.bubble-multi-left1`).css("left").match(/\d+/)[0])
+    //ЛИБО СОЗДАТЬ ФУНКЦИЮ В ТЕСТАХ, КОТОРАЯ БЫ ЗАБИРАЛА ЦИФРЫ ИЗ ТЕКСТА, toFix'ила и затем возвращала обратно.
+    //А ЛУЧШЕ ПРОСТО ИЗНАЧАЛЬНО В range2.ts в расчетах применять к цифрам toFixed(), чтобы ничего не дописывать в тестах
+    assert.equal(thumbLeft.style.left, View.position.toFixed(4) + '%')
+    assert.equal(range.style.left, View.position.toFixed(4) + '%')
+  })
+  it("thumbRight.style.right = View.position, range.style.right = View.position", function () {
+    var thumbRight = document.querySelector(`.thumb1.right1`),
+        range = document.querySelector('.range1')
+    view.bindScaleBubbleRangeRight()
+    // assert.equal($(`.bubble-multi-right1`).css("left"), View.countMultiPositionRight)
+    assert.equal(thumbRight.style.right, 0 + 'px')
+    assert.equal(range.style.right, 0 + 'px')
+  })
+})
+describe("тест bindScaleBubbleSing", function() {
+  it("singleRange.value = View.valResultInsView, range.style.right = View.position", function () {
+    var singleRange = document.querySelector(`.single-range1`)
+    view.bindScaleBubbleSing()
+    assert.equal($(`.bubble-single1`).css("left"), View.bubblePosition)
+    assert.equal($(`.value-single-span1`).first().text(), View.valResultInsView)
+  })
 })
 
 
@@ -180,8 +204,8 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     controller.inTouchLeft()
     controller.inTouchRight()
 
-    assert.equal(Math.floor(Model.percentLeft * 100) / 100, 13.33)
-    assert.equal(Math.floor(Model.percentRight * 100) / 100, 41.33)
+    assert.equal(Model.percentLeft.toFixed(2), 13.33)
+    assert.equal(Model.percentRight.toFixed(2), 41.33)
     assert.equal(range.style.left, 13.3333 + '%')
     assert.equal(range.style.right, 58.6667 + '%')
   })
@@ -203,7 +227,7 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     controller.inTouchRight()
 
     assert.equal(Math.floor(Model.percentLeft * 100) / 100, 31.57)
-    assert.equal(Math.floor(Model.percentRight * 100) / 100, 73.68)
+    assert.equal(Model.percentRight.toFixed(2), 73.68)
     assert.equal(range.style.left, 31.5789 + '%')
     assert.equal(range.style.right, 26.3158 + '%')
   })
@@ -237,91 +261,91 @@ describe("тест z-index inputLeft и inputRight при перемещении
     assert.equal(inputRight.style.zIndex, 2)
   })
 })
-describe('тест результата Model.percentLeft при клике на значения шкалы в model.bindScaleBubbleProgressMulti()', function() {
+describe('тест результата Model.percentLeft при клике на значения шкалы в model.bindScaleBubbleRangeMulti()', function() {
   it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
-    model.bindScaleBubbleProgressMulti(20, 280, 20)
+    model.bindScaleBubbleRangeMulti(20, 280, 20)
     assert.equal(Model.percentLeft, 0)
   })
   it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
-    model.bindScaleBubbleProgressMulti(0, 100, 25)
+    model.bindScaleBubbleRangeMulti(0, 100, 25)
     assert.equal(Model.percentLeft, 25)
   })
   it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
-    model.bindScaleBubbleProgressMulti(0, 1500, 750)
+    model.bindScaleBubbleRangeMulti(0, 1500, 750)
     assert.equal(Model.percentLeft, 50)
   })
   it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
-    model.bindScaleBubbleProgressMulti(200, 300, 275)
+    model.bindScaleBubbleRangeMulti(200, 300, 275)
     assert.equal(Model.percentLeft, 75)
   })
   it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
-    model.bindScaleBubbleProgressMulti(20, 100000, 100000)
+    model.bindScaleBubbleRangeMulti(20, 100000, 100000)
     assert.equal(Model.percentLeft, 100)
   })
 })
-describe('тест результата Model.countMultiPositionLeft при клике на значения шкалы в model.bindScaleBubbleProgressMulti()', function() {
+describe('тест результата Model.countMultiPositionLeft при клике на значения шкалы в model.bindScaleBubbleRangeMulti()', function() {
   it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
-    model.bindScaleBubbleProgressMulti(20, 280, 20)
+    model.bindScaleBubbleRangeMulti(20, 280, 20)
     assert.equal(Model.countMultiPositionLeft, 'calc(0% + (-10px))')
   })
   it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
-    model.bindScaleBubbleProgressMulti(0, 100, 25)
+    model.bindScaleBubbleRangeMulti(0, 100, 25)
     assert.equal(Model.countMultiPositionLeft, 'calc(25% + (-11.25px))')
   })
   it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
-    model.bindScaleBubbleProgressMulti(0, 1500, 750)
+    model.bindScaleBubbleRangeMulti(0, 1500, 750)
     assert.equal(Model.countMultiPositionLeft, 'calc(50% + (-12.5px))')
   })
   it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
-    model.bindScaleBubbleProgressMulti(200, 300, 275)
+    model.bindScaleBubbleRangeMulti(200, 300, 275)
     assert.equal(Model.countMultiPositionLeft, 'calc(75% + (-13.75px))')
   })
   it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
-    model.bindScaleBubbleProgressMulti(20, 100000, 100000)
+    model.bindScaleBubbleRangeMulti(20, 100000, 100000)
     assert.equal(Model.countMultiPositionLeft, 'calc(100% + (-15px))')
   })
 })
-describe('тест результата Model.progressBarWidth при клике на значения шкалы в model.bindScaleBubbleProgressSing()', function() {
+describe('тест результата Model.progressBarWidth при клике на значения шкалы в model.bindScaleBubbleRangeSing()', function() {
   it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
-    model.bindScaleBubbleProgressSing(20, 280, 20)
+    model.bindScaleBubbleRangeSing(20, 280, 20)
     assert.equal(Model.progressBarWidth, 0)
   })
   it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
-    model.bindScaleBubbleProgressSing(0, 100, 25)
+    model.bindScaleBubbleRangeSing(0, 100, 25)
     assert.equal(Model.progressBarWidth, 25)
   })
   it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
-    model.bindScaleBubbleProgressSing(0, 1500, 750)
+    model.bindScaleBubbleRangeSing(0, 1500, 750)
     assert.equal(Model.progressBarWidth, 50)
   })
   it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
-    model.bindScaleBubbleProgressSing(200, 300, 275)
+    model.bindScaleBubbleRangeSing(200, 300, 275)
     assert.equal(Model.progressBarWidth, 75)
   })
   it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
-    model.bindScaleBubbleProgressSing(20, 100000, 100000)
+    model.bindScaleBubbleRangeSing(20, 100000, 100000)
     assert.equal(Model.progressBarWidth, 100)
   })
 })
-describe('тест результата Model.insCountSinglePosition при клике на значения шкалы в model.bindScaleBubbleProgressSing()', function() {
+describe('тест результата Model.insCountSinglePosition при клике на значения шкалы в model.bindScaleBubbleRangeSing()', function() {
   it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
-    model.bindScaleBubbleProgressSing(20, 280, 20)
+    model.bindScaleBubbleRangeSing(20, 280, 20)
     assert.equal(Model.insCountSinglePosition, 'calc(0% + (5px))')
   })
   it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
-    model.bindScaleBubbleProgressSing(0, 100, 25)
+    model.bindScaleBubbleRangeSing(0, 100, 25)
     assert.equal(Model.insCountSinglePosition, 'calc(25% + (-1.25px))')
   })
   it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
-    model.bindScaleBubbleProgressSing(0, 1500, 750)
+    model.bindScaleBubbleRangeSing(0, 1500, 750)
     assert.equal(Model.insCountSinglePosition, 'calc(50% + (-7.5px))')
   })
   it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
-    model.bindScaleBubbleProgressSing(200, 300, 275)
+    model.bindScaleBubbleRangeSing(200, 300, 275)
     assert.equal(Model.insCountSinglePosition, 'calc(75% + (-13.75px))')
   })
   it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
-    model.bindScaleBubbleProgressSing(20, 100000, 100000)
+    model.bindScaleBubbleRangeSing(20, 100000, 100000)
     assert.equal(Model.insCountSinglePosition, 'calc(100% + (-20px))')
   })
 })
