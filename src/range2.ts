@@ -458,7 +458,7 @@ import { htmlPrefilter } from "jquery";
 						else newValue = (testVal - min) * 100 / (max - min)
 						let newSingPosition = 5 - (newValue * 0.25)
 						newPosition = -10 - (newValue * 0.05)
-						Model.countBubblePosition = `calc(${newValue}% + (${newPosition}px))`
+						Model.countBubblePosition = `calc(${newValue.toFixed(4)}% + (${newPosition.toFixed(4)}px))`
 						Model.countSingBubblePosition = `calc(${newValue}% + (${newSingPosition}px))`
 					}).trigger('input')
 				}
@@ -579,7 +579,7 @@ import { htmlPrefilter } from "jquery";
 				bindScaleBubbleSing(){
 					singleRange.value = View.valResultInsView
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
-					$(`.value-single-span${silderNum}`).first().text(View.valResultInsView)
+					$(`.value-single-span${silderNum}`).text(View.valResultInsView)
 				}
 			}
 			let view = new View

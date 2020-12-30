@@ -122,7 +122,7 @@ describe("тест расположения bubble multi-range", function() {
     inputLeft = document.querySelector(`.input-left1`)
     inputRight = document.querySelector(`.input-right1`)
     model.bubbleCount(inputLeft, 2001, 2020, 2007)
-    assert.equal(Model.countBubblePosition, 'calc(31.57894736842105% + (-11.578947368421053px))')
+    assert.equal(Model.countBubblePosition, 'calc(31.5789% + (-11.5789px))')
   });
   it("View.countMultiPositionRight = Model.countBubblePosition", function () {
     view.getRightValue()
@@ -130,7 +130,7 @@ describe("тест расположения bubble multi-range", function() {
   })
   it("при min = 1.6, max = 3759 и val = 456 .bubble-multi-right left: calc(12.093468888060892% + (1.976632777984777px))", function () {
     model.bubbleCount(inputRight, 1.6, 3759, 456)
-    assert.equal(Model.countBubblePosition, 'calc(12.093468888060892% + (-10.604673444403044px))')
+    assert.equal(Model.countBubblePosition, 'calc(12.0935% + (-10.6047px))')
   });
 })
 describe("тест расположения thumb и range multi-range", function() {
@@ -153,11 +153,7 @@ describe("тест bindScaleBubbleRangeLeft и bindScaleBubbleRangeRight", funct
   it("thumbLeft.style.left = View.position, range.style.left = View.position", function () {
     var thumbLeft = document.querySelector(`.thumb1.left1`),
         range = document.querySelector('.range1')
-    view.bindScaleBubbleRangeLeft()
-    // assert.equal($(`.bubble-multi-left1`).css("left"), View.countMultiPositionLeft.replace(/[^.^ ^.\d]+/g, ''))
-    // console.log($(`.bubble-multi-left1`).css("left").match(/\d+/)[0])
-    //ЛИБО СОЗДАТЬ ФУНКЦИЮ В ТЕСТАХ, КОТОРАЯ БЫ ЗАБИРАЛА ЦИФРЫ ИЗ ТЕКСТА, toFix'ила и затем возвращала обратно.
-    //А ЛУЧШЕ ПРОСТО ИЗНАЧАЛЬНО В range2.ts в расчетах применять к цифрам toFixed(), чтобы ничего не дописывать в тестах
+    assert.equal($(`.bubble-multi-left1`).css("left").replace('calc', ''), View.countMultiPositionLeft.replace('+ (', ``).replace(')', '').replace('-', '- ').replace('calc', ' '))
     assert.equal(thumbLeft.style.left, View.position.toFixed(4) + '%')
     assert.equal(range.style.left, View.position.toFixed(4) + '%')
   })
