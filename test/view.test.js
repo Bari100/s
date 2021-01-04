@@ -99,18 +99,18 @@ describe("тест расположения bubble single-range", function() {
     view.getSingleValue()
     assert.equal(View.bubblePosition, Model.countSingBubblePosition)
   })
-  it("при min = 2001, max = 2020 и val = 2007 .bubble-single left: calc(31.57894736842105% + (-2.894736842105263px))", function () {
+  it("при min = 2001, max = 2020 и val = 2007 .bubble-single left: calc(31.5789% + (-2.8947px))", function () {
     singleRange = document.querySelector(`.single-range1`)
     model.bubbleCount(singleRange, 2001, 2020, 2007)
-    assert.equal(Model.countSingBubblePosition, 'calc(31.57894736842105% + (-2.894736842105263px))')
+    assert.equal(Model.countSingBubblePosition, 'calc(31.5789% + (-2.8947px))')
   });
-  it("при min = -100, max = 100 и val = 0 .bubble-single left: calc(50% + (-7.5px))", function () {
+  it("при min = -100, max = 100 и val = 0 .bubble-single left: calc(50.0000% + (-7.5000px))", function () {
     model.bubbleCount(singleRange, -100, 100, 0)
-    assert.equal(Model.countSingBubblePosition, 'calc(50% + (-7.5px))')
+    assert.equal(Model.countSingBubblePosition, 'calc(50.0000% + (-7.5000px))')
   });
-  it("при min = 1.6, max = 3759 и val = 456 .bubble-single left: calc(12.093468888060892% + (1.976632777984777px))", function () {
+  it("при min = 1.6, max = 3759 и val = 456 .bubble-single left: calc(12.09346% + (1.9766px))", function () {
     model.bubbleCount(singleRange, 1.6, 3759, 456)
-    assert.equal(Model.countSingBubblePosition, 'calc(12.093468888060892% + (1.976632777984777px))')
+    assert.equal(Model.countSingBubblePosition, 'calc(12.0935% + (1.9766px))')
   });
 })
 describe("тест расположения bubble multi-range", function() {
@@ -151,27 +151,29 @@ describe("тест расположения thumb и range multi-range", functio
 })
 describe("тест bindScaleBubbleRangeLeft и bindScaleBubbleRangeRight", function() {
   it("thumbLeft.style.left = View.position, range.style.left = View.position", function () {
+    view.bindScaleBubbleRangeLeft()
     var thumbLeft = document.querySelector(`.thumb1.left1`),
         range = document.querySelector('.range1')
-    assert.equal($(`.bubble-multi-left1`).css("left").replace('calc', ''), View.countMultiPositionLeft.replace('+ (', ``).replace(')', '').replace('-', '- ').replace('calc', ' '))
+        inputLeft = document.querySelector(`.input-left1`)
+    assert.equal($(`.bubble-multi-left1`).css("left"), View.countMultiPositionLeft.replace('+ (', ``).replace(')', '').replace('-', '- '))
+    assert.equal($(`.value-multi-left-span1`).first().text(), inputLeft.value)
     assert.equal(thumbLeft.style.left, View.position.toFixed(4) + '%')
     assert.equal(range.style.left, View.position.toFixed(4) + '%')
   })
   it("thumbRight.style.right = View.position, range.style.right = View.position", function () {
     var thumbRight = document.querySelector(`.thumb1.right1`),
         range = document.querySelector('.range1')
+        inputRight = document.querySelector(`.input-right1`)
     view.bindScaleBubbleRangeRight()
-    // assert.equal($(`.bubble-multi-right1`).css("left"), View.countMultiPositionRight)
+    assert.equal($(`.bubble-multi-right1`).css("left"), View.countMultiPositionRight.replace('+ (', ``).replace('-', '- ').replace(')', ''))
+    assert.equal($(`.value-multi-left-span1`).first().text(), inputLeft.value)
     assert.equal(thumbRight.style.right, 0 + 'px')
     assert.equal(range.style.right, 0 + 'px')
   })
 })
 describe("тест bindScaleBubbleSing", function() {
   it("singleRange.value = View.valResultInsView, range.style.right = View.position", function () {
-    var singleRange = document.querySelector(`.single-range1`)
-    view.bindScaleBubbleSing()
-    assert.equal($(`.bubble-single1`).css("left"), View.bubblePosition)
-    assert.equal($(`.value-single-span1`).first().text(), View.valResultInsView)
+    assert.equal($(`.bubble-single1`).css("left"), View.bubblePosition.replace(')', '').replace('+ (', '+ '))
   })
 })
 
@@ -376,5 +378,26 @@ describe("тест добавления eventListener для multirange-slider",
     expect(inputRight.addEventListener.calledTwice).not.to.be.true
     controller.inMoveRight()
     expect(inputRight.addEventListener.calledTwice).to.be.true
+  })
+})
+describe("тест .on в контроллере", function() {
+  inputLeft = document.querySelector(".input-left1")
+  inputRight = document.querySelector(".input-right1")
+  it('при controller.inInsCatchInputLR() и клике по шкале View.countMultiPositionLeft = Model.countMultiPositionLeft, View.position = Model.percentLeft, View.countMultiPositionRight = Model.countMultiPositionRight', function() {
+    // sinon.spy(model, 'bindScaleBubbleRangeMulti')
+    controller.inInsCatchInputLR()
+    // model.bindScaleBubbleRangeMulti()
+    $(`.multi-first-ins1, .multi-second-ins1, .multi-third-ins1, .multi-fourth-ins1, .multi-fifth-ins1`).trigger('click')
+    // expect(model.bindScaleBubbleRangeMulti.called).to.be.true
+    assert.equal(View.countMultiPositionLeft, Model.countMultiPositionLeft)
+    assert.equal(View.position, Model.percentLeft)
+    assert.equal(View.countMultiPositionRight, Model.countMultiPositionRight)
+  })
+  it('при controller.inMultiBubble() и взаимодействии с input View.countMultiPositionLeft = Model.countBubblePosition, View.countMultiPositionRight = Model.countBubblePosition', function() {
+    controller.inMultiBubble()
+    $(inputLeft).trigger('input')
+    // $(inputRight).trigger('input')
+    assert.equal(View.countMultiPositionLeft, Model.countBubblePosition)
+    // assert.equal(View.countMultiPositionRight, Model.countBubblePosition)
   })
 })

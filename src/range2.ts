@@ -459,7 +459,7 @@ import { htmlPrefilter } from "jquery";
 						let newSingPosition = 5 - (newValue * 0.25)
 						newPosition = -10 - (newValue * 0.05)
 						Model.countBubblePosition = `calc(${newValue.toFixed(4)}% + (${newPosition.toFixed(4)}px))`
-						Model.countSingBubblePosition = `calc(${newValue}% + (${newSingPosition}px))`
+						Model.countSingBubblePosition = `calc(${newValue.toFixed(4)}% + (${newSingPosition.toFixed(4)}px))`
 					}).trigger('input')
 				}
 			};
@@ -484,13 +484,13 @@ import { htmlPrefilter } from "jquery";
 					range.style.right = (100 - View.position) + "%"
 				}
 				
-				bindScaleBubbleRangeLeft(){//??????!!!
+				bindScaleBubbleRangeLeft(){//!!!!!!!!!!
 					$(`.bubble-multi-left${silderNum}`).css("left", View.countMultiPositionLeft)
 					$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
 				}
-				bindScaleBubbleRangeRight(){//??????!!!
+				bindScaleBubbleRangeRight(){//!!!!!!!!!!
 					$(`.bubble-multi-right${silderNum}`).css("left", View.countMultiPositionRight)
 					$(`.value-multi-right-span${silderNum}`).text(settings.max)
 					thumbRight.style.right = '0'
@@ -576,7 +576,7 @@ import { htmlPrefilter } from "jquery";
 
 				
 				static valResultInsView
-				bindScaleBubbleSing(){
+				bindScaleBubbleSing(){//!!!!!????
 					singleRange.value = View.valResultInsView
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
 					$(`.value-single-span${silderNum}`).text(View.valResultInsView)
@@ -608,7 +608,7 @@ import { htmlPrefilter } from "jquery";
 				inMoveLeft() {inputLeft.addEventListener('mousemove', model.MouseMove)}//!!!!!!!!!!
 				inMoveRight() {inputRight.addEventListener('mousemove', model.MouseMove)}//!!!!!!!!!!
 
-				inInsCatchInputLR() {
+				inInsCatchInputLR() {//!!!!!!???
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
 					.on('click', () => {
 						model.bindScaleBubbleRangeMulti()
