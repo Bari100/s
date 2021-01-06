@@ -323,8 +323,8 @@ import { htmlPrefilter } from "jquery";
 					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
 					let testCountVal = Math.max(testRightVal, testLeftVal + 1)
 					if(testRightVal == -666.666){
-						Model.percentRight = ((inputRight.value - min) / (max - min)) * 100
-					} else {Model.percentRight = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+						Model.percentRight = 100 - (((inputRight.value - min) / (max - min)) * 100)
+					} else {Model.percentRight = 100 - (((testCountVal - testMin) / (testMax - testMin)) * 100)}
 				}
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
@@ -396,6 +396,15 @@ import { htmlPrefilter } from "jquery";
 					let newValueRight = (+$(`.multi-fifth-ins${silderNum}`).text() - settings.min) * 100 / (settings.max - settings.min)
 					let newPositionRight = -10 - (newValueRight * 0.05)
 					Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
+				}
+
+				static scaleMultArr
+				countScaleMulti() {
+					Model.scaleMultArr = [
+						Math.round((settings.max - settings.min) / 4 + (+settings.min)),
+						Math.round((settings.max - settings.min) / 2 + (+settings.min)),
+						Math.round(settings.max - ((settings.max - settings.min) / 4)),
+					]
 				}
 
 				static countMultiPositionRight:number|string
@@ -472,6 +481,7 @@ import { htmlPrefilter } from "jquery";
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
 			model.bindScaleBubbleRangeMulti()
+			model.countScaleMulti()
 			//=====================================================================================================================================================================================================================
 			class View {
 				static position
@@ -480,8 +490,8 @@ import { htmlPrefilter } from "jquery";
 					range.style.left = View.position + "%"
 				}
 				setRightValueView(){//!!!!!!!!!!
-					thumbRight.style.right = (100 - View.position) + "%"
-					range.style.right = (100 - View.position) + "%"
+					thumbRight.style.right = View.position + "%"
+					range.style.right = View.position + "%"
 				}
 				
 				bindScaleBubbleRangeLeft(){//!!!!!!!!!!
@@ -525,9 +535,12 @@ import { htmlPrefilter } from "jquery";
 				scaleMulti(min:number, max:number) {//!!!!!!!!!!
 					let scaleMultiObj = {
 						first: min,
-						second: Math.floor((max - min) / 4 + (+min)),
-						third: Math.round((max - min) / 2 + (+min)),
-						fourth: Math.round(max - ((max - min) / 4)),
+						// second: Math.floor((max - min) / 4 + (+min)),
+						// third: Math.round((max - min) / 2 + (+min)),
+						// fourth: Math.round(max - ((max - min) / 4)),
+						second: Model.scaleMultArr[0],
+						third: Model.scaleMultArr[1],
+						fourth: Model.scaleMultArr[2],
 						fifth: max
 					}
 

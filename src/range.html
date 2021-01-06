@@ -6,6 +6,8 @@
     <link href="range.css" rel="stylesheet">
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="range2.ts"></script>
     <div class="settings1">
         <div class="single-multi1">
             <label> Single
@@ -45,9 +47,9 @@
             <input type="number" id="multislider-value-21">
         </div>
     </div>
-    
-    
-    <div class="sliders1">
+    <div class="sliders1"></div>
+    <script>$("body").rangeSliders(1)</script>
+    <!-- <div class="sliders1"> -->
         <!-- <div class="slider-single">
             <div class="bubble-single"><span class="value-single-span"></span></div>
             <input type="range" id="single-range" min="12" max="250" value="50">
@@ -99,18 +101,6 @@
                 </span>
             </div>
         </div> -->
-    </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <!-- <script src="range2.ts"></script> -->
-    <script src="index.js"></script>
-
-
-    <script src="range2.ts"></script>
-    <div class="sliders1"></div>
-    <script>$("body").rangeSliders(1)</script>
-    
-    
+    <!-- </div> -->
 </body>
 </html>
