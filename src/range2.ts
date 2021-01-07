@@ -304,9 +304,19 @@ import { htmlPrefilter } from "jquery";
 
 			//=====================================================================================================================================================================================================================
 			class Model {
+				static percentLeft:number
+				static percentRight:number
+				static scaleValues:number[]
+				static countMultiPositionRight:number|string
+				static progressBarWidth:number//because can't create const or let here
+				static insCountSinglePosition:number|string
+				static valResultIns:number
+				static countMultiPositionLeft:number|string
+				static countBubblePosition:number|string
+				static countSingBubblePosition:number|string
+
+
 					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				static percentLeft
-				static percentRight
 				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {//!!!!!!!!!!
 					let	min = settings.min,
 						max = settings.max
@@ -363,9 +373,6 @@ import { htmlPrefilter } from "jquery";
 						}
 					}
 				}
-				static positionXY: number
-				static inputL
-				static inputLRight
 				bindScaleBubbleRangeMulti(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666){//!!!!!!!!!!
 					let	newValue
 					$(`.multi-first-ins${silderNum}`).on('click', function(){
@@ -398,18 +405,6 @@ import { htmlPrefilter } from "jquery";
 					Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
 				}
 
-				static scaleMultArr
-				countScaleMulti() {
-					Model.scaleMultArr = [
-						Math.round((settings.max - settings.min) / 4 + (+settings.min)),
-						Math.round((settings.max - settings.min) / 2 + (+settings.min)),
-						Math.round(settings.max - ((settings.max - settings.min) / 4)),
-					]
-				}
-
-				static countMultiPositionRight:number|string
-
-				static progressBarWidth:number//because can't create const or let here
 				countProgress(min:number, max:number, testVal:number = -666.666) {//!!!!!!!!!!
 					$(singleRange).on('input', function(){
 						let val:number = singleRange.value
@@ -419,11 +414,6 @@ import { htmlPrefilter } from "jquery";
 					}).trigger('input')
 				}
 
-				static countSinglePosition:number|string//because can't create const or let here
-				static insCountSinglePosition:number|string
-
-				static valResultIns:number
-				static varIns:number
 				bindScaleBubbleRangeSing(testMin:number = -666.666, testMax:number = -666.666, testVal:number = -666.666){//!!!!!!!!!!
 					let newValue:number
 					$(`.first-ins${silderNum}`).on('click', function(){
@@ -456,9 +446,6 @@ import { htmlPrefilter } from "jquery";
 					else Model.progressBarWidth = (testVal - testMin) * 100 / (testMax - testMin)
 				}
 
-				static countMultiPositionLeft:number|string
-				static countBubblePosition:number|string
-				static countSingBubblePosition
 				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {//!!!!!!!!!!
 					$(input).on('input', function(){
 						let newValue
@@ -471,6 +458,15 @@ import { htmlPrefilter } from "jquery";
 						Model.countSingBubblePosition = `calc(${newValue.toFixed(4)}% + (${newSingPosition.toFixed(4)}px))`
 					}).trigger('input')
 				}
+
+				countScale() {
+					Model.scaleValues = [
+						Math.round((settings.max - settings.min) / 4 + (+settings.min)),
+						Math.round((settings.max - settings.min) / 2 + (+settings.min)),
+						Math.round(settings.max - ((settings.max - settings.min) / 4)),
+					]
+				}
+				
 			};
 			let model = new Model
 			model.setLeftValue();
@@ -481,10 +477,19 @@ import { htmlPrefilter } from "jquery";
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
 			model.bindScaleBubbleRangeMulti()
-			model.countScaleMulti()
+			model.countScale()
+
 			//=====================================================================================================================================================================================================================
 			class View {
-				static position
+				static position:number
+				static countMultiPositionLeft:number|string
+				static countMultiPositionRight:number|string
+				static progressBarWidth:number//because can't create const or let here
+				static bubblePosition:number|string
+				static valResultInsView:number
+				static scaleValues:number[] = []
+
+
 				setLeftValueView(){//!!!!!!!!!!
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
@@ -509,8 +514,6 @@ import { htmlPrefilter } from "jquery";
 
 				/////////////////////////////////MULTI
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				static countMultiPositionLeft:number|string
-				static inputLRview
 				getLeftValue() {//!!!!!!!!!!
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputLeft).on('input', function(){
@@ -520,7 +523,6 @@ import { htmlPrefilter } from "jquery";
 						$(`.value-multi-left-span${silderNum}`).text(inputLeft.value)
 					}).trigger('input')
 				}
-				static countMultiPositionRight:number|string
 				getRightValue() {//!!!!!!!!!!
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputRight).on('input', function(){
@@ -535,12 +537,9 @@ import { htmlPrefilter } from "jquery";
 				scaleMulti(min:number, max:number) {//!!!!!!!!!!
 					let scaleMultiObj = {
 						first: min,
-						// second: Math.floor((max - min) / 4 + (+min)),
-						// third: Math.round((max - min) / 2 + (+min)),
-						// fourth: Math.round(max - ((max - min) / 4)),
-						second: Model.scaleMultArr[0],
-						third: Model.scaleMultArr[1],
-						fourth: Model.scaleMultArr[2],
+						second: View.scaleValues[0],
+						third: View.scaleValues[1],
+						fourth: View.scaleValues[2],
 						fifth: max
 					}
 
@@ -553,7 +552,6 @@ import { htmlPrefilter } from "jquery";
 
 				/////////////////////////////////SINGLE
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
-				static progressBarWidth:number//because can't create const or let here
 				countProgress() {//!!!!!!!!!!
 					$(`.progress-bar${silderNum}`).css({
 						'width': View.progressBarWidth + '%'
@@ -561,7 +559,6 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-				static bubblePosition
 				getSingleValue() {//!!!!!!!!!!
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
@@ -574,9 +571,9 @@ import { htmlPrefilter } from "jquery";
 				scaleSingle(min:number, max:number) {//!!!!!!!!!!
 					let scaleSingleObj = {
 						first: min,
-						second: Math.floor((max - min) / 4 + (+min)),
-						third: Math.round((max - min) / 2 + (+min)),
-						fourth: Math.round(max - ((max - min) / 4)),
+						second: View.scaleValues[0],
+						third: View.scaleValues[1],
+						fourth: View.scaleValues[2],
 						fifth: max
 					}
 
@@ -587,8 +584,6 @@ import { htmlPrefilter } from "jquery";
 					$(`.fifth-ins${silderNum}`).first().text(scaleSingleObj.fifth);
 				}
 
-				
-				static valResultInsView
 				bindScaleBubbleSing(){//!!!!!????
 					singleRange.value = View.valResultInsView
 					$(`.bubble-single${silderNum}`).css("left", View.bubblePosition)
@@ -600,10 +595,8 @@ import { htmlPrefilter } from "jquery";
 			view.setRightValueView()
 			view.getLeftValue()
 			view.getRightValue()
-			view.scaleMulti(settings.min, settings.max)
 			view.countProgress()
 			view.getSingleValue()
-			view.scaleSingle(settings.min, settings.max)
 
 			//=====================================================================================================================================================================================================================
 			class Controller {
@@ -623,40 +616,40 @@ import { htmlPrefilter } from "jquery";
 
 				inInsCatchInputLR() {//!!!!!!???
 					$(`.multi-first-ins${silderNum}, .multi-second-ins${silderNum}, .multi-third-ins${silderNum}, .multi-fourth-ins${silderNum}, .multi-fifth-ins${silderNum}`)
-					.on('click', () => {
-						model.bindScaleBubbleRangeMulti()
-						View.countMultiPositionLeft = Model.countMultiPositionLeft
-						View.position = Model.percentLeft
-						view.bindScaleBubbleRangeLeft()
+						.on('click', () => {
+							model.bindScaleBubbleRangeMulti()
+							View.countMultiPositionLeft = Model.countMultiPositionLeft
+							View.position = Model.percentLeft
+							view.bindScaleBubbleRangeLeft()
 
-						View.countMultiPositionRight = Model.countMultiPositionRight
-						view.bindScaleBubbleRangeRight()
-					})
+							View.countMultiPositionRight = Model.countMultiPositionRight
+							view.bindScaleBubbleRangeRight()
+						})
 				}
 
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
 				inMultiBubble() {
 					$(inputLeft)
-					.on('input', function(){View.countMultiPositionLeft = Model.countBubblePosition})
-					.on('input',  model.bubbleCount(inputLeft, settings.min, settings.max)).trigger('input')
+						.on('input', function(){View.countMultiPositionLeft = Model.countBubblePosition})
+						.on('input',  model.bubbleCount(inputLeft, settings.min, settings.max)).trigger('input')
 					inputLeft.addEventListener('input', view.getLeftValue)
 					$(inputRight)
-					.on('input', function(){View.countMultiPositionRight = Model.countBubblePosition})
-					.on('input',  model.bubbleCount(inputRight, settings.min, settings.max)).trigger('input')
+						.on('input', function(){View.countMultiPositionRight = Model.countBubblePosition})
+						.on('input',  model.bubbleCount(inputRight, settings.min, settings.max)).trigger('input')
 					inputRight.addEventListener('input', view.getRightValue)
 				}
 				
 				/////////////////////////////////SINGLE
 				inInsCatchBubbleProgress(){
 					$(`.first-ins${silderNum}, .second-ins${silderNum}, .third-ins${silderNum}, .fourth-ins${silderNum}, .fifth-ins${silderNum}`)
-					.on('click', model.bindScaleBubbleRangeSing).trigger('input')
-					.on('click', function(){
-						View.valResultInsView = Model.valResultIns})
-					.on('click', function(){
-						View.bubblePosition = Model.insCountSinglePosition})
-					.on('click', view.bindScaleBubbleSing)
-					.on('click', function(){View.progressBarWidth = Model.progressBarWidth})
-					.on('click', view.countProgress)
+						.on('click', model.bindScaleBubbleRangeSing).trigger('input')
+						.on('click', function(){
+							View.valResultInsView = Model.valResultIns})
+						.on('click', function(){
+							View.bubblePosition = Model.insCountSinglePosition})
+						.on('click', view.bindScaleBubbleSing)
+						.on('click', function(){View.progressBarWidth = Model.progressBarWidth})
+						.on('click', view.countProgress)
 				}
 
 				inGetSingleValue(){
@@ -667,8 +660,16 @@ import { htmlPrefilter } from "jquery";
 
 				inCountProgress(){
 					$(singleRange)
-					.on('input', function(){View.progressBarWidth = Model.progressBarWidth})
-					.on('input', view.countProgress).trigger('input')
+						.on('input', function(){View.progressBarWidth = Model.progressBarWidth})
+						.on('input', view.countProgress).trigger('input')
+				}
+
+				inCountScale() {
+					View.scaleValues[0] = Model.scaleValues[0]
+					View.scaleValues[1] = Model.scaleValues[1]
+					View.scaleValues[2] = Model.scaleValues[2]
+					view.scaleSingle(settings.min, settings.max)
+					view.scaleMulti(settings.min, settings.max)
 				}
 			}
 			let controller = new Controller
@@ -681,6 +682,7 @@ import { htmlPrefilter } from "jquery";
 			controller.inInsCatchInputLR()
 			controller.inMultiBubble()
 			controller.inGetSingleValue()
+			controller.inCountScale()
 
 			module.exports = {
 				Model: Model,
