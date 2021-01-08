@@ -316,7 +316,7 @@ import { htmlPrefilter } from "jquery";
 				static countSingBubblePosition:number|string
 
 
-					//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
+				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
 				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {//!!!!!!!!!!
 					let	min = settings.min,
 						max = settings.max
@@ -459,11 +459,11 @@ import { htmlPrefilter } from "jquery";
 					}).trigger('input')
 				}
 
-				countScale() {
+				countScale(min:number, max:number) {
 					Model.scaleValues = [
-						Math.round((settings.max - settings.min) / 4 + (+settings.min)),
-						Math.round((settings.max - settings.min) / 2 + (+settings.min)),
-						Math.round(settings.max - ((settings.max - settings.min) / 4)),
+						Math.round((max - min) / 4 + (+min)),
+						Math.round((max - min) / 2 + (+min)),
+						Math.round(max - ((max - min) / 4)),
 					]
 				}
 				
@@ -477,7 +477,7 @@ import { htmlPrefilter } from "jquery";
 			model.bubbleCount(inputRight, settings.min, settings.max)
 			model.bubbleCount(singleRange, settings.min, settings.max)
 			model.bindScaleBubbleRangeMulti()
-			model.countScale()
+			model.countScale(settings.min, settings.max)
 
 			//=====================================================================================================================================================================================================================
 			class View {

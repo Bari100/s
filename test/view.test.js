@@ -8,8 +8,62 @@ let controller = new Controller()
 
 const sinon = require('sinon')//node.js does't work without this string 
 
+// describe("тест шкалы single-range", function() {
+//   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
+//     view.scaleSingle(300, 600)
+//     assert.equal($(".first-ins1").text(), 300)
+//     assert.equal($(".second-ins1").text(), 375)
+//     assert.equal($(".third-ins1").text(), 450)
+//     assert.equal($(".fourth-ins1").text(), 525)
+//     assert.equal($(".fifth-ins1").text(), 600)
+//   });
+//   it("при min = 0 и max = 100 шкала имеет значения: 0, 25, 50, 75, 100", function () {
+//     view.scaleSingle(0, 100)
+//     assert.equal($(".first-ins1").text(), 0)
+//     assert.equal($(".second-ins1").text(), 25)
+//     assert.equal($(".third-ins1").text(), 50)
+//     assert.equal($(".fourth-ins1").text(), 75)
+//     assert.equal($(".fifth-ins1").text(), 100)
+//   });
+//   it("при min = 30 и max = 380 шкала имеет значения: 30, 117, 205, 293, 380", function () {
+//     view.scaleSingle(30, 380)
+//     assert.equal($(".first-ins1").text(), 30)
+//     assert.equal($(".second-ins1").text(), 117)
+//     assert.equal($(".third-ins1").text(), 205)
+//     assert.equal($(".fourth-ins1").text(), 293)
+//     assert.equal($(".fifth-ins1").text(), 380)
+//   });
+// });
+// describe("тест шкалы multi-range", function() {
+//   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
+//     view.scaleMulti(300, 600)
+//     assert.equal($(".multi-first-ins1").text(), 300)
+//     assert.equal($(".multi-second-ins1").text(), 375)
+//     assert.equal($(".multi-third-ins1").text(), 450)
+//     assert.equal($(".multi-fourth-ins1").text(), 525)
+//     assert.equal($(".multi-fifth-ins1").text(), 600)
+//   });
+//   it("при min = 0 и max = 100 шкала имеет значения: 0, 25, 50, 75, 100", function () {
+//     view.scaleMulti(0, 100)
+//     assert.equal($(".multi-first-ins1").text(), 0)
+//     assert.equal($(".multi-second-ins1").text(), 25)
+//     assert.equal($(".multi-third-ins1").text(), 50)
+//     assert.equal($(".multi-fourth-ins1").text(), 75)
+//     assert.equal($(".multi-fifth-ins1").text(), 100)
+//   });
+//   it("при min = 30 и max = 380 шкала имеет значения: 30, 117, 205, 293, 380", function () {
+//     view.scaleMulti(30, 380)
+//     assert.equal($(".multi-first-ins1").text(), 30)
+//     assert.equal($(".multi-second-ins1").text(), 117)
+//     assert.equal($(".multi-third-ins1").text(), 205)
+//     assert.equal($(".multi-fourth-ins1").text(), 293)
+//     assert.equal($(".multi-fifth-ins1").text(), 380)
+//   });
+// });
 describe("тест шкалы single-range", function() {
   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
+    model.countScale(300, 600)
+    controller.inCountScale()
     view.scaleSingle(300, 600)
     assert.equal($(".first-ins1").text(), 300)
     assert.equal($(".second-ins1").text(), 375)
@@ -18,6 +72,8 @@ describe("тест шкалы single-range", function() {
     assert.equal($(".fifth-ins1").text(), 600)
   });
   it("при min = 0 и max = 100 шкала имеет значения: 0, 25, 50, 75, 100", function () {
+    model.countScale(0, 100)
+    controller.inCountScale()
     view.scaleSingle(0, 100)
     assert.equal($(".first-ins1").text(), 0)
     assert.equal($(".second-ins1").text(), 25)
@@ -25,18 +81,12 @@ describe("тест шкалы single-range", function() {
     assert.equal($(".fourth-ins1").text(), 75)
     assert.equal($(".fifth-ins1").text(), 100)
   });
-  it("при min = -500 и max = 1000 шкала имеет значения: -500, -125, 250, 625, 1000", function () {
-    view.scaleSingle(-500, 1000)
-    assert.equal($(".first-ins1").text(), -500)
-    assert.equal($(".second-ins1").text(), -125)
-    assert.equal($(".third-ins1").text(), 250)
-    assert.equal($(".fourth-ins1").text(), 625)
-    assert.equal($(".fifth-ins1").text(), 1000)
-  });
   it("при min = 30 и max = 380 шкала имеет значения: 30, 117, 205, 293, 380", function () {
+    model.countScale(30, 380)
+    controller.inCountScale()
     view.scaleSingle(30, 380)
     assert.equal($(".first-ins1").text(), 30)
-    assert.equal($(".second-ins1").text(), 117)
+    assert.equal($(".second-ins1").text(), 118)
     assert.equal($(".third-ins1").text(), 205)
     assert.equal($(".fourth-ins1").text(), 293)
     assert.equal($(".fifth-ins1").text(), 380)
@@ -44,6 +94,8 @@ describe("тест шкалы single-range", function() {
 });
 describe("тест шкалы multi-range", function() {
   it("при min = 300 и max = 600 шкала имеет значения: 300, 375, 450, 525, 600", function () {
+    model.countScale(300, 600)
+    controller.inCountScale()
     view.scaleMulti(300, 600)
     assert.equal($(".multi-first-ins1").text(), 300)
     assert.equal($(".multi-second-ins1").text(), 375)
@@ -52,6 +104,8 @@ describe("тест шкалы multi-range", function() {
     assert.equal($(".multi-fifth-ins1").text(), 600)
   });
   it("при min = 0 и max = 100 шкала имеет значения: 0, 25, 50, 75, 100", function () {
+    model.countScale(0, 100)
+    controller.inCountScale()
     view.scaleMulti(0, 100)
     assert.equal($(".multi-first-ins1").text(), 0)
     assert.equal($(".multi-second-ins1").text(), 25)
@@ -59,18 +113,12 @@ describe("тест шкалы multi-range", function() {
     assert.equal($(".multi-fourth-ins1").text(), 75)
     assert.equal($(".multi-fifth-ins1").text(), 100)
   });
-  it("при min = -500 и max = 1000 шкала имеет значения: -500, -125, 250, 625, 1000", function () {
-    view.scaleMulti(-500, 1000)
-    assert.equal($(".multi-first-ins1").text(), -500)
-    assert.equal($(".multi-second-ins1").text(), -125)
-    assert.equal($(".multi-third-ins1").text(), 250)
-    assert.equal($(".multi-fourth-ins1").text(), 625)
-    assert.equal($(".multi-fifth-ins1").text(), 1000)
-  });
   it("при min = 30 и max = 380 шкала имеет значения: 30, 117, 205, 293, 380", function () {
+    model.countScale(30, 380)
+    controller.inCountScale()
     view.scaleMulti(30, 380)
     assert.equal($(".multi-first-ins1").text(), 30)
-    assert.equal($(".multi-second-ins1").text(), 117)
+    assert.equal($(".multi-second-ins1").text(), 118)
     assert.equal($(".multi-third-ins1").text(), 205)
     assert.equal($(".multi-fourth-ins1").text(), 293)
     assert.equal($(".multi-fifth-ins1").text(), 380)
@@ -145,8 +193,8 @@ describe("тест расположения thumb и range multi-range", functio
     var thumbRight = document.querySelector(`.thumb1.right1`),
         range = document.querySelector('.range1')
     controller.inTouchRight()
-    assert.equal(thumbRight.style.right, (100 - View.position).toFixed(4) + '%')
-    assert.equal(range.style.right, (100 - View.position).toFixed(4) + '%')
+    assert.equal(thumbRight.style.right, (View.position).toFixed(4) + '%')
+    assert.equal(range.style.right, (View.position).toFixed(4) + '%')
   })
 })
 describe("тест bindScaleBubbleRangeLeft и bindScaleBubbleRangeRight", function() {
@@ -192,7 +240,7 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     controller.inTouchRight()
     
     assert.equal(Model.percentLeft, 30)
-    assert.equal(Model.percentRight, 70)
+    assert.equal(Model.percentRight, 30)
     assert.equal(range.style.left, 30 + '%')
     assert.equal(range.style.right, 30 + '%')
   })
@@ -203,7 +251,7 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     controller.inTouchRight()
 
     assert.equal(Model.percentLeft.toFixed(2), 13.33)
-    assert.equal(Model.percentRight.toFixed(2), 41.33)
+    assert.equal(Model.percentRight.toFixed(2), 58.67)
     assert.equal(range.style.left, 13.3333 + '%')
     assert.equal(range.style.right, 58.6667 + '%')
   })
@@ -214,7 +262,7 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     controller.inTouchRight()
 
     assert.equal(Model.percentLeft, 15)
-    assert.equal(Model.percentRight, 35)
+    assert.equal(Model.percentRight, 65)
     assert.equal(range.style.left, 15 + '%')
     assert.equal(range.style.right, 65 + '%')
   })
@@ -225,7 +273,7 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     controller.inTouchRight()
 
     assert.equal(Math.floor(Model.percentLeft * 100) / 100, 31.57)
-    assert.equal(Model.percentRight.toFixed(2), 73.68)
+    assert.equal(Model.percentRight.toFixed(2), 26.32)
     assert.equal(range.style.left, 31.5789 + '%')
     assert.equal(range.style.right, 26.3158 + '%')
   })
@@ -384,20 +432,28 @@ describe("тест .on в контроллере", function() {
   inputLeft = document.querySelector(".input-left1")
   inputRight = document.querySelector(".input-right1")
   it('при controller.inInsCatchInputLR() и клике по шкале View.countMultiPositionLeft = Model.countMultiPositionLeft, View.position = Model.percentLeft, View.countMultiPositionRight = Model.countMultiPositionRight', function() {
-    // sinon.spy(model, 'bindScaleBubbleRangeMulti')
-    controller.inInsCatchInputLR()
+    // var spy = sinon.spy(model, 'bindScaleBubbleRangeMulti')
+    // controller.inInsCatchInputLR()
     // model.bindScaleBubbleRangeMulti()
     $(`.multi-first-ins1, .multi-second-ins1, .multi-third-ins1, .multi-fourth-ins1, .multi-fifth-ins1`).trigger('click')
     // expect(model.bindScaleBubbleRangeMulti.called).to.be.true
+    // sinon.assert.called(spy)
     assert.equal(View.countMultiPositionLeft, Model.countMultiPositionLeft)
     assert.equal(View.position, Model.percentLeft)
     assert.equal(View.countMultiPositionRight, Model.countMultiPositionRight)
   })
   it('при controller.inMultiBubble() и взаимодействии с input View.countMultiPositionLeft = Model.countBubblePosition, View.countMultiPositionRight = Model.countBubblePosition', function() {
     var spy = sinon.spy(model, 'bubbleCount')
+    // const spy = sinon.stub(model, 'bubbleCount')
     controller.inMultiBubble()
     $(inputLeft).trigger('input')
     sinon.assert.called(spy)
+
+    // spy.callsFake(() => {
+    //   sinon.assert.calledOnce(spy)
+    //   done()
+    // })
+
     // $(inputLeft).trigger('input')
     // $(inputRight).trigger('input')
     // assert.equal(View.countMultiPositionLeft, Model.countBubblePosition)
