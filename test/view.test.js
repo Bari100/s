@@ -6,6 +6,8 @@ let view = new Range.View()
 let model = new Model()
 let controller = new Controller()
 
+let test = Range.test
+
 const sinon = require('sinon')//node.js does't work without this string 
 
 // describe("тест шкалы single-range", function() {
@@ -234,8 +236,9 @@ describe("тест bindScaleBubbleSing", function() {
 describe("тест ширины range и значений Model.percentLeft, Model.percentRight в setLeftValue и setRightValue", function() {
   var range = document.querySelector(".slider1 > .range1")
   it("при min = 10, max = 100, sliders.width = 372.828(26vw), valueLeft = 37 и valueRight = 73 range.style.left = 30%; range.style.right = 30%", function () {
-    model.setLeftValue(10,100, 37, 73)
-    model.setRightValue(10,100, 37, 73)
+    Model.test = {min: 10, max: 100, leftVal: 37, rightVal: 73}
+    model.setLeftValue()
+    model.setRightValue()
     controller.inTouchLeft()
     controller.inTouchRight()
     
@@ -245,8 +248,9 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     assert.equal(range.style.right, 30 + '%')
   })
   it("при min = 0, max = 1500, sliders.width = 372.828(26vw), valueLeft = 200 и valueRight = 620 range.style.left = 13.3333%; range.style.right = 58.6667%", function () {
-    model.setLeftValue(0,1500, 200, 620)
-    model.setRightValue(0,1500, 200, 620)
+    Model.test = {min: 0, max: 1500, leftVal: 200, rightVal: 620}
+    model.setLeftValue()
+    model.setRightValue()
     controller.inTouchLeft()
     controller.inTouchRight()
 
@@ -256,8 +260,9 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     assert.equal(range.style.right, 58.6667 + '%')
   })
   it("при min = 0.5, max = 10.5, sliders.width = 372.828(26vw), valueLeft = 2 и valueRight = 4 range.style.left = 15%; range.style.right = 65%", function () {
-    model.setLeftValue(0.5, 10.5, 2, 4)
-    model.setRightValue(0.5, 10.5, 2, 4)
+    Model.test = {min: 0.5, max: 10.5, leftVal: 2, rightVal: 4}
+    model.setLeftValue()
+    model.setRightValue()
     controller.inTouchLeft()
     controller.inTouchRight()
 
@@ -267,8 +272,9 @@ describe("тест ширины range и значений Model.percentLeft, Mod
     assert.equal(range.style.right, 65 + '%')
   })
   it("при min = 1, max = 20, sliders.width = 372.828(26vw), valueLeft = 7 и valueRight = 15 range.style.left = 31.5789%; range.style.right = 26.3158%", function () {
-    model.setLeftValue(1,20, 7, 15)
-    model.setRightValue(1,20, 7, 15)
+    Model.test = {min: 1, max: 20, leftVal: 7, rightVal: 15}
+    model.setLeftValue()
+    model.setRightValue()
     controller.inTouchLeft()
     controller.inTouchRight()
 
@@ -282,72 +288,65 @@ describe("тест z-index inputLeft и inputRight при перемещении
   inputLeft = document.querySelector(`.input-left1`)
   inputRight = document.querySelector(`.input-right1`)
   it("при min = 30, max = 380, sliders.width = 372.828, valueLeft = 117, valueRight = 380 и mousePosition = 147 inputLeft.zIndex = 2", function () {
-    model.MouseMove(1, 30, 380, 372.828, 117, 380, 147)
+    Model.test = {min: 30, max: 380, leftVal: 117, rightVal: 380}
+    model.MouseMove(1, 372.828, 147)
     assert.equal(inputLeft.style.zIndex, 2)
     assert.equal(inputRight.style.zIndex, 1)
   })
   it("при min = 0, max = 55, sliders.width = 206.953, valueLeft = 5, valueRight = 25 и mousePosition = 66 inputLeft.zIndex = 1", function () {
-    model.MouseMove(1, 0, 55, 206.953, 5, 25, 66)
+    Model.test = {min: 0, max: 55, leftVal: 5, rightVal: 25}
+    model.MouseMove(1, 206.953, 66)
     assert.equal(inputLeft.style.zIndex, 1)
     assert.equal(inputRight.style.zIndex, 2)
   })
   it("при min = 10, max = 100, sliders.width = 372.828, valueLeft = 20, valueRight = 50 и mousePosition = 120 inputRight.zIndex = 2", function () {
-    model.MouseMove(1, 10, 100, 372.828, 20, 50, 120)
+    Model.test = {min: 10, max: 100, leftVal: 20, rightVal: 50}
+    model.MouseMove(1, 372.828, 120)
     assert.equal(inputRight.style.zIndex, 2)
     assert.equal(inputLeft.style.zIndex, 1)
   })
   it("при min = 0, max = 200, sliders.width = 372.828, valueLeft = 100, valueRight = 200 и mousePosition = 135 inputRight.zIndex = 1", function () {
-    model.MouseMove(1, 0, 200, 372.828, 100, 200, 135)
+    Model.test = {min: 0, max: 200, leftVal: 100, rightVal: 200}
+    model.MouseMove(1, 372.828, 135)
     assert.equal(inputRight.style.zIndex, 1)
     assert.equal(inputLeft.style.zIndex, 2)
   })
   it("при min = 0, max = 100, sliders.width = 372.828, valueLeft = 15, valueRight = 50 и mousePosition = 235 inputLeft.zIndex = 1", function () {
-    model.MouseMove(1, 0, 100, 372.828, 15, 50, 235)
+    Model.test = {min: 0, max: 100, leftVal: 15, rightVal: 50}
+    model.MouseMove(1, 372.828, 235)
     assert.equal(inputLeft.style.zIndex, 1)
     assert.equal(inputRight.style.zIndex, 2)
   })
 })
-describe('тест результата Model.percentLeft при клике на значения шкалы в model.bindScaleBubbleRangeMulti()', function() {
+describe('тест результата Model.percentLeft и Model.countMultiPositionLeft при клике на значения шкалы в model.bindScaleBubbleRangeMulti()', function() {
   it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
-    model.bindScaleBubbleRangeMulti(20, 280, 20)
+    Model.test = {min: 20, max: 280, leftVal: 20}
+    model.bindScaleBubbleRangeMulti()
     assert.equal(Model.percentLeft, 0)
-  })
-  it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
-    model.bindScaleBubbleRangeMulti(0, 100, 25)
-    assert.equal(Model.percentLeft, 25)
-  })
-  it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
-    model.bindScaleBubbleRangeMulti(0, 1500, 750)
-    assert.equal(Model.percentLeft, 50)
-  })
-  it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
-    model.bindScaleBubbleRangeMulti(200, 300, 275)
-    assert.equal(Model.percentLeft, 75)
-  })
-  it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
-    model.bindScaleBubbleRangeMulti(20, 100000, 100000)
-    assert.equal(Model.percentLeft, 100)
-  })
-})
-describe('тест результата Model.countMultiPositionLeft при клике на значения шкалы в model.bindScaleBubbleRangeMulti()', function() {
-  it('при $(`.multi-first-ins${silderNum}`).text() = 20 и max = 280', function() {
-    model.bindScaleBubbleRangeMulti(20, 280, 20)
     assert.equal(Model.countMultiPositionLeft, 'calc(0% + (-10px))')
   })
   it('при $(`.multi-second-ins${silderNum}`).text() = 25 и min = 0, max = 100', function() {
-    model.bindScaleBubbleRangeMulti(0, 100, 25)
+    Model.test = {min: 0, max: 100, leftVal: 25}
+    model.bindScaleBubbleRangeMulti()
+    assert.equal(Model.percentLeft, 25)
     assert.equal(Model.countMultiPositionLeft, 'calc(25% + (-11.25px))')
   })
   it('при $(`.multi-third-ins${silderNum}`).text() = 750 и min = 0, max = 1500', function() {
-    model.bindScaleBubbleRangeMulti(0, 1500, 750)
+    Model.test = {min: 0, max: 1500, leftVal: 750}
+    model.bindScaleBubbleRangeMulti()
+    assert.equal(Model.percentLeft, 50)
     assert.equal(Model.countMultiPositionLeft, 'calc(50% + (-12.5px))')
   })
   it('при $(`.multi-fourth-ins${silderNum}`).text() = 275 и min = 200, max = 300', function() {
-    model.bindScaleBubbleRangeMulti(200, 300, 275)
+    Model.test = {min: 200, max: 300, leftVal: 275}
+    model.bindScaleBubbleRangeMulti()
+    assert.equal(Model.percentLeft, 75)
     assert.equal(Model.countMultiPositionLeft, 'calc(75% + (-13.75px))')
   })
   it('при $(`.multi-fifth-ins${silderNum}`).text() = 100000 и min = 20', function() {
-    model.bindScaleBubbleRangeMulti(20, 100000, 100000)
+    Model.test = {min: 20, max: 100000, leftVal: 100000}
+    model.bindScaleBubbleRangeMulti()
+    assert.equal(Model.percentLeft, 100)
     assert.equal(Model.countMultiPositionLeft, 'calc(100% + (-15px))')
   })
 })

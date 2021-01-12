@@ -314,53 +314,68 @@ import { htmlPrefilter } from "jquery";
 				static countMultiPositionLeft:number|string
 				static countBubblePosition:number|string
 				static countSingBubblePosition:number|string
-
-
-				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
-				setLeftValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {//!!!!!!!!!!
-					let	min = settings.min,
-						max = settings.max
-					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
-					let testCountVal = Math.min(testLeftVal, testRightVal - 1)
-					if(testLeftVal == -666.666) {
-						Model.percentLeft = ((inputLeft.value - min) / (max - min)) * 100
-					} else {Model.percentLeft = ((testCountVal - testMin) / (testMax - testMin)) * 100}
+				static defaultNum:number = -666.666
+				static test = {
+					min: Model.defaultNum,
+					max: Model.defaultNum,
+					leftVal: Model.defaultNum,
+					rightVal: Model.defaultNum,
 				}
 
-				setRightValue(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666, testRightVal:number = -666.666) {//!!!!!!!!!!
+				//ДЕЛАЕТ РАБОЧИМ СТИЛИЗОВАННЫЙ ПОД ИНПУТ ДИВ (MULTIRANGE SLIDER)
+				setLeftValue(tests = Model.test) {//!!!!!!!!!!
 					let	min = settings.min,
-						max = settings.max
+						max = settings.max,
+						test = Model.test,
+						defaultNum = Model.defaultNum
+
+					inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 1)
+					let testCountVal = Math.min(test.leftVal, test.rightVal - 1)
+					test.leftVal == defaultNum
+						? Model.percentLeft = ((inputLeft.value - min) / (max - min)) * 100
+						: Model.percentLeft = ((testCountVal - test.min) / (test.max - test.min)) * 100
+				}
+
+				setRightValue(tests = Model.test) {//!!!!!!!!!!
+					let	min = settings.min,
+						max = settings.max,
+						test = Model.test,
+						defaultNum = Model.defaultNum
+
 					inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 1)
-					let testCountVal = Math.max(testRightVal, testLeftVal + 1)
-					if(testRightVal == -666.666){
-						Model.percentRight = 100 - (((inputRight.value - min) / (max - min)) * 100)
-					} else {Model.percentRight = 100 - (((testCountVal - testMin) / (testMax - testMin)) * 100)}
+					let testCountVal = Math.max(test.rightVal, test.leftVal + 1)
+					test.rightVal == defaultNum
+						? Model.percentRight = 100 - (((inputRight.value - min) / (max - min)) * 100)
+						: Model.percentRight = 100 - (((testCountVal - test.min) / (test.max - test.min)) * 100)
 				}
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				MouseMove(eventArg, min:number, max:number, width, testValLeft:number = -666.666, testValRight:number = -666.666, testPosition:number = -666.666) {//!!!!!!!!!!
-					var positionXY: number,
+				MouseMove(eventArg, width, testPosition:number = Model.defaultNum, tests = Model.test) {//!!!!!!!!!!
+					let positionXY: number,
 						compareInputs: boolean,
 						countPosition: number,
 						inputLeftMath: number,
 						inputRightMath: number,
-						x100: number;
+						x100: number,
+						test = Model.test,
+						defaultNum = Model.defaultNum
+
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
 					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
-					let testCountPosition = (min + max) / width
+					let testCountPosition = (test.min + test.max) / width
 					/* percentage position Y of cursor  */
-					if(testPosition == -666.666) {
-						x100 = positionXY * countPosition
-					} else {x100 = testPosition * testCountPosition}
+					testPosition == defaultNum
+						? x100 = positionXY * countPosition
+						: x100 = testPosition * testCountPosition
 					
 					/* absolute distance from respective slider values */
 					inputLeftMath = Math.abs(inputLeft.value - x100)
 					inputRightMath = Math.abs(inputRight.value - x100)
-					let testInputLeftMath = Math.abs(testValLeft - x100)
-					let testInputRightMath = Math.abs(testValRight - x100)
-					if(testValLeft == -666.666 && testValRight == -666.666) {
-						compareInputs = inputLeftMath < inputRightMath
-					} else {compareInputs = testInputLeftMath < testInputRightMath}
+					let testInputLeftMath = Math.abs(test.leftVal - x100)
+					let testInputRightMath = Math.abs(test.rightVal - x100)
+					test.leftVal == defaultNum && test.rightVal == defaultNum
+						? compareInputs = inputLeftMath < inputRightMath
+						: compareInputs = testInputLeftMath < testInputRightMath
 					
 					// Making the two sliders appear above one another only when no mouse button is pressed, this oondition may be removed at will
 					if (!eventArg.buttons) {
@@ -373,8 +388,12 @@ import { htmlPrefilter } from "jquery";
 						}
 					}
 				}
-				bindScaleBubbleRangeMulti(testMin:number = -666.666, testMax:number = -666.666, testLeftVal:number = -666.666){//!!!!!!!!!!
-					let	newValue
+
+				bindScaleBubbleRangeMulti(tests = Model.test){//!!!!!!!!!!
+					let	newValue,
+						test = Model.test,
+						defaultNum = Model.defaultNum
+
 					$(`.multi-first-ins${silderNum}`).on('click', function(){
 						inputLeft.value = +$(`.multi-first-ins${silderNum}`).text()
 					})
@@ -391,30 +410,31 @@ import { htmlPrefilter } from "jquery";
 						inputLeft.value = +$(`.multi-fifth-ins${silderNum}`).text()
 					})
 
-					if (testLeftVal == -666.666) newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
-					else newValue = (testLeftVal - testMin) * 100 / (testMax - testMin)
+					test.leftVal == defaultNum 
+						? newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min)
+						: newValue = (test.leftVal - test.min) * 100 / (test.max - test.min)
 					let newPosition = -10 - (newValue * 0.05)
 					Model.countMultiPositionLeft = `calc(${newValue}% + (${newPosition}px))`
 
-					if(testLeftVal == -666.666) {
-						Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
-					} else {Model.percentLeft = ((testLeftVal - testMin) / (testMax - testMin)) * 100}
+					test.leftVal == defaultNum
+						? Model.percentLeft = ((inputLeft.value - settings.min) / (settings.max - settings.min)) * 100
+						: Model.percentLeft = ((test.leftVal - test.min) / (test.max - test.min)) * 100
 					
 					let newValueRight = (+$(`.multi-fifth-ins${silderNum}`).text() - settings.min) * 100 / (settings.max - settings.min)
 					let newPositionRight = -10 - (newValueRight * 0.05)
 					Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
 				}
 
-				countProgress(min:number, max:number, testVal:number = -666.666) {//!!!!!!!!!!
+				countProgress(min:number, max:number, testVal:number = Model.defaultNum) {//!!!!!!!!!!
 					$(singleRange).on('input', function(){
 						let val:number = singleRange.value
-						if (testVal == -666.666) {
+						if (testVal == Model.defaultNum) {
 							Model.progressBarWidth = (val - min) * 100 / (max - min)
 						} else {Model.progressBarWidth = (testVal - min) * 100 / (max - min)}
 					}).trigger('input')
 				}
 
-				bindScaleBubbleRangeSing(testMin:number = -666.666, testMax:number = -666.666, testVal:number = -666.666){//!!!!!!!!!!
+				bindScaleBubbleRangeSing(testMin:number = Model.defaultNum, testMax:number = Model.defaultNum, testVal:number = Model.defaultNum){//!!!!!!!!!!
 					let newValue:number
 					$(`.first-ins${silderNum}`).on('click', function(){
 						Model.valResultIns = +$(`.first-ins${silderNum}`).text()
@@ -437,20 +457,20 @@ import { htmlPrefilter } from "jquery";
 						singleRange.value = $(`.fifth-ins${silderNum}`).text()
 					})
 
-					if (testVal == -666.666) newValue = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
+					if (testVal == Model.defaultNum) newValue = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
 					else newValue = (testVal - testMin) * 100 / (testMax - testMin)
 					let	newPosition = 5 - (newValue * 0.25)
 					Model.insCountSinglePosition = `calc(${newValue}% + (${newPosition}px))`
 
-					if (testVal == -666.666) Model.progressBarWidth = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
+					if (testVal == Model.defaultNum) Model.progressBarWidth = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min)
 					else Model.progressBarWidth = (testVal - testMin) * 100 / (testMax - testMin)
 				}
 
-				bubbleCount(input, min:number, max:number, testVal:number = -666.666) {//!!!!!!!!!!
+				bubbleCount(input, min:number, max:number, testVal:number = Model.defaultNum) {//!!!!!!!!!!
 					$(input).on('input', function(){
 						let newValue
 						let newPosition
-						if (testVal == -666.666) newValue = (input.value - min) * 100 / (max - min)
+						if (testVal == Model.defaultNum) newValue = (input.value - min) * 100 / (max - min)
 						else newValue = (testVal - min) * 100 / (max - min)
 						let newSingPosition = 5 - (newValue * 0.25)
 						newPosition = -10 - (newValue * 0.05)
