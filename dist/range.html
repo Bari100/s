@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5</title>
+    <link href="/range.4e5e8e0e.css" rel="stylesheet">
+<script src="/range.4e5e8e0e.js"></script></head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="/range2.e9d7be64.js"></script>
+    <div class="settings1">
+        <div class="single-multi1">
+            <label> Single
+                <input id="mult-sing1" class="choose-single1" name="choose-slider1" type="radio">
+            </label>
+            <label> Multi
+                <input id="mult-sing1" class="choose-multi1" name="choose-slider1" type="radio" checked="">
+            </label>
+        </div>
+        <div class="bubble-on-off1">
+            <label> Bubble
+                <input class="bubble-on1" name="bubble-radio1" type="radio" checked="">
+            </label>
+            <label> Without Bubble
+                <input class="bubble-off1" name="bubble-radio1" type="radio">
+            </label>
+        </div>
+        <div class="horizontal-vertical1">
+            <label> horizontal
+                <input class="horizontal1" name="horiz-vert1" type="radio" checked="">
+            </label>
+            <label> vertical
+                <input class="vertical1" name="horiz-vert1" type="radio">
+            </label>
+        </div>
+        <div>
+            <button class="change-step1">Step</button>
+            <input type="number" id="step_number1">
+        </div>
+        <div class="change-value-block1">
+            <button class="change-value1">Value</button>
+            <input type="number" id="slider-value1">
+        </div>
+        <div class="change-value-multi-block1">
+            <button class="change-value-multi1">Value</button>
+            <input type="number" id="multislider-value-11">
+            <input type="number" id="multislider-value-21">
+        </div>
+    </div>
+    <div class="sliders1 js-sliders1"></div>
+    <script>$("body").rangeSliders(1);</script>
+    <!-- <div class="sliders1"> -->
+        <!-- <div class="slider-single">
+            <div class="bubble-single"><span class="value-single-span"></span></div>
+            <input type="range" id="single-range" min="12" max="250" value="50">
+            <div class="progress-bar"></div>
+            <div class="scale">
+                <span style="left: 0%">
+                    <ins class="first-ins"></ins>
+                </span>
+                <span class="second" style="left: 25%">
+                    <ins class="second-ins">-1</ins>
+                </span>
+                <span class="third" style="left: 49%">
+                    <ins class="third-ins">0</ins>
+                </span>
+                <span class="fourth" style="left: 73%">
+                    <ins class="fourth-ins">1</ins>
+                </span>
+                <span style="left: 95%">
+                    <ins class="fifth-ins">2</ins>
+                </span>
+            </div>
+        </div> -->
+        <!-- <div class="multi-range-slider">
+            <div class="bubble-multi-left"><span class="value-multi-left-span"></span></div>
+            <div class="bubble-multi-right"><span class="value-multi-right-span"></span></div>
+            <input type="range" id="input-left" min="50" max="1000" value="25">
+            <input type="range" id="input-right" min="50" max="1000" value="75">
+            <div class="slider">
+                <div class="track"></div>
+                <div class="range"></div>
+                <div class="thumb left"></div>
+                <div class="thumb right"></div>
+            </div>
+            <div class="multi-scale">
+                <span style="left: 0%">
+                    <ins class="multi-first-ins"></ins>
+                </span>
+                <span class="second" style="left: 25%">
+                    <ins class="multi-second-ins">-1</ins>
+                </span>
+                <span class="third" style="left: 49%">
+                    <ins class="multi-third-ins">0</ins>
+                </span>
+                <span class="fourth" style="left: 73%">
+                    <ins class="multi-fourth-ins">1</ins>
+                </span>
+                <span style="left: 95%">
+                    <ins class="multi-fifth-ins">2</ins>
+                </span>
+            </div>
+        </div> -->
+    <!-- </div> -->
+</body>
+</html>

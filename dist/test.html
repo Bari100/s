@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- добавим стили mocha для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- <link rel="stylesheet" href="range.css"> -->
+    <!-- добавляем сам фреймворк mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>// включаем режим тестирования в стиле BDD
+mocha.setup('bdd'); //     var chai = require("chai");
+//     var sinonChai = require("sinon-chai");
+//     chai.use(sinonChai);</script>
+    <!-- добавим chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="/sinon-chai.13b70636.js"></script>
+    <!-- <script src="../node_modules/chai-spies/chai-spies.js"></script> -->
+    <script src="/sinon.4e0e2566.js"></script>
+    <script>// chai предоставляет большое количество функций. Объявим assert глобально
+var assert = chai.assert;
+var expect = chai.expect;</script>
+</head>
+
+<body>
+    
+    <div class="sliders1" style="display: none;"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <!-- <script src="range.227ef839.js"></script> -->
+    
+    
+    <script src="/range2.933a2c2b.js"></script>
+<!--    <script>$("body").rangeSliders(1)</script>-->
+    
+
+    <!-- скрипт со спецификацией (describe, it...) -->
+    <!-- <script src="test.js"></script> -->
+     <script src="/view.test.10ccdc72.js"></script> 
+<!--    <script src="controller2.test.js"></script>-->
+
+    <!-- элемент с id="mocha" будет содержать результаты тестов -->
+    <div id="mocha"></div>
+
+    <!-- запускаем тесты! -->
+    <script>mocha.run();</script>
+</body>
+
+</html>
