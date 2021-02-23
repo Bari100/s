@@ -1,0 +1,71 @@
+.range-blocks-1-2, .range-blocks-3-4 {
+    display: flex;
+}
+
+.range-blocks-1-2 {
+    /* margin-top: 500px; */
+    margin-bottom: 350px;
+    /* margin-left: 100px; */
+}
+
+.range-block-1, .range-block-3 {
+    margin-right: 200px;
+}
+
+.settings1, .settings2, .settings3, .settings4 {
+    margin-bottom: 50px;
+}
+
+#multislider-value-11, #multislider-value-21, #multislider-value-12, #multislider-value-22, #multislider-value-13, #multislider-value-23, #multislider-value-14, #multislider-value-24 {
+    width: 40px;
+}
+
+.slider2 > .range2, .slider2 > .thumb2, .progress-bar2, .single-range2::-webkit-slider-thumb {
+    background-color: rgb(138, 201, 75);
+}
+
+.slider2 > .track2, .single-range2::-webkit-slider-runnable-track {
+    background-color: rgb(201, 228, 175);
+}
+
+.bubble-multi-left2, .bubble-multi-right2, .bubble-multi-left2::after, .bubble-multi-right2::after, .bubble-single2, .bubble-single2:after {
+    background-color: rgb(148, 216, 81);
+}
+
+.slider1 > .range1, .slider1 > .thumb1, .progress-bar1, .single-range1::-webkit-slider-thumb {
+    background-color: rgb(206, 42, 42);
+}
+
+.slider1 > .track1, .single-range1::-webkit-slider-runnable-track {
+    background-color: rgb(228, 175, 175);
+}
+
+.bubble-multi-left1, .bubble-multi-right1, .bubble-multi-left1::after, .bubble-multi-right1::after, .bubble-single1, .bubble-single1:after {
+    background-color: rgb(216, 81, 81);
+}
+
+.slider3 > .range3, .slider3 > .thumb3, .progress-bar3, .single-range3::-webkit-slider-thumb {
+    background-color: rgb(75, 201, 201);
+}
+
+.slider3 > .track3, .single-range3::-webkit-slider-runnable-track {
+    background-color: rgb(175, 213, 228);
+}
+
+.bubble-multi-left3, .bubble-multi-right3, .bubble-multi-left3::after, .bubble-multi-right3::after, .bubble-single3, .bubble-single3:after {
+    background-color: rgb(81, 211, 216);
+}
+
+.slider4 > .range4, .slider4 > .thumb4, .progress-bar4, .single-range4::-webkit-slider-thumb {
+    background-color: rgb(201, 75, 174);
+}
+
+.slider4 > .track4, .single-range4::-webkit-slider-runnable-track {
+    background-color: rgb(228, 175, 217);
+}
+
+.bubble-multi-left4, .bubble-multi-right4, .bubble-multi-left4::after, .bubble-multi-right4::after, .bubble-single4, .bubble-single4:after {
+    background-color: rgb(216, 81, 164);
+}
+
+/*# sourceMappingURL=/ranges.ee7fbe08.css.map */
