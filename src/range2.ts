@@ -4,7 +4,7 @@ import { htmlPrefilter } from "jquery";
 	(<any>$.fn).rangeSliders = function (silderNum: number, vertical: boolean) {
 		let settings = {
 			step: 1,
-			vertical: true,
+			vertical: false,
 			multirange: true,
 			bubbles: true,
 			width: 26,
@@ -730,4 +730,4 @@ import { htmlPrefilter } from "jquery";
 	}
 })(jQuery);
 
-(<any>$("body")).rangeSliders(1)
+// (<any>$("body")).rangeSliders(1)
