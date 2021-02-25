@@ -137,182 +137,184 @@ Object.defineProperty(exports, "__esModule", {
       max: 280
     };
     return this.each(function () {
-      var sliders = document.querySelector(".sliders" + silderNum),
-          radioMulti = document.querySelector(".choose-multi" + silderNum);
-      var sliderSingle = $('<div>', {
+      var sliders = document.querySelector(".js-sliders" + silderNum); // radioMulti = document.querySelector(`.js-choose-multi${silderNum}`);
+
+      var $sliderSingle = $('<div>', {
         'class': "slider-single" + silderNum
       });
-      $(sliders).append(sliderSingle);
-      var bubbleSingle = $('<div>', {
-        'class': "bubble-single" + silderNum
+      $(sliders).append($sliderSingle);
+      var $bubbleSingle = $('<div>', {
+        'class': "bubble-single" + silderNum + " js-bubble-single" + silderNum
       });
-      $(sliderSingle).append(bubbleSingle);
-      var valueSingleSpan = $('<span>', {
-        'class': "value-single-span" + silderNum
+      $($sliderSingle).append($bubbleSingle);
+      var $valueSingleSpan = $('<span>', {
+        'class': "value-single-span" + silderNum + " js-value-single-span" + silderNum
       });
-      $(bubbleSingle).append(valueSingleSpan);
-      var singleRange = $('<input>', {
+      $($bubbleSingle).append($valueSingleSpan);
+      var $singleRange = $('<input>', {
         'class': "single-range" + silderNum,
         'type': 'range',
         'min': '50',
         'max': '250',
         'value': '50'
       });
-      $(sliderSingle).append(singleRange);
-      $(sliderSingle).append($('<div>', {
-        'class': "progress-bar" + silderNum
+      $($sliderSingle).append($singleRange);
+      $($sliderSingle).append($('<div>', {
+        'class': "progress-bar" + silderNum + " js-progress-bar" + silderNum
       }));
-      var scaleSingle = $('<div>', {
-        'class': "scale" + silderNum
+      var $scaleSingle = $('<div>', {
+        'class': "scale" + silderNum + " js-scale" + silderNum
       });
-      $(sliderSingle).append(scaleSingle);
-      var spanScaleSingle1 = $('<span>', {
+      $($sliderSingle).append($scaleSingle);
+      var $spanScaleSingle1 = $('<span>', {
         'style': 'left: 0%'
       });
-      $(scaleSingle).append(spanScaleSingle1);
-      $(spanScaleSingle1).append($('<ins>', {
-        'class': "first-ins" + silderNum
+      $($scaleSingle).append($spanScaleSingle1);
+      $($spanScaleSingle1).append($('<ins>', {
+        'class': "first-ins" + silderNum + " js-first-ins" + silderNum
       }));
-      var spanScaleSingle2 = $('<span>', {
+      var $spanScaleSingle2 = $('<span>', {
         'class': 'second',
         'style': 'left: 25%'
       });
-      $(scaleSingle).append(spanScaleSingle2);
-      $(spanScaleSingle2).append($('<ins>', {
-        'class': "second-ins" + silderNum
+      $($scaleSingle).append($spanScaleSingle2);
+      $($spanScaleSingle2).append($('<ins>', {
+        'class': "second-ins" + silderNum + " js-second-ins" + silderNum
       }));
-      var spanScaleSingle3 = $('<span>', {
+      var $spanScaleSingle3 = $('<span>', {
         'class': 'third',
         'style': 'left: 49%'
       });
-      $(scaleSingle).append(spanScaleSingle3);
-      $(spanScaleSingle3).append($('<ins>', {
-        'class': "third-ins" + silderNum
+      $($scaleSingle).append($spanScaleSingle3);
+      $($spanScaleSingle3).append($('<ins>', {
+        'class': "third-ins" + silderNum + " js-third-ins" + silderNum
       }));
-      var spanScaleSingle4 = $('<span>', {
+      var $spanScaleSingle4 = $('<span>', {
         'class': 'fourth',
         'style': 'left: 73%'
       });
-      $(scaleSingle).append(spanScaleSingle4);
-      $(spanScaleSingle4).append($('<ins>', {
-        'class': "fourth-ins" + silderNum
+      $($scaleSingle).append($spanScaleSingle4);
+      $($spanScaleSingle4).append($('<ins>', {
+        'class': "fourth-ins" + silderNum + " js-fourth-ins" + silderNum
       }));
-      var spanScaleSingle5 = $('<span>', {
+      var $spanScaleSingle5 = $('<span>', {
         'style': 'left: 95%'
       });
-      $(scaleSingle).append(spanScaleSingle5);
-      $(spanScaleSingle5).append($('<ins>', {
-        'class': "fifth-ins" + silderNum
+      $($scaleSingle).append($spanScaleSingle5);
+      $($spanScaleSingle5).append($('<ins>', {
+        'class': "fifth-ins" + silderNum + " js-fifth-ins" + silderNum
       }));
       var singleRange = document.querySelector(".single-range" + silderNum);
-      var multiRangeSlider = $('<div>', {
-        'class': "multi-range-slider" + silderNum
+      var $multiRangeSlider = $('<div>', {
+        'class': "multi-range-slider" + silderNum + " js-multi-range-slider" + silderNum
       });
-      $(sliders).append(multiRangeSlider);
-      var bubbleMultiLeft = $('<div>', {
-        'class': "bubble-multi-left" + silderNum
+      $(sliders).append($multiRangeSlider);
+      var $bubbleMultiLeft = $('<div>', {
+        'class': "bubble-multi-left" + silderNum + " js-bubble-multi-left" + silderNum
       });
-      $(multiRangeSlider).append(bubbleMultiLeft);
-      var valueMultiLeftSpan = $('<span>', {
-        'class': "value-multi-left-span" + silderNum
+      $($multiRangeSlider).append($bubbleMultiLeft);
+      var $valueMultiLeftSpan = $('<span>', {
+        'class': "value-multi-left-span" + silderNum + " js-value-multi-left-span" + silderNum
       });
-      $(bubbleMultiLeft).append(valueMultiLeftSpan);
-      var bubbleMultiRight = $('<div>', {
-        'class': "bubble-multi-right" + silderNum
+      $($bubbleMultiLeft).append($valueMultiLeftSpan);
+      var $bubbleMultiRight = $('<div>', {
+        'class': "bubble-multi-right" + silderNum + " js-bubble-multi-right" + silderNum
       });
-      $(multiRangeSlider).append(bubbleMultiRight);
-      var valueMultiRightSpan = $('<span>', {
-        'class': "value-multi-right-span" + silderNum
+      $($multiRangeSlider).append($bubbleMultiRight);
+      var $valueMultiRightSpan = $('<span>', {
+        'class': "value-multi-right-span" + silderNum + " js-value-multi-right-span" + silderNum
       });
-      $(bubbleMultiRight).append(valueMultiRightSpan);
-      var inputLeft = $('<input>', {
-        'class': "input-left" + silderNum,
+      $($bubbleMultiRight).append($valueMultiRightSpan);
+      var $inputLeft = $('<input>', {
+        'class': "input-left" + silderNum + " js-input-left" + silderNum,
         'type': 'range',
         'min': '50',
         'max': '250',
         'value': '100'
       });
-      var inputRight = $('<input>', {
-        'class': "input-right" + silderNum,
+      var $inputRight = $('<input>', {
+        'class': "input-right" + silderNum + " js-input-right" + silderNum,
         'type': 'range',
         'min': '50',
         'max': '250',
         'value': '200'
       });
-      $(multiRangeSlider).append(inputLeft);
-      $(multiRangeSlider).append(inputRight);
-      var slider = $('<div>', {
-        'class': "slider" + silderNum
+      $($multiRangeSlider).append($inputLeft);
+      $($multiRangeSlider).append($inputRight);
+      var $slider = $('<div>', {
+        'class': "slider" + silderNum + " js-slider" + silderNum
       });
-      $(multiRangeSlider).append(slider);
-      $(slider).append($('<div>', {
+      $($multiRangeSlider).append($slider);
+      $($slider).append($('<div>', {
         'class': "track" + silderNum
       }));
-      $(slider).append($('<div>', {
-        'class': "range" + silderNum
+      $($slider).append($('<div>', {
+        'class': "range" + silderNum + " js-range" + silderNum
       }));
-      $(slider).append($('<div>', {
-        'class': "thumb" + silderNum + " left" + silderNum
+      $($slider).append($('<div>', {
+        'class': "thumb" + silderNum + " left" + silderNum + " js-thumb" + silderNum + " js-left" + silderNum
       }));
-      $(slider).append($('<div>', {
-        'class': "thumb" + silderNum + " right" + silderNum
+      $($slider).append($('<div>', {
+        'class': "thumb" + silderNum + " right" + silderNum + " js-thumb" + silderNum + " js-right" + silderNum
       }));
-      var multiScale = $('<div>', {
-        'class': "multi-scale" + silderNum
+      var $multiScale = $('<div>', {
+        'class': "multi-scale" + silderNum + " js-multi-scale" + silderNum
       });
-      $(multiRangeSlider).append(multiScale);
-      var spanMultiScale1 = $('<span>', {
+      $($multiRangeSlider).append($multiScale);
+      var $spanMultiScale1 = $('<span>', {
         'style': 'left: 0%'
       });
-      $(multiScale).append(spanMultiScale1);
-      $(spanMultiScale1).append($('<ins>', {
-        'class': "multi-first-ins" + silderNum
+      $($multiScale).append($spanMultiScale1);
+      $($spanMultiScale1).append($('<ins>', {
+        'class': "multi-first-ins" + silderNum + " js-multi-first-ins" + silderNum
       }));
-      var spanMultiScale2 = $('<span>', {
+      var $spanMultiScale2 = $('<span>', {
         'class': 'second',
         'style': 'left: 25%'
       });
-      $(multiScale).append(spanMultiScale2);
-      $(spanMultiScale2).append($('<ins>', {
-        'class': "multi-second-ins" + silderNum
+      $($multiScale).append($spanMultiScale2);
+      $($spanMultiScale2).append($('<ins>', {
+        'class': "multi-second-ins" + silderNum + " js-multi-second-ins" + silderNum
       }));
-      var spanMultiScale3 = $('<span>', {
+      var $spanMultiScale3 = $('<span>', {
         'class': 'third',
         'style': 'left: 49%'
       });
-      $(multiScale).append(spanMultiScale3);
-      $(spanMultiScale3).append($('<ins>', {
-        'class': "multi-third-ins" + silderNum
+      $($multiScale).append($spanMultiScale3);
+      $($spanMultiScale3).append($('<ins>', {
+        'class': "multi-third-ins" + silderNum + " js-multi-third-ins" + silderNum
       }));
-      var spanMultiScale4 = $('<span>', {
+      var $spanMultiScale4 = $('<span>', {
         'class': 'fourth',
         'style': 'left: 73%'
       });
-      $(multiScale).append(spanMultiScale4);
-      $(spanMultiScale4).append($('<ins>', {
-        'class': "multi-fourth-ins" + silderNum
+      $($multiScale).append($spanMultiScale4);
+      $($spanMultiScale4).append($('<ins>', {
+        'class': "multi-fourth-ins" + silderNum + " js-multi-fourth-ins" + silderNum
       }));
-      var spanMultiScale5 = $('<span>', {
+      var $spanMultiScale5 = $('<span>', {
         'style': 'left: 95%'
       });
-      $(multiScale).append(spanMultiScale5);
-      $(spanMultiScale5).append($('<ins>', {
-        'class': "multi-fifth-ins" + silderNum
+      $($multiScale).append($spanMultiScale5);
+      $($spanMultiScale5).append($('<ins>', {
+        'class': "multi-fifth-ins" + silderNum + " js-multi-fifth-ins" + silderNum
       }));
-      var range = document.querySelector(".slider" + silderNum + " > .range" + silderNum),
-          thumbLeft = document.querySelector(".slider" + silderNum + " > .thumb" + silderNum + ".left" + silderNum),
-          thumbRight = document.querySelector(".slider" + silderNum + " > .thumb" + silderNum + ".right" + silderNum),
-          inputLeft = document.querySelector(".input-left" + silderNum),
-          inputRight = document.querySelector(".input-right" + silderNum); //*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
+      var range = document.querySelector(".js-slider" + silderNum + " > .js-range" + silderNum),
+          thumbLeft = document.querySelector(".js-slider" + silderNum + " > .js-thumb" + silderNum + ".js-left" + silderNum),
+          thumbRight = document.querySelector(".js-slider" + silderNum + " > .js-thumb" + silderNum + ".js-right" + silderNum),
+          inputLeft = document.querySelector(".js-input-left" + silderNum),
+          inputRight = document.querySelector(".js-input-right" + silderNum),
+          $scaleValuesMult = $(".js-multi-first-ins" + silderNum + ", .js-multi-second-ins" + silderNum + ", .js-multi-third-ins" + silderNum + ", .js-multi-fourth-ins" + silderNum + ", .js-multi-fifth-ins" + silderNum),
+          $scaleValuesSing = $(".js-first-ins" + silderNum + ", .js-second-ins" + silderNum + ", .js-third-ins" + silderNum + ", .js-fourth-ins" + silderNum + ", .js-fifth-ins" + silderNum); //*-DEMO-* ФУНКЦИЯ ВЫБОРА SINGLE ИЛИ MULTIRANGE
 
       $(".choose-multi" + silderNum).on('click', function () {
-        $(sliderSingle).hide();
+        $($sliderSingle).hide();
         $(".multi-range-slider" + silderNum).show();
         $(".change-value-multi-block" + silderNum).show();
         $(".change-value-block" + silderNum).hide();
       });
       $(".choose-single" + silderNum).on('click', function () {
-        $(sliderSingle).show();
+        $($sliderSingle).show();
         $(".multi-range-slider" + silderNum).hide();
         $(".change-value-multi-block" + silderNum).hide();
         $(".change-value-block" + silderNum).show();
@@ -341,7 +343,7 @@ Object.defineProperty(exports, "__esModule", {
         $(inputLeft).css("width", settings.width + "vw");
         $(inputRight).css("width", settings.width + "vw");
         $(singleRange).css("width", settings.width + "vw");
-        $(sliderSingle).css("width", settings.width + "vw");
+        $($sliderSingle).css("width", settings.width + "vw");
         $(".scale" + silderNum).css("width", settings.width + "vw");
         $(".multi-scale" + silderNum).css("width", settings.width + "vw");
       });
@@ -352,7 +354,7 @@ Object.defineProperty(exports, "__esModule", {
         $(inputLeft).css("width", newWidth + "px");
         $(inputRight).css("width", newWidth + "px");
         $(singleRange).css("width", newWidth + "px");
-        $(sliderSingle).css("width", newWidth + "px");
+        $($sliderSingle).css("width", newWidth + "px");
         $(".scale" + silderNum).css("width", newWidth + "px");
         $(".multi-scale" + silderNum).css("width", newWidth + "px");
       }); //*-DEMO-* ФУНКЦИЯ STEP
@@ -458,9 +460,9 @@ Object.defineProperty(exports, "__esModule", {
       $(inputLeft).css("width", settings.width + "vw");
       $(inputRight).css("width", settings.width + "vw");
       $(singleRange).css("width", settings.width + "vw");
-      $(sliderSingle).css("width", settings.width + "vw");
-      $(".scale" + silderNum).css("width", settings.width + "vw");
-      $(".multi-scale" + silderNum).css("width", settings.width + "vw"); //ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЕ ШАГА (STEP)
+      $sliderSingle.css("width", settings.width + "vw");
+      $scaleSingle.css("width", settings.width + "vw");
+      $multiScale.css("width", settings.width + "vw"); //ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ (ВЕРТИКАЛЬ) И ИЗМЕНЕНИЕ ШАГА (STEP)
 
       if (settings.vertical) {
         sliders.style.transform = "rotate(270deg)";
@@ -469,9 +471,9 @@ Object.defineProperty(exports, "__esModule", {
         $(inputLeft).css("width", newWidth + "px");
         $(inputRight).css("width", newWidth + "px");
         $(singleRange).css("width", newWidth + "px");
-        $(sliderSingle).css("width", newWidth + "px");
-        $(".scale" + silderNum).css("width", newWidth + "px");
-        $(".multi-scale" + silderNum).css("width", newWidth + "px");
+        $sliderSingle.css("width", newWidth + "px");
+        $scaleSingle.css("width", newWidth + "px");
+        $multiScale.css("width", newWidth + "px");
       } else {
         sliders.style.transform = "rotate(0deg)";
       }
@@ -481,22 +483,22 @@ Object.defineProperty(exports, "__esModule", {
       inputRight.step = settings.step; //SINGLE ИЛИ MULTIRANGE
 
       if (settings.multirange) {
-        $(sliderSingle).hide();
-        $(".multi-range-slider" + silderNum).show();
+        $sliderSingle.hide();
+        $multiRangeSlider.show();
       } else {
-        $(sliderSingle).show();
-        $(".multi-range-slider" + silderNum).hide();
+        $sliderSingle.show();
+        $multiRangeSlider.hide();
       } //BUBBLES ВКЛ. ВЫКЛ.
 
 
       if (settings.bubbles) {
-        $(".bubble-single").removeClass("none");
-        $(".bubble-multi-right").removeClass("none");
-        $(".bubble-multi-left").removeClass("none");
+        $bubbleSingle.removeClass("none");
+        $bubbleMultiRight.removeClass("none");
+        $bubbleMultiLeft.removeClass("none");
       } else {
-        $(".bubble-single").addClass("none");
-        $(".bubble-multi-right").addClass("none");
-        $(".bubble-multi-left").addClass("none");
+        $bubbleSingle.addClass("none");
+        $bubbleMultiRight.addClass("none");
+        $bubbleMultiLeft.addClass("none");
       } //ИЗМЕНЕНИЕ MIN MAX
 
 
@@ -510,7 +512,11 @@ Object.defineProperty(exports, "__esModule", {
       var Model =
       /** @class */
       function () {
-        function Model() {} //РАСЧЁТ ДЛЯ ПЕРЕМЕЩЕНИЯ THUMB И RANGE (MULTIRANGE SLIDER)
+        function Model() {}
+
+        Model.trackZindexL = function () {};
+
+        Model.trackZindexR = function () {}; //РАСЧЁТ ДЛЯ ПЕРЕМЕЩЕНИЯ THUMB И RANGE (MULTIRANGE SLIDER)
 
 
         Model.prototype.countThumbRangeL = function (tests) {
@@ -572,6 +578,14 @@ Object.defineProperty(exports, "__esModule", {
           var testInputLeftMath = Math.abs(test.leftVal - x100);
           var testInputRightMath = Math.abs(test.rightVal - x100);
           test.leftVal == defaultNum && test.rightVal == defaultNum ? Model.compareInputs = inputLeftMath < inputRightMath : Model.compareInputs = testInputLeftMath < testInputRightMath;
+
+          if (!eventArg.buttons) {
+            if (Model.compareInputs) {
+              Model.trackZindexL();
+            } else {
+              Model.trackZindexR();
+            }
+          }
         };
 
         Model.prototype.bindScaleBubbleRangeMulti = function (tests) {
@@ -582,20 +596,20 @@ Object.defineProperty(exports, "__esModule", {
           var newValue,
               test = Model.test,
               defaultNum = Model.defaultNum;
-          $(".multi-first-ins" + silderNum).on('click', function () {
-            inputLeft.value = +$(".multi-first-ins" + silderNum).text();
+          $(".js-multi-first-ins" + silderNum).on('click', function () {
+            inputLeft.value = +$(".js-multi-first-ins" + silderNum).text();
           });
-          $(".multi-second-ins" + silderNum).on('click', function () {
-            inputLeft.value = +$(".multi-second-ins" + silderNum).text();
+          $(".js-multi-second-ins" + silderNum).on('click', function () {
+            inputLeft.value = +$(".js-multi-second-ins" + silderNum).text();
           });
-          $(".multi-third-ins" + silderNum).on('click', function () {
-            inputLeft.value = +$(".multi-third-ins" + silderNum).text();
+          $(".js-multi-third-ins" + silderNum).on('click', function () {
+            inputLeft.value = +$(".js-multi-third-ins" + silderNum).text();
           });
-          $(".multi-fourth-ins" + silderNum).on('click', function () {
-            inputLeft.value = +$(".multi-fourth-ins" + silderNum).text();
+          $(".js-multi-fourth-ins" + silderNum).on('click', function () {
+            inputLeft.value = +$(".js-multi-fourth-ins" + silderNum).text();
           });
-          $(".multi-fifth-ins" + silderNum).on('click', function () {
-            inputLeft.value = +$(".multi-fifth-ins" + silderNum).text();
+          $(".js-multi-fifth-ins" + silderNum).on('click', function () {
+            inputLeft.value = +$(".js-multi-fifth-ins" + silderNum).text();
           });
           test.leftVal == defaultNum ? newValue = (inputLeft.value - settings.min) * 100 / (settings.max - settings.min) : newValue = (test.leftVal - test.min) * 100 / (test.max - test.min);
           var newPosition = -10 - newValue * 0.05;
@@ -631,25 +645,25 @@ Object.defineProperty(exports, "__esModule", {
           }
 
           var newValue;
-          $(".first-ins" + silderNum).on('click', function () {
-            Model.valResultIns = +$(".first-ins" + silderNum).text();
-            singleRange.value = $(".first-ins" + silderNum).text();
+          $(".js-first-ins" + silderNum).on('click', function () {
+            Model.valResultIns = +$(".js-first-ins" + silderNum).text();
+            singleRange.value = $(".js-first-ins" + silderNum).text();
           });
-          $(".second-ins" + silderNum).on('click', function () {
-            Model.valResultIns = +$(".second-ins" + silderNum).text();
-            singleRange.value = $(".second-ins" + silderNum).text();
+          $(".js-second-ins" + silderNum).on('click', function () {
+            Model.valResultIns = +$(".js-second-ins" + silderNum).text();
+            singleRange.value = $(".js-second-ins" + silderNum).text();
           });
-          $(".third-ins" + silderNum).on('click', function () {
-            Model.valResultIns = +$(".third-ins" + silderNum).text();
-            singleRange.value = $(".third-ins" + silderNum).text();
+          $(".js-third-ins" + silderNum).on('click', function () {
+            Model.valResultIns = +$(".js-third-ins" + silderNum).text();
+            singleRange.value = $(".js-third-ins" + silderNum).text();
           });
-          $(".fourth-ins" + silderNum).on('click', function () {
-            Model.valResultIns = +$(".fourth-ins" + silderNum).text();
-            singleRange.value = $(".fourth-ins" + silderNum).text();
+          $(".js-fourth-ins" + silderNum).on('click', function () {
+            Model.valResultIns = +$(".js-fourth-ins" + silderNum).text();
+            singleRange.value = $(".js-fourth-ins" + silderNum).text();
           });
-          $(".fifth-ins" + silderNum).on('click', function () {
-            Model.valResultIns = +$(".fifth-ins" + silderNum).text();
-            singleRange.value = $(".fifth-ins" + silderNum).text();
+          $(".js-fifth-ins" + silderNum).on('click', function () {
+            Model.valResultIns = +$(".js-fifth-ins" + silderNum).text();
+            singleRange.value = $(".js-fifth-ins" + silderNum).text();
           });
           testVal == Model.defaultNum ? newValue = (Model.valResultIns - settings.min) * 100 / (settings.max - settings.min) : newValue = (testVal - testMin) * 100 / (testMax - testMin);
           var newPosition = 5 - newValue * 0.25;
@@ -714,26 +728,26 @@ Object.defineProperty(exports, "__esModule", {
           range.style.right = View.position + "%";
         };
 
-        View.prototype.setTrackZindex = function () {
-          if (View.compareInputs) {
-            inputLeft.style.zIndex = 2;
-            inputRight.style.zIndex = 1;
-          } else {
-            inputRight.style.zIndex = 2;
-            inputLeft.style.zIndex = 1;
-          }
+        View.prototype.setTrackZindexL = function () {
+          inputLeft.style.zIndex = 2;
+          inputRight.style.zIndex = 1;
+        };
+
+        View.prototype.setTrackZindexR = function () {
+          inputRight.style.zIndex = 2;
+          inputLeft.style.zIndex = 1;
         };
 
         View.prototype.bindScaleBubbleRangeLeft = function () {
-          $(".bubble-multi-left" + silderNum).css("left", View.countMultiPositionLeft);
-          $(".value-multi-left-span" + silderNum).text(inputLeft.value);
+          $bubbleMultiLeft.css("left", View.countMultiPositionLeft);
+          $valueMultiLeftSpan.text(inputLeft.value);
           thumbLeft.style.left = View.position + "%";
           range.style.left = View.position + "%";
         };
 
         View.prototype.bindScaleBubbleRangeRight = function () {
-          $(".bubble-multi-right" + silderNum).css("left", View.countMultiPositionRight);
-          $(".value-multi-right-span" + silderNum).text(settings.max);
+          $bubbleMultiRight.css("left", View.countMultiPositionRight);
+          $valueMultiRightSpan.text(settings.max);
           thumbRight.style.right = '0';
           range.style.right = '0';
         }; /////////////////////////////////MULTI
@@ -743,20 +757,20 @@ Object.defineProperty(exports, "__esModule", {
         View.prototype.setBubbleL = function () {
           //ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
           $(inputLeft).on('input', function () {
-            $(".bubble-multi-left" + silderNum).css("left", View.countMultiPositionLeft);
-            $(".bubble-multi-left" + silderNum).css("bottom", "50px"); //ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+            $bubbleMultiLeft.css("left", View.countMultiPositionLeft);
+            $bubbleMultiLeft.css("bottom", "50px"); //ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 
-            $(".value-multi-left-span" + silderNum).text(inputLeft.value);
+            $valueMultiLeftSpan.text(inputLeft.value);
           }).trigger('input');
         };
 
         View.prototype.setBubbleR = function () {
           //ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
           $(inputRight).on('input', function () {
-            $(".bubble-multi-right" + silderNum).css("left", View.countMultiPositionRight);
-            $(".bubble-multi-right" + silderNum).css("bottom", "50px"); //ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+            $bubbleMultiRight.css("left", View.countMultiPositionRight);
+            $bubbleMultiRight.css("bottom", "50px"); //ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 
-            $(".value-multi-right-span" + silderNum).text(inputRight.value);
+            $valueMultiRightSpan.text(inputRight.value);
           }).trigger('input');
         }; //ДИАПАЗОН-ШКАЛА(MULTI)
 
@@ -769,18 +783,18 @@ Object.defineProperty(exports, "__esModule", {
             fourth: View.scaleValues[2],
             fifth: max
           };
-          $(".multi-first-ins" + silderNum).first().text(scaleMultiObj.first); //.first() because .text() makes double value when testing scaleMulti()
+          $(".js-multi-first-ins" + silderNum).first().text(scaleMultiObj.first); //.first() because .text() makes double value when testing scaleMulti()
 
-          $(".multi-second-ins" + silderNum).first().text(scaleMultiObj.second);
-          $(".multi-third-ins" + silderNum).first().text(scaleMultiObj.third);
-          $(".multi-fourth-ins" + silderNum).first().text(scaleMultiObj.fourth);
-          $(".multi-fifth-ins" + silderNum).first().text(scaleMultiObj.fifth);
+          $(".js-multi-second-ins" + silderNum).first().text(scaleMultiObj.second);
+          $(".js-multi-third-ins" + silderNum).first().text(scaleMultiObj.third);
+          $(".js-multi-fourth-ins" + silderNum).first().text(scaleMultiObj.fourth);
+          $(".js-multi-fifth-ins" + silderNum).first().text(scaleMultiObj.fifth);
         }; /////////////////////////////////SINGLE
         //ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
 
 
         View.prototype.setRange = function () {
-          $(".progress-bar" + silderNum).css({
+          $(".js-progress-bar" + silderNum).css({
             'width': View.progressBarWidth + '%'
           });
         }; //BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
@@ -788,9 +802,9 @@ Object.defineProperty(exports, "__esModule", {
 
         View.prototype.setBubbleSing = function () {
           //ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
-          $(".bubble-single" + silderNum).css("left", View.bubblePosition); //ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
+          $bubbleSingle.css("left", View.bubblePosition); //ДОБАВЛЯЕТ ЗНАЧЕНИЕ VALUE В BUBBLE
 
-          $(".value-single-span" + silderNum).text(singleRange.value);
+          $valueSingleSpan.text(singleRange.value);
         }; //ДИАПАЗОН-ШКАЛА(SINGLE)
 
 
@@ -802,18 +816,18 @@ Object.defineProperty(exports, "__esModule", {
             fourth: View.scaleValues[2],
             fifth: max
           };
-          $(".first-ins" + silderNum).first().text(scaleSingleObj.first); //.first() because .text() makes double value when testing scaleSingle()
+          $(".js-first-ins" + silderNum).first().text(scaleSingleObj.first); //.first() because .text() makes double value when testing scaleSingle()
 
-          $(".second-ins" + silderNum).first().text(scaleSingleObj.second);
-          $(".third-ins" + silderNum).first().text(scaleSingleObj.third);
-          $(".fourth-ins" + silderNum).first().text(scaleSingleObj.fourth);
-          $(".fifth-ins" + silderNum).first().text(scaleSingleObj.fifth);
+          $(".js-second-ins" + silderNum).first().text(scaleSingleObj.second);
+          $(".js-third-ins" + silderNum).first().text(scaleSingleObj.third);
+          $(".js-fourth-ins" + silderNum).first().text(scaleSingleObj.fourth);
+          $(".js-fifth-ins" + silderNum).first().text(scaleSingleObj.fifth);
         };
 
         View.prototype.bindScaleBubbleSing = function () {
           singleRange.value = View.valResultInsView;
-          $(".bubble-single" + silderNum).css("left", View.bubblePosition);
-          $(".value-single-span" + silderNum).text(View.valResultInsView);
+          $bubbleSingle.css("left", View.bubblePosition);
+          $valueSingleSpan.text(View.valResultInsView);
         };
 
         View.scaleValues = [];
@@ -850,23 +864,19 @@ Object.defineProperty(exports, "__esModule", {
 
 
         Controller.prototype.makeTrackZindexMousemoveHandlerL = function () {
+          Model.trackZindexL = view.setTrackZindexL;
           inputLeft.addEventListener('mousemove', model.countTrackZindex);
-          $(inputLeft).on('mousemove', function () {
-            return View.compareInputs = Model.compareInputs;
-          }).on('mousemove', view.setTrackZindex);
         }; //!!!!!!!!!!
 
 
         Controller.prototype.makeTrackZindexMousemoveHandlerR = function () {
+          Model.trackZindexR = view.setTrackZindexR;
           inputRight.addEventListener('mousemove', model.countTrackZindex);
-          $(inputRight).on('mousemove', function () {
-            return View.compareInputs = Model.compareInputs;
-          }).on('mousemove', view.setTrackZindex);
         }; //!!!!!!!!!!
 
 
         Controller.prototype.makeScaleBubbleRangeMultiClickHandler = function () {
-          $(".multi-first-ins" + silderNum + ", .multi-second-ins" + silderNum + ", .multi-third-ins" + silderNum + ", .multi-fourth-ins" + silderNum + ", .multi-fifth-ins" + silderNum).on('click', function () {
+          $scaleValuesMult.on('click', function () {
             model.bindScaleBubbleRangeMulti();
             View.countMultiPositionLeft = Model.countMultiPositionLeft;
             View.position = Model.percentLeft;
@@ -890,13 +900,14 @@ Object.defineProperty(exports, "__esModule", {
 
 
         Controller.prototype.makeScaleBubbleRangeSingClickHandler = function () {
-          $(".first-ins" + silderNum + ", .second-ins" + silderNum + ", .third-ins" + silderNum + ", .fourth-ins" + silderNum + ", .fifth-ins" + silderNum).on('click', model.bindScaleBubbleRangeSing).trigger('input').on('click', function () {
+          $scaleValuesSing.on('click', function () {
+            model.bindScaleBubbleRangeSing();
             View.valResultInsView = Model.valResultIns;
-          }).on('click', function () {
             View.bubblePosition = Model.insCountSinglePosition;
-          }).on('click', view.bindScaleBubbleSing).on('click', function () {
+            view.bindScaleBubbleSing();
             View.progressBarWidth = Model.progressBarWidth;
-          }).on('click', view.setRange);
+            view.setRange();
+          }).trigger('input');
         };
 
         Controller.prototype.makeBubbleSingInputHandler = function () {
@@ -942,9 +953,7 @@ Object.defineProperty(exports, "__esModule", {
       };
     });
   };
-})(jQuery);
-
-$("body").rangeSliders(1);
+})(jQuery); // (<any>$("body")).rangeSliders(1)
 },{}],"../node_modules/@sinonjs/commons/lib/global.js":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
@@ -20760,7 +20769,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62005" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62926" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

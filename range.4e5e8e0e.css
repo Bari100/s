@@ -4,15 +4,11 @@
 
 
 
-/* body {
-	margin: 0;
-	padding: 20px;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #e5e5e5;
-} */
+body {
+	background: #D3CCE3;
+	background: -webkit-linear-gradient(to right, #E9E4F0, #e6e1f1);
+	background: linear-gradient(to right, #E9E4F0, #e6e1f1);
+}
 
 .sliders1,.sliders2,.sliders3,.sliders4,.sliders5,.sliders6,.sliders7,.sliders8,.sliders9,
 .sliders10,.sliders11,.sliders12,.sliders13,.sliders14,.sliders15,.sliders16,.sliders17,.sliders18,
@@ -189,6 +185,7 @@
 	/* z-index: 2; */
 	/* height: 10px; */
 	opacity: 0;
+	cursor: pointer;
 }
 .input-left1,.input-left2,.input-left3,.input-left4,.input-left5,.input-left6,.input-left7,.input-left8,.input-left9,.input-left10,.input-left11,.input-left12,.input-left13,
 .input-left14,.input-left15,.input-left16,.input-left17,.input-left18,.input-left19,.input-left20,.input-left21,.input-left22,.input-left23,.input-left24,.input-left25,.input-left26,
