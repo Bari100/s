@@ -120,21 +120,26 @@ import { htmlPrefilter } from "jquery";
 				$(`.bubble-multi-left${silderNum}`).addClass("none")
 			})
 
+			$(`.width-value${silderNum}`).val('');
 			//*-DEMO-* ФУНКЦИЯ ВЫБОРА ГОРИЗОНТ ИЛИ ВЕРТИКАЛЬ
 			$(`.horizontal${silderNum}`).on('click', function(){
 				sliders.style.transform = "rotate(0deg)"
 				// settings.width = settings.width
-				$(sliders).css("width", settings.width + "vw")
-				$(inputLeft).css("width", settings.width + "vw")
-				$(inputRight).css("width", settings.width + "vw")
-				$(singleRange).css("width", settings.width + "vw")
-				$($sliderSingle).css("width", settings.width + "vw")
-				$(`.scale${silderNum}`).css("width", settings.width + "vw")
-				$(`.multi-scale${silderNum}`).css("width", settings.width + "vw")
+				let width = settings.width
+				if($(`.width-value${silderNum}`).val() > 0) width = +$(`.width-value${silderNum}`).val()
+				$(sliders).css("width", width + "vw")
+				$(inputLeft).css("width", width + "vw")
+				$(inputRight).css("width", width + "vw")
+				$(singleRange).css("width", width + "vw")
+				$($sliderSingle).css("width", width + "vw")
+				$(`.scale${silderNum}`).css("width", width + "vw")
+				$(`.multi-scale${silderNum}`).css("width", width + "vw")
 			})
 			$(`.vertical${silderNum}`).on('click', function(){
 				sliders.style.transform = "rotate(270deg)"
-				let newWidth = (window.screen.width * window.devicePixelRatio*settings.width)/100
+				let width = settings.width
+				if($(`.width-value${silderNum}`).val() > 0) width = +$(`.width-value${silderNum}`).val()
+				let newWidth = (window.screen.width * window.devicePixelRatio * width)/100
 				$(sliders).css("width", newWidth + "px")
 				$(inputLeft).css("width", newWidth + "px")
 				$(inputRight).css("width", newWidth + "px")
@@ -247,6 +252,52 @@ import { htmlPrefilter } from "jquery";
 			// 		$(singleRange).on('input', function(){singleRange.step = settings.step})})//!!!!!!!!!!!!!!!!!ПЕРЕМЕСТИТЬ В MODEL И CONTROLLER 
 
 
+			//*-DEMO-* ИЗМЕНЕНИЕ WIDTH
+			$(`.change-width${silderNum}`).on('click', function(){
+				$(sliders).css("width", $(`.width-value${silderNum}`).val() + "vw")
+				$(inputLeft).css("width", $(`.width-value${silderNum}`).val() + "vw")
+				$(inputRight).css("width", $(`.width-value${silderNum}`).val() + "vw")
+				$(singleRange).css("width", $(`.width-value${silderNum}`).val() + "vw")
+				$sliderSingle.css("width", $(`.width-value${silderNum}`).val() + "vw")
+				$scaleSingle.css("width", $(`.width-value${silderNum}`).val() + "vw")
+				$multiScale.css("width", $(`.width-value${silderNum}`).val() + "vw")
+			})
+
+			//*-DEMO-* ИЗМЕНЕНИЕ MIN MAX
+			$(`.change-min-max${silderNum}`).on('click', function(){
+				if(+$(`.min-value${silderNum}`).val() < 0 || +$(`.max-value${silderNum}`).val() < 0) {
+					$(`.min-value${silderNum}`).val(0)
+					$(`.max-value${silderNum}`).val(100)
+				}
+				if(+$(`.min-value${silderNum}`).val() > +$(`.max-value${silderNum}`).val()) {
+					let oldMinVal = $(`.min-value${silderNum}`).val()
+					$(`.min-value${silderNum}`).val($(`.max-value${silderNum}`).val())
+					$(`.max-value${silderNum}`).val(oldMinVal)
+				}
+				settings.min = +$(`.min-value${silderNum}`).val()
+				settings.max = +$(`.max-value${silderNum}`).val()
+				singleRange.min = settings.min
+				singleRange.max = settings.max
+				inputLeft.min = settings.min
+				inputRight.min = settings.min
+				inputLeft.max = settings.max
+				inputRight.max = settings.max
+				inputLeft.value = settings.min
+				inputRight.value = settings.max
+				model.countThumbRangeL()
+				model.countThumbRangeR()
+				model.countBubble(inputLeft, settings.min, settings.max)
+				model.countBubble(inputRight, settings.min, settings.max)
+				model.countBubble(singleRange, settings.min, settings.max)
+				controller.makeBubbleMultInputHandler()
+				controller.makeBubbleSingInputHandler()
+				model.countScale(settings.min, settings.max)
+				model.countRange(settings.min, settings.max)
+				controller.makeRangeInputHandler()
+				controller.makeScale()
+			})
+
+
 			//WIDTH
 			$(sliders).css("width", settings.width + "vw")
 			$(inputLeft).css("width", settings.width + "vw")
@@ -309,7 +360,7 @@ import { htmlPrefilter } from "jquery";
 				static percentRight:number
 				static scaleValues:number[]
 				static countMultiPositionRight:number|string
-				static progressBarWidth:number//because can't create const or let here
+				static progressBarWidth:number
 				static insCountSinglePosition:number|string
 				static valResultIns:number
 				static countMultiPositionLeft:number|string
