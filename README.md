@@ -1,7 +1,7 @@
 # Range-slider
 
 ## Слайдер
-https://bari100.github.io/Toxin/
+https://bari100.github.io/s/
  
 ## Установка
 
