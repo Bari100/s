@@ -9,3 +9,6 @@ https://bari100.github.io/s/
     $ cd s
     $ npm install
     $ npm run dev
+
+# Тесты
+    $ npm run test
