@@ -7,8 +7,7 @@ https://bari100.github.io/s/
 
     $ git clone https://github.com/Bari100/s.git
     $ cd s
-    $ npm install
-    $ npm run dev
+    $ yarn dev
 
 ## Тесты
-    $ npm run test
+    $ yarn test
