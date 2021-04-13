@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"range2.ts":[function(require,module,exports) {
+})({"../src/range2.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -334,22 +334,27 @@ Object.defineProperty(exports, "__esModule", {
         $(".bubble-single" + silderNum).addClass("none");
         $(".bubble-multi-right" + silderNum).addClass("none");
         $(".bubble-multi-left" + silderNum).addClass("none");
-      }); //*-DEMO-* ФУНКЦИЯ ВЫБОРА ГОРИЗОНТ ИЛИ ВЕРТИКАЛЬ
+      });
+      $(".width-value" + silderNum).val(''); //*-DEMO-* ФУНКЦИЯ ВЫБОРА ГОРИЗОНТ ИЛИ ВЕРТИКАЛЬ
 
       $(".horizontal" + silderNum).on('click', function () {
         sliders.style.transform = "rotate(0deg)"; // settings.width = settings.width
 
-        $(sliders).css("width", settings.width + "vw");
-        $(inputLeft).css("width", settings.width + "vw");
-        $(inputRight).css("width", settings.width + "vw");
-        $(singleRange).css("width", settings.width + "vw");
-        $($sliderSingle).css("width", settings.width + "vw");
-        $(".scale" + silderNum).css("width", settings.width + "vw");
-        $(".multi-scale" + silderNum).css("width", settings.width + "vw");
+        var width = settings.width;
+        if ($(".width-value" + silderNum).val() > 0) width = +$(".width-value" + silderNum).val();
+        $(sliders).css("width", width + "vw");
+        $(inputLeft).css("width", width + "vw");
+        $(inputRight).css("width", width + "vw");
+        $(singleRange).css("width", width + "vw");
+        $($sliderSingle).css("width", width + "vw");
+        $(".scale" + silderNum).css("width", width + "vw");
+        $(".multi-scale" + silderNum).css("width", width + "vw");
       });
       $(".vertical" + silderNum).on('click', function () {
         sliders.style.transform = "rotate(270deg)";
-        var newWidth = window.screen.width * window.devicePixelRatio * settings.width / 100;
+        var width = settings.width;
+        if ($(".width-value" + silderNum).val() > 0) width = +$(".width-value" + silderNum).val();
+        var newWidth = window.screen.width * window.devicePixelRatio * width / 100;
         $(sliders).css("width", newWidth + "px");
         $(inputLeft).css("width", newWidth + "px");
         $(inputRight).css("width", newWidth + "px");
@@ -454,7 +459,52 @@ Object.defineProperty(exports, "__esModule", {
       // 	.on('mouseover', function(){singleRange.step = 1})
       // 	.on('mouseout', function(){
       // 		$(singleRange).on('input', function(){singleRange.step = settings.step})})//!!!!!!!!!!!!!!!!!ПЕРЕМЕСТИТЬ В MODEL И CONTROLLER 
-      //WIDTH
+      //*-DEMO-* ИЗМЕНЕНИЕ WIDTH
+
+      $(".change-width" + silderNum).on('click', function () {
+        $(sliders).css("width", $(".width-value" + silderNum).val() + "vw");
+        $(inputLeft).css("width", $(".width-value" + silderNum).val() + "vw");
+        $(inputRight).css("width", $(".width-value" + silderNum).val() + "vw");
+        $(singleRange).css("width", $(".width-value" + silderNum).val() + "vw");
+        $sliderSingle.css("width", $(".width-value" + silderNum).val() + "vw");
+        $scaleSingle.css("width", $(".width-value" + silderNum).val() + "vw");
+        $multiScale.css("width", $(".width-value" + silderNum).val() + "vw");
+      }); //*-DEMO-* ИЗМЕНЕНИЕ MIN MAX
+
+      $(".change-min-max" + silderNum).on('click', function () {
+        if (+$(".min-value" + silderNum).val() < 0 || +$(".max-value" + silderNum).val() < 0) {
+          $(".min-value" + silderNum).val(0);
+          $(".max-value" + silderNum).val(100);
+        }
+
+        if (+$(".min-value" + silderNum).val() > +$(".max-value" + silderNum).val()) {
+          var oldMinVal = $(".min-value" + silderNum).val();
+          $(".min-value" + silderNum).val($(".max-value" + silderNum).val());
+          $(".max-value" + silderNum).val(oldMinVal);
+        }
+
+        settings.min = +$(".min-value" + silderNum).val();
+        settings.max = +$(".max-value" + silderNum).val();
+        singleRange.min = settings.min;
+        singleRange.max = settings.max;
+        inputLeft.min = settings.min;
+        inputRight.min = settings.min;
+        inputLeft.max = settings.max;
+        inputRight.max = settings.max;
+        inputLeft.value = settings.min;
+        inputRight.value = settings.max;
+        model.countThumbRangeL();
+        model.countThumbRangeR();
+        model.countBubble(inputLeft, settings.min, settings.max);
+        model.countBubble(inputRight, settings.min, settings.max);
+        model.countBubble(singleRange, settings.min, settings.max);
+        controller.makeBubbleMultInputHandler();
+        controller.makeBubbleSingInputHandler();
+        model.countScale(settings.min, settings.max);
+        model.countRange(settings.min, settings.max);
+        controller.makeRangeInputHandler();
+        controller.makeScale();
+      }); //WIDTH
 
       $(sliders).css("width", settings.width + "vw");
       $(inputLeft).css("width", settings.width + "vw");
@@ -953,7 +1003,9 @@ Object.defineProperty(exports, "__esModule", {
       };
     });
   };
-})(jQuery); // (<any>$("body")).rangeSliders(1)
+})(jQuery);
+
+$("body").rangeSliders(1);
 },{}],"C:/Users/user/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -982,7 +1034,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49802" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58547" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -1158,5 +1210,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/user/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","range2.ts"], null)
+},{}]},{},["C:/Users/user/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","../src/range2.ts"], null)
 //# sourceMappingURL=/range2.e9d7be64.js.map

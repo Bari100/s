@@ -5,10 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/range.html",
-    "dev2": "parcel test/test.html",
+    "test": "parcel test/test.html",
     "dev3": "parcel src/ranges.html",
-    "prod": "parcel build src/ranges.html --public-url ./",
-    "test": "karma"
+    "prod": "parcel build src/ranges.html --public-url ./"
   },
   "devDependencies": {
     "browserify": "^17.0.0",

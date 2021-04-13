@@ -13,7 +13,6 @@ import { htmlPrefilter } from "jquery";
 		  };
 		return this.each(function () {
 			var sliders:any = <HTMLElement>document.querySelector(`.js-sliders${silderNum}`)
-				// radioMulti = document.querySelector(`.js-choose-multi${silderNum}`);
 
 			var $sliderSingle = $('<div>', {'class': `slider-single${silderNum}`});
 			$(sliders).append($sliderSingle);
@@ -378,7 +377,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//РАСЧЁТ ДЛЯ ПЕРЕМЕЩЕНИЯ THUMB И RANGE (MULTIRANGE SLIDER)
-				countThumbRangeL(tests = Model.test) {//!!!!!!!!!!
+				countThumbRangeL(tests = Model.test) {
 					let	min = settings.min,
 						max = settings.max,
 						test = Model.test,
@@ -391,7 +390,7 @@ import { htmlPrefilter } from "jquery";
 						: Model.percentLeft = ((testCountVal - test.min) / (test.max - test.min)) * 100
 				}
 
-				countThumbRangeR(tests = Model.test) {//!!!!!!!!!!
+				countThumbRangeR(tests = Model.test) {
 					let	min = settings.min,
 						max = settings.max,
 						test = Model.test,
@@ -405,7 +404,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//ДЕЛАЕТ КЛИКАБЕЛЬНЫМ MULTIRANGE SLIDER ПО ВСЕМУ ТРЭКУ
-				countTrackZindex(eventArg, width, testPosition:number = Model.defaultNum, tests = Model.test) {//!!!!!!!!!!
+				countTrackZindex(eventArg, width, testPosition:number = Model.defaultNum, tests = Model.test) {
 					let positionXY: number,
 						countPosition: number,
 						inputLeftMath: number,
@@ -417,12 +416,10 @@ import { htmlPrefilter } from "jquery";
 					positionXY = eventArg.offsetX;//offsetX и offsetY относятся к родительскому контейнеру, тогда как pageX и pageY относятся к документу. Если в данной ситуации использовать clientX или pageX, screenX, то при display: flex данная функция будет работать некорректно.
 					countPosition = ((+inputLeft.min) + (+inputLeft.max)) / $(sliders).width()
 					let testCountPosition = (test.min + test.max) / width
-					/* percentage position Y of cursor  */
 					testPosition == defaultNum
 						? x100 = positionXY * countPosition
 						: x100 = testPosition * testCountPosition
 					
-					/* absolute distance from respective slider values */
 					inputLeftMath = Math.abs(inputLeft.value - x100)
 					inputRightMath = Math.abs(inputRight.value - x100)
 					let testInputLeftMath = Math.abs(test.leftVal - x100)
@@ -440,7 +437,7 @@ import { htmlPrefilter } from "jquery";
 					}
 				}
 
-				bindScaleBubbleRangeMulti(tests = Model.test){//!!!!!!!!!!
+				bindScaleBubbleRangeMulti(tests = Model.test){
 					let	newValue,
 						test = Model.test,
 						defaultNum = Model.defaultNum
@@ -476,7 +473,7 @@ import { htmlPrefilter } from "jquery";
 					Model.countMultiPositionRight = `calc(${newValueRight}% + (${newPositionRight}px))`
 				}
 
-				countRange(min:number, max:number, testVal:number = Model.defaultNum) {//!!!!!!!!!!
+				countRange(min:number, max:number, testVal:number = Model.defaultNum) {
 					$(singleRange).on('input', function(){
 						let val:number = singleRange.value
 						testVal == Model.defaultNum
@@ -485,7 +482,7 @@ import { htmlPrefilter } from "jquery";
 					}).trigger('input')
 				}
 
-				bindScaleBubbleRangeSing(testMin:number = Model.defaultNum, testMax:number = Model.defaultNum, testVal:number = Model.defaultNum){//!!!!!!!!!!
+				bindScaleBubbleRangeSing(testMin:number = Model.defaultNum, testMax:number = Model.defaultNum, testVal:number = Model.defaultNum){
 					let newValue:number
 					$(`.js-first-ins${silderNum}`).on('click', function(){
 						Model.valResultIns = +$(`.js-first-ins${silderNum}`).text()
@@ -519,7 +516,7 @@ import { htmlPrefilter } from "jquery";
 						: Model.progressBarWidth = (testVal - testMin) * 100 / (testMax - testMin)
 				}
 
-				countBubble(input, min:number, max:number, testVal:number = Model.defaultNum) {//!!!!!!!!!!
+				countBubble(input, min:number, max:number, testVal:number = Model.defaultNum) {
 					$(input).on('input', function(){
 						let newValue
 						let newPosition
@@ -565,11 +562,11 @@ import { htmlPrefilter } from "jquery";
 				static compareInputs:boolean
 
 
-				setThumbRangeL(){//!!!!!!!!!!
+				setThumbRangeL(){
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
 				}
-				setThumbRangeR(){//!!!!!!!!!!
+				setThumbRangeR(){
 					thumbRight.style.right = View.position + "%"
 					range.style.right = View.position + "%"
 				}
@@ -583,22 +580,22 @@ import { htmlPrefilter } from "jquery";
 					inputLeft.style.zIndex = 1
 				}
 				
-				bindScaleBubbleRangeLeft(){//!!!!!!!!!!
+				bindScaleBubbleRangeLeft(){
 					$bubbleMultiLeft.css("left", View.countMultiPositionLeft)
 					$valueMultiLeftSpan.text(inputLeft.value)
 					thumbLeft.style.left = View.position + "%"
 					range.style.left = View.position + "%"
 				}
-				bindScaleBubbleRangeRight(){//!!!!!!!!!!
+				bindScaleBubbleRangeRight(){
 					$bubbleMultiRight.css("left", View.countMultiPositionRight)
 					$valueMultiRightSpan.text(settings.max)
 					thumbRight.style.right = '0'
 					range.style.right = '0'
 				}
 
-				/////////////////////////////////MULTI
+				
 				//BUBBLE MULTI СО ЗНАЧЕНИЕМ VALUE
-				setBubbleL() {//!!!!!!!!!!
+				setBubbleL() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputLeft).on('input', function(){
 						$bubbleMultiLeft.css("left", View.countMultiPositionLeft)
@@ -607,7 +604,7 @@ import { htmlPrefilter } from "jquery";
 						$valueMultiLeftSpan.text(inputLeft.value)
 					}).trigger('input')
 				}
-				setBubbleR() {//!!!!!!!!!!
+				setBubbleR() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$(inputRight).on('input', function(){
 						$bubbleMultiRight.css("left", View.countMultiPositionRight)
@@ -618,7 +615,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//ДИАПАЗОН-ШКАЛА(MULTI)
-				setScaleMulti(min:number, max:number) {//!!!!!!!!!!
+				setScaleMulti(min:number, max:number) {
 					let scaleMultiObj = {
 						first: min,
 						second: View.scaleValues[0],
@@ -636,14 +633,14 @@ import { htmlPrefilter } from "jquery";
 
 				/////////////////////////////////SINGLE
 				//ДОБАВЛЯЕТ PROGRESS BAR (SLIDER-SINGLE)
-				setRange() {//!!!!!!!!!!
+				setRange() {
 					$(`.js-progress-bar${silderNum}`).css({
 						'width': View.progressBarWidth + '%'
 					})
 				}
 
 				//BUBBLE SINGLE СО ЗНАЧЕНИЕМ VALUE
-				setBubbleSing() {//!!!!!!!!!!
+				setBubbleSing() {
 					//ЗАСТАВЛЯЕТ ДВИГАТЬСЯ BUBBLE ОТНОСИТЕЛЬНО THUMB
 					$bubbleSingle.css("left", View.bubblePosition)
 
@@ -652,7 +649,7 @@ import { htmlPrefilter } from "jquery";
 				}
 
 				//ДИАПАЗОН-ШКАЛА(SINGLE)
-				setScaleSingle(min:number, max:number) {//!!!!!!!!!!
+				setScaleSingle(min:number, max:number) {
 					let scaleSingleObj = {
 						first: min,
 						second: View.scaleValues[0],
@@ -668,7 +665,7 @@ import { htmlPrefilter } from "jquery";
 					$(`.js-fifth-ins${silderNum}`).first().text(scaleSingleObj.fifth);
 				}
 
-				bindScaleBubbleSing(){//!!!!!????
+				bindScaleBubbleSing(){
 					singleRange.value = View.valResultInsView
 					$bubbleSingle.css("left", View.bubblePosition)
 					$valueSingleSpan.text(View.valResultInsView)
@@ -685,11 +682,11 @@ import { htmlPrefilter } from "jquery";
 			//=====================================================================================================================================================================================================================
 			class Controller {
 				//РАСЧЁТ ДЛЯ ПЕРЕМЕЩЕНИЯ THUMB И RANGE (MULTIRANGE SLIDER)
-				makeThumbRangeInputHandlerL() {//!!!!!!!!!!
+				makeThumbRangeInputHandlerL() {
 					inputLeft.addEventListener("input", model.countThumbRangeL)
 					$(inputLeft).on("input", function(){View.position = Model.percentLeft}).trigger('input').on("input", view.setThumbRangeL).trigger('input')
 				}
-				makeThumbRangeInputHandlerR() {//!!!!!!!!!!
+				makeThumbRangeInputHandlerR() {
 					inputRight.addEventListener("input", model.countThumbRangeR)
 					$(inputRight).on("input", function(){View.position = Model.percentRight}).trigger('input').on("input", view.setThumbRangeR).trigger('input')
 				}
@@ -704,7 +701,7 @@ import { htmlPrefilter } from "jquery";
 					inputRight.addEventListener('mousemove', model.countTrackZindex)
 				}//!!!!!!!!!!
 
-				makeScaleBubbleRangeMultiClickHandler() {//!!!!!!??? 
+				makeScaleBubbleRangeMultiClickHandler() {
 					$scaleValuesMult.on('click', () => {
 						model.bindScaleBubbleRangeMulti()
 						View.countMultiPositionLeft = Model.countMultiPositionLeft
@@ -781,4 +778,4 @@ import { htmlPrefilter } from "jquery";
 	}
 })(jQuery);
 
-// (<any>$("body")).rangeSliders(1)
+(<any>$("body")).rangeSliders(1)
